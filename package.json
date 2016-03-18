@@ -1,0 +1,33 @@
+{
+  "name": "rh-keynote-demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently \"npm run tsc:w\" \"npm run lite\"",
+    "tsc": "tsc",
+    "tsc:w": "tsc -w",
+    "lite": "lite-server",
+    "typings": "typings",
+    "postinstall": "typings install"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "angular2": "^2.0.0-beta.7",
+    "es6-promise": "^3.1.2",
+    "es6-shim": "^0.34.4",
+    "material-design-lite": "^1.1.1",
+    "phaser": "^2.4.6",
+    "reflect-metadata": "^0.1.3",
+    "rxjs": "^5.0.0-beta.2",
+    "systemjs": "^0.19.23",
+    "zone.js": "^0.5.15"
+  },
+  "devDependencies": {
+    "concurrently": "^2.0.0",
+    "lite-server": "^2.1.0",
+    "typescript": "^1.8.2",
+    "typings": "^0.6.8"
+  }
+}

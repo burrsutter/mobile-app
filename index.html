@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <base href="/">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Red Hat Keynote Demo</title>
+
+        <link rel="stylesheet" href="/node_modules/material-design-lite/material.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <script src="/node_modules/material-design-lite/material.min.js"></script>
+
+        <script src="node_modules/es6-shim/es6-shim.min.js"></script>
+        <script src="node_modules/systemjs/dist/system-polyfills.js"></script>
+
+        <script src="node_modules/angular2/bundles/angular2-polyfills.js"></script>
+        <script src="node_modules/systemjs/dist/system.src.js"></script>
+        <script src="node_modules/rxjs/bundles/Rx.js"></script>
+        <script src="node_modules/angular2/bundles/angular2.dev.js"></script>
+        <script src="node_modules/angular2/bundles/router.dev.js"></script>
+        <script src="node_modules/phaser/dist/phaser.js"></script>
+
+        <script>
+            System.config({
+                packages: {
+                    app: {
+                        format: 'register',
+                        defaultExtension: 'js'
+                    }
+                }
+            });
+
+            System.import('app/main')
+                .then(null, console.error.bind(console));
+        </script>
+    </head>
+    <body>
+        <rh-keynote-app>Loading...</rh-keynote-app>
+    </body>
+</html>
