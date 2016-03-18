@@ -147,7 +147,7 @@ export class GameComponent implements OnInit {
             throwGoodObject: () => {
                 var obj = goodObjects.getFirstDead();
                 obj.reset(game.world.centerX + Math.random() * 100 - Math.random() * 100, game.world.height);
-                game.physics.arcade.moveToXY(obj, game.world.centerX, game.world.centerY, game.world.height);
+                game.physics.arcade.moveToXY(obj, game.world.centerX, game.world.centerY, (game.world.height + 56 - 568) * 0.5 + 450);
             }
         };
 

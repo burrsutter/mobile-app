@@ -146,7 +146,7 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                         throwGoodObject: function () {
                             var obj = goodObjects.getFirstDead();
                             obj.reset(game.world.centerX + Math.random() * 100 - Math.random() * 100, game.world.height);
-                            game.physics.arcade.moveToXY(obj, game.world.centerX, game.world.centerY, game.world.height);
+                            game.physics.arcade.moveToXY(obj, game.world.centerX, game.world.centerY, (game.world.height + 56 - 568) * 0.5 + 450);
                         }
                     };
                     game.state.add('Play', PlayState);
