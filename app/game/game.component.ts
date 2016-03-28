@@ -193,13 +193,9 @@ export class GameComponent implements OnInit {
             },
             throwGoodObject: () => {
                 var obj = goodObjects.getFirstDead();
-<<<<<<< 454a6a0725c637add0a0060b67e2b8b5dbace798
-                obj.reset(game.world.centerX + Math.random() * 100 - Math.random() * 100, game.world.height);
-                game.physics.arcade.moveToXY(obj, game.world.centerX, game.world.centerY, (game.world.height + 56 - 568) * 0.5 + 450);
-=======
+
                 obj.reset(this.game.world.centerX + Math.random() * 100 - Math.random() * 100, this.game.world.height);
-                this.game.physics.arcade.moveToXY(obj, this.game.world.centerX, this.game.world.centerY, this.game.world.height - 100);
->>>>>>> added web sockets and configuration change listener
+                this.game.physics.arcade.moveToXY(obj, this.game.world.centerX, this.game.world.centerY, (this.game.world.height + 56 - 568) * 0.5 + 450);
             }
         };
 
