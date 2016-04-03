@@ -14,8 +14,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "angular2": "^2.0.0-beta.13",
-    "blueimp-load-image": "^2.6.1",
+    "angular2": "^2.0.0-beta.7",
     "es6-promise": "^3.1.2",
     "es6-shim": "^0.34.4",
     "material-design-lite": "^1.1.1",

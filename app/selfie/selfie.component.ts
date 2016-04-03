@@ -1,65 +1,114 @@
-import { Component, OnInit } from 'angular2/core';
-import { Http, HTTP_PROVIDERS, Headers, RequestOptions } from 'angular2/http';
+import { Component, OnInit, OnDestroy } from 'angular2/core';
 
 @Component({
-    providers: [ HTTP_PROVIDERS ],
     template: `<div class="mdl-grid">
-                   <div class="mdl-cell">
-                       <input type="file" capture="camera" accept="image/*" id="takePictureField" (change)="onChange($event)">
-                       <button (click)="upload()">Upload</button>
-                   </div>
-               </div>
-               <div class="mdl-grid">
-                   <div class="mdl-cell mdl-cell--12-col">
+                   <div *ngIf="canTakePicture">
+                       <button class="mdl-button mdl-js-button mdl-button--raised" (click)="toggleVideo()">{{videoBtnText}}</button>
+                       <button class="mdl-button mdl-js-button mdl-button--raised" (click)="capturePhoto($event)" *ngIf="stream">Take Photo</button>
+                       <div>
+                           <video id="video" class="responsive-video">Video stream not available.</video>
+                       </div>
                        <canvas id="canvas"></canvas>
+                       <div>
+                           <img id="photo">
+                       </div>
                    </div>
-               </div>`
+                   <div *ngIf="!canTakePicture">
+                       <input type="file" accept="image/*">
+                   </div>
+               </div>`,
+    styles: [`
+        canvas {
+            display: none;
+        }
+
+        .responsive-video {
+            max-width: 100%;
+            height: auto;
+        }
+    `]
 })
 
-export class SelfieComponent implements OnInit {
+export class SelfieComponent implements OnInit, OnDestroy {
+    canTakePicture = false;
+    width = null;
+    height = null;
+    video = null;
     canvas = null;
+    stream = null;
+    videoBtnTakeText = 'Take a Selfie';
+    videoBtnStopText = 'Stop Camera';
+    videoBtnText = this.videoBtnTakeText;
 
-    constructor(private http: Http) {}
+    constructor() {
+        navigator.getMedia = ( navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
 
-    ngOnInit() {
-        this.canvas = document.getElementById('canvas');
-    }
-
-    onChange(event) {
-        if (event.target.files.length === 1 && event.target.files[0].type.indexOf('image/') === 0) {
-            let file = event.target.files[0];
-            let options = {
-                maxWidth: this.canvas.parentNode.clientWidth,
-                canvas: true,
-                pixelRatio: window.devicePixelRatio,
-                downsamplingRatio: 0.5
-            };
-
-            loadImage.parseMetaData(file, data => {
-                if (data.exif) {
-                    options.orientation = data.exif.get('Orientation');
-                }
-
-                loadImage(file, data => {
-                    this.canvas.parentNode.replaceChild(data, this.canvas);
-                    this.canvas = data;
-                }, options);
-            });
+        if (navigator.getMedia) {
+            this.canTakePicture = true;
         }
     }
 
-    upload() {
-        let image = this.canvas.toDataURL('image/jpeg', 0.1);
-        let body = JSON.stringify({ image: image });
-        let headers = new Headers({ 'Content-Type': 'application/json' });
-        let options = new RequestOptions({ headers: headers });
-        // let url = 'http://localhost:8080/upload';
-        let url = 'http://192.168.0.4:8080/upload';
+    ngOnInit() {
 
-        this.http.post(url, body, options)
-            .toPromise()
-            .then(res => {
-                console.log('done!');
-            });
+    }
+
+    ngOnDestroy() {
+        this.stopVideo();
+    }
+
+    toggleVideo() {
+        if (this.stream) {
+            this.stopVideo();
+            this.videoBtnText = this.videoBtnTakeText;
+            return;
+        }
+
+        this.videoBtnText = this.videoBtnStopText;
+        this.startVideo();
+    }
+
+    startVideo() {
+        this.video = document.getElementById('video');
+        this.canvas = document.getElementById('canvas');
+
+        navigator.getMedia({
+            video: true,
+            audio: false
+        }, stream => {
+            this.stream = stream;
+
+            if (navigator.mozGetUserMedia) {
+                this.video.mozSrcObject = stream;
+            } else {
+                let vendorURL = window.URL || window.webkitURL;
+                this.video.src = vendorURL.createObjectURL(stream);
+            }
+
+            this.video.play();
+        }, err => {
+            console.log("An error occured! " + err);
+        });
+
+        this.video.addEventListener('canplay', () => {
+            this.width = this.video.videoWidth;
+            this.height = this.video.videoHeight;
+
+            this.canvas.setAttribute('width', this.width);
+            this.canvas.setAttribute('height', this.height);
+        });
+    }
+
+    stopVideo() {
+        if (this.stream) {
+            this.stream.getVideoTracks()[0].stop();
+            this.stream = null;
+        }
+    }
+
+    capturePhoto() {
+        let context = this.canvas.getContext('2d');
+
+        context.drawImage(this.video, 0, 0);
+        document.getElementById('photo').src = this.canvas.toDataURL('image/webp');
     }
 }
