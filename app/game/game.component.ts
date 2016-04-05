@@ -3,11 +3,13 @@ import { Component, OnInit } from 'angular2/core';
 declare var Phaser: any;
 
 @Component({
-    template: `<div style="position: absolute; z-index: 1; color: white; right: 0;">
-                   <p>Team Score: {{teamScore}}</p>
-                   <p>Your Score: {{score}}</p>
-               </div>
-               <div id="game"></div>`
+    template: `
+        <div style="position: absolute; z-index: 1; color: white; right: 0;">
+            <p>Team Score: {{teamScore}}</p>
+            <p>Your Score: {{score}}</p>
+        </div>
+        <div id="game"></div>
+    `
 })
 
 export class GameComponent implements OnInit {

@@ -5,17 +5,19 @@ declare var loadImage: any;
 
 @Component({
     providers: [ HTTP_PROVIDERS ],
-    template: `<div class="mdl-grid">
-                   <div class="mdl-cell">
-                       <input type="file" capture="camera" accept="image/*" id="takePictureField" (change)="onChange($event)">
-                       <button (click)="upload()">Upload</button>
-                   </div>
-               </div>
-               <div class="mdl-grid">
-                   <div class="mdl-cell mdl-cell--12-col">
-                       <canvas id="canvas"></canvas>
-                   </div>
-               </div>`
+    template: `
+        <div class="mdl-grid">
+           <div class="mdl-cell">
+               <input type="file" capture="camera" accept="image/*" id="takePictureField" (change)="onChange($event)">
+               <button (click)="upload()">Upload</button>
+           </div>
+       </div>
+       <div class="mdl-grid">
+           <div class="mdl-cell mdl-cell--12-col">
+               <canvas id="canvas"></canvas>
+           </div>
+       </div>
+    `
 })
 
 export class SelfieComponent implements OnInit {
