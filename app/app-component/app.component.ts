@@ -5,13 +5,12 @@ import { MainComponent } from '../main/main.component';
 import { GameComponent } from '../game/game.component';
 import { SelfieComponent } from '../selfie/selfie.component';
 
+declare var componentHandler: any;
+
 @Component({
     selector: 'rh-keynote-app',
     template: `<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
                    <header class="mdl-layout__header">
-                       <div aria-expanded="false" role="button" tabindex="0" class="mdl-layout__drawer-button">
-                           <i class="material-icons"></i>
-                       </div>
                        <div class="mdl-layout__header-row">
                            <span class="mdl-layout-title">App</span>
                            <div class="mdl-layout-spacer"></div>

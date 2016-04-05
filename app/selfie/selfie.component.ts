@@ -1,6 +1,8 @@
 import { Component, OnInit } from 'angular2/core';
 import { Http, HTTP_PROVIDERS, Headers, RequestOptions } from 'angular2/http';
 
+declare var loadImage: any;
+
 @Component({
     providers: [ HTTP_PROVIDERS ],
     template: `<div class="mdl-grid">
@@ -37,7 +39,7 @@ export class SelfieComponent implements OnInit {
 
             loadImage.parseMetaData(file, data => {
                 if (data.exif) {
-                    options.orientation = data.exif.get('Orientation');
+                    options['orientation'] = data.exif.get('Orientation');
                 }
 
                 loadImage(file, data => {
