@@ -13,11 +13,19 @@ declare var loadImage: any;
            </div>
        </div>
        <div class="mdl-grid">
-           <div class="mdl-cell mdl-cell--12-col">
+           <div class="mdl-cell mdl-cell--12-col" id="canvasContainer" style="display: flex; justify-content: center;">
                <canvas id="canvas"></canvas>
            </div>
        </div>
-    `
+    `,
+    styles: [`
+        #canvasContainer {
+            display: -webkit-flex;
+            diplay: flex;
+            -webkit-justify-content: center;
+            justify-content: center;
+        }
+    `]
 })
 
 export class SelfieComponent implements OnInit {
@@ -33,10 +41,10 @@ export class SelfieComponent implements OnInit {
         if (event.target.files.length === 1 && event.target.files[0].type.indexOf('image/') === 0) {
             let file = event.target.files[0];
             let options = {
-                maxWidth: this.canvas.parentNode.clientWidth,
-                canvas: true,
-                pixelRatio: window.devicePixelRatio,
-                downsamplingRatio: 0.5
+                maxWidth: 300,
+                maxHeight: 300,
+                crop: true,
+                downsamplingRatio: 0.05
             };
 
             loadImage.parseMetaData(file, data => {
@@ -54,7 +62,10 @@ export class SelfieComponent implements OnInit {
 
     upload() {
         let image = this.canvas.toDataURL('image/jpeg', 0.1);
-        let body = JSON.stringify({ image: image });
+        let body = JSON.stringify({
+            image: image ,
+            id: localStorage.getItem('id') || null
+        });
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
         let url = 'http://localhost:8080/upload';
@@ -62,7 +73,8 @@ export class SelfieComponent implements OnInit {
         this.http.post(url, body, options)
             .toPromise()
             .then(res => {
-                console.log('done!');
+                let data = res.json();
+                localStorage.setItem('id', data.id);
             });
     }
 }
