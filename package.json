@@ -4,12 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "concurrently \"npm run tsc:w\" \"npm run lite\"",
+    "start": "concurrently \"npm run tsc:w\" \"npm run lite\" \"npm run sass:build\" \"npm run sass:watch\"",
     "tsc": "tsc",
     "tsc:w": "tsc -w",
     "lite": "lite-server",
     "typings": "typings",
-    "postinstall": "typings install"
+    "postinstall": "typings install",
+    "sass:build": "node-sass --include-path scss ./app/scss/main.scss ./app/styles/main.css",
+    "sass:watch": "node-sass --watch --include-path scss ./app/scss/main.scss ./app/styles/main.css"
   },
   "author": "",
   "license": "ISC",
@@ -28,6 +30,7 @@
   "devDependencies": {
     "concurrently": "^2.0.0",
     "lite-server": "^2.1.0",
+    "node-sass": "^3.4.2",
     "typescript": "^1.8.2",
     "typings": "^0.6.8"
   }
