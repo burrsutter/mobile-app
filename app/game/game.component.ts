@@ -48,7 +48,6 @@ export class GameComponent implements OnInit {
 
     ngOnInit() {
         this.game = new Phaser.Game(window.innerWidth, window.innerHeight - 56, Phaser.AUTO, 'game', null, true);
-//        this.game = new Phaser.Game(window.innerWidth, window.innerHeight - 56, Phaser.AUTO, 'game');
         let goodObjects = null;
         let explosions = null;
         let fireRate = 100;
