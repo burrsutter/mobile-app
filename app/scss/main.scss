@@ -1,3 +1,91 @@
+@import "../../node_modules/material-design-lite/src/material-design-lite.scss";
+
+// @import "../../node_modules/material-design-lite/src/color-definitions";
+// @import "../../node_modules/material-design-lite/src/functions";
+
+
+
+$color-background:          #002235;
+$color-background-env:      #002a42;
+$color-text:                #7cdbf3;
+$color-teal:                #7dbdc3;
+$color-teal-dark:           #005c66;
+$color-violet:              #a18fff;
+$color-violet-dark:         #582fc0;
+$color-orange:              #f7bd7f;
+$color-orange-dark:         #b35c00;
+$color-yellow:              #f0ab00;
+$color-yellow-dark:         #b58100;
+$color-red:                 #ce0000;
+$color-red-dark:            #8b0000;
+$color-blue:                #00b9e4;
+$color-blue-dark:           #008bad;
+$color-green:               #92d400;
+$color-green-dark:          #2d7623;
+
+
 body {
-    background: white;
+//  background: unquote("rgb(#{$palette-red-200})");
+}
+
+.game{
+  background-image:
+    url(../game/assets/clouds.png),
+    linear-gradient(to bottom, #019bdb, #fff);
+  background-size:100% auto;
+  background-repeat: no-repeat;
+  background-position: 50% 85%;
+  height: calc(100vh - 72px);
+}
+
+.game-score{
+  list-style: none;
+  padding: 0;
+  margin-left: 16px;
+  width: calc(100% - 32px);
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  align-content: flex-start;
+  li{
+    background: rgba(0,0,0,.1);
+    color: #fff;
+    padding: 5px 10px;
+    margin: 1px;
+    flex: 0 1 calc(50% - 22px);
+    font-size: 16px;
+    font-weight: 600;
+    &:first-child{
+      flex: 0 1 100%;
+      border-radius: 4px 4px 0 0;
+      padding: 0px 10px;
+      background: $color-violet;
+      color: $color-violet-dark;
+      font-weight: 300;
+      font-size: 11px;
+      span{
+        font-weight: 600;
+      }
+      &.canary{
+        background: $color-yellow;
+        color: $color-yellow-dark;
+      }
+      &.blue{
+        background: $color-green;
+        color: $color-green-dark;
+      }
+      &.green{
+        background: $color-blue;
+        color: $color-blue-dark;
+      }
+    }
+    span{
+      text-transform: uppercase;
+      font-weight: 300;
+      font-size: 11px;
+    }
+  }
 }

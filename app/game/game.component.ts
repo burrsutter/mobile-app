@@ -4,11 +4,17 @@ declare var Phaser: any;
 
 @Component({
     template: `
-        <div style="position: absolute; z-index: 1; color: white; right: 0;">
-            <p>Team Score: {{teamScore}}</p>
-            <p>Your Score: {{score}}</p>
-        </div>
-        <div id="game"></div>
+        <ul class="game-score">
+        <!--
+          <li class="blue">Build <span>Blue</span></li>
+          <li class="green">Build <span>Green</span></li>
+          <li class="canary">Build <span>Canary</span></li>
+        -->
+          <li>Build <span>Normal</span></li>
+          <li><span>Team Score</span> {{teamScore}}</li>
+          <li><span>Your Score</span> {{score}}</li>
+        </ul>
+        <div id="game" class="game"></div>
     `
 })
 
@@ -39,8 +45,10 @@ export class GameComponent implements OnInit {
         };
     }
 
+
     ngOnInit() {
-        this.game = new Phaser.Game(window.innerWidth, window.innerHeight - 56, Phaser.AUTO, 'game');
+        this.game = new Phaser.Game(window.innerWidth, window.innerHeight - 56, Phaser.AUTO, 'game', null, true);
+//        this.game = new Phaser.Game(window.innerWidth, window.innerHeight - 56, Phaser.AUTO, 'game');
         let goodObjects = null;
         let explosions = null;
         let fireRate = 100;
