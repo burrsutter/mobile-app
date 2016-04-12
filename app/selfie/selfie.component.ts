@@ -13,7 +13,7 @@ declare var loadImage: any;
            </div>
        </div>
        <div class="mdl-grid">
-           <div class="mdl-cell mdl-cell--12-col" id="canvasContainer" style="display: flex; justify-content: center;">
+           <div class="mdl-cell mdl-cell--12-col" id="canvasContainer">
                <canvas id="canvas"></canvas>
            </div>
        </div>
