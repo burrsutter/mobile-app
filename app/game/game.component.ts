@@ -71,7 +71,6 @@ export class GameComponent implements OnInit {
 
         let NinjaState = {
             preload: () => {
-                this.game.time.advancedTiming = true;
                 this.game.load.atlas('balloons', './app/game/assets/balloons.png', './app/game/assets/balloons.json');
                 this.game.load.spritesheet('explosion', './app/game/assets/explosion.png', 128, 128, 10);
             },
@@ -118,9 +117,6 @@ export class GameComponent implements OnInit {
             },
             update: () => {
                 NinjaState.throwObject();
-            },
-            render: () => {
-                this.game.debug.text(this.game.time.fps, 2, 14, "#00ff00");
             },
             throwObject: () => {
                 if (this.game.time.now > nextFire && balloons.countDead() > 0) {
