@@ -72,7 +72,7 @@ export class GameComponent implements OnInit {
         let NinjaState = {
             preload: () => {
                 this.game.time.advancedTiming = true;
-                this.game.load.atlas('balloons', './app/game/assets/ball.png', './app/game/assets/balloons.json');
+                this.game.load.atlas('balloons', './app/game/assets/balloons.png', './app/game/assets/balloons.json');
                 this.game.load.spritesheet('explosion', './app/game/assets/explosion.png', 128, 128, 10);
             },
             create: () => {
