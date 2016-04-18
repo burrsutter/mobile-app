@@ -30,7 +30,6 @@ body {
 
 .mdl-layout__drawer{
   &.is-visible{
-    width: calc(100vw - 56px);
     border: none;
   }
   .mdl-layout-title{
