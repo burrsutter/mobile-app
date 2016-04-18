@@ -48,101 +48,69 @@ export class GameComponent implements OnInit {
 
     ngOnInit() {
         this.game = new Phaser.Game(window.innerWidth, window.innerHeight - 56, Phaser.AUTO, 'game', null, true);
-        let goodObjects = null;
+        const fireRate = 100;
+        const numBalloons = 4;
+        let balloons = null;
         let explosions = null;
-        let fireRate = 100;
         let nextFire = 0;
 
         let TitleState = {
-            update: () => {
-                let text = this.game.add.text(Math.floor(this.game.world.width / 2), Math.floor(this.game.world.height / 2), 'Tap to Start', {
-                    font: '25px Arial',
-                    align: 'center',
-                    fill: '#fff'
-                });
-
-                text.anchor.setTo(0.5);
-
-                this.game.input.onTap.add(() => {
-                    this.game.state.start('Ninja')
-                });
-            }
-        };
-
-        let PlayState = {
             preload: () => {
-                this.game.load.image('ball', './app/game/assets/ball.png');
-                this.game.load.spritesheet('explosion', './app/game/assets/explosion.png', 128, 128, 10);
+                this.game.load.image('btn-start', './app/game/assets/btn-start.png');
             },
             create: () => {
-                this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-                this.game.scale.pageAlignHorizontally = true;
-                this.game.scale.pageAlignVertically = true;
-                this.game.scale.setScreenSize = true;
-                this.game.scale.minWidth = 320;
-                this.game.scale.minHeight = 480;
-                this.game.scale.forceOrientation(false, true);
-
-                this.game.world.setBounds(0, 0, this.game.world.width, this.game.world.height);
-                this.game.physics.startSystem(Phaser.Physics.ARCADE);
-                this.game.physics.arcade.gravity.y = 300;
-
-                PlayState.updateNextEvent();
-            },
-            generateBall: () => {
-                let ball = this.game.add.sprite(this.game.rnd.integerInRange(0, this.game.width), 0, 'ball');
-                ball.scale.setTo(0.4);
-                ball.anchor.setTo(0.5);
-
-                ball.inputEnabled = true;
-                ball.checkWorldBounds = true;
-                ball.events.onOutOfBounds.add(PlayState.ballOut, this);
-                ball.events.onInputDown.add(PlayState.handleTap, this);
-
-                this.game.physics.enable(ball, Phaser.Physics.ARCADE);
-                ball.body.velocity.setTo(0, 200);
-            },
-            ballOut: ball => {
-                ball.kill();
-            },
-            handleTap: ball => {
-                ball.kill();
-
-                let explosion = this.game.add.sprite(ball.body.x, ball.body.y, 'explosion');
-                explosion.anchor.set(0.25);
-                explosion.animations.add('explode');
-                explosion.animations.play('explode', 30, false, true);
-            },
-            update: () => {
-                if (this.game.time.now > this.game.nextEvent) {
-                    PlayState.updateNextEvent();
-                    PlayState.generateBall();
-                }
-            },
-            updateNextEvent: () => {
-                this.game.nextEvent = this.game.time.now + this.game.rnd.realInRange(0.5, 1) * Phaser.Timer.SECOND;
+                let btnStart = this.game.add.sprite(Math.floor(this.game.world.width / 2), Math.floor(this.game.world.height / 2), 'btn-start');
+                btnStart.anchor.setTo(0.5);
+                btnStart.scale.setTo(0.5);
+                btnStart.inputEnabled = true;
+                btnStart.events.onInputDown.add(() => {
+                    this.game.state.start('Ninja');
+                });
             }
         };
 
         let NinjaState = {
             preload: () => {
                 this.game.time.advancedTiming = true;
-                this.game.load.image('ball', './app/game/assets/ball.png');
-                this.game.load.image('fruit', './app/game/assets/fruit.png');
-                this.game.load.atlas('kitten', './app/game/assets/kitten-sprite.png', './app/game/assets/kitten-sprite.json');
+                this.game.load.atlas('balloons', './app/game/assets/ball.png', './app/game/assets/balloons.json');
                 this.game.load.spritesheet('explosion', './app/game/assets/explosion.png', 128, 128, 10);
             },
             create: () => {
                 this.game.physics.arcade.gravity.y = 300;
-                goodObjects = NinjaState.createGroup(4, 'ball');
-                // goodObjects = NinjaState.createGroup(4, 'fruit');
+
+                balloons = this.game.add.group();
+                balloons.enableBody = true;
+                balloons.physicsBodyType = Phaser.Physics.ARCADE;
+                for (var i = 0; i < numBalloons; i += 1) {
+                    balloons.create(0, 0, 'balloons', i, false);
+                }
+
+                balloons.setAll('checkWorldBounds', true);
+                balloons.setAll('outOfBoundsKill', true);
+
+                balloons.children.forEach(balloon => {
+                    balloon.scale.setTo(0.3);
+                    balloon.anchor.setTo(0.5);
+                    balloon.inputEnabled = true;
+                    balloon.events.onInputDown.add(() => {
+                        balloon.kill();
+
+                        this.score += 1;
+
+                        var explosion = explosions.getFirstExists(false);
+                        explosion.reset(balloon.body.x, balloon.body.y);
+                        explosion.play('explode', 30, false, true);
+
+                        this.ws.send(JSON.stringify({
+                            message: 'score'
+                        }));
+                    });
+                });
 
                 explosions = this.game.add.group();
                 explosions.createMultiple(4, 'explosion');
                 explosions.children.forEach(explosion => {
                     explosion.anchor.set(-0.125);
-                    // for kittens and fruit
-                    // explosion.anchor.set(0.5);
                     explosion.animations.add('explode');
                 });
 
@@ -154,63 +122,21 @@ export class GameComponent implements OnInit {
             render: () => {
                 this.game.debug.text(this.game.time.fps, 2, 14, "#00ff00");
             },
-            createGroup: (numItems, sprite) => {
-                let group = this.game.add.group();
-                group.enableBody = true;
-                group.physicsBodyType = Phaser.Physics.ARCADE;
-                group.createMultiple(numItems, sprite);
-                // group.createMultiple(numItems, 'kitten');
-                group.setAll('checkWorldBounds', true);
-                group.setAll('outOfBoundsKill', true);
-
-                group.children.forEach(obj => {
-                    // kittens
-                    // obj.animations.add('forward', Phaser.Animation.generateFrameNames('cat_right', 0, 2, '', 1), 7, true);
-                    // obj.animations.play('forward');
-                    // obj.scale.setTo(1.5);
-
-                    // fruit
-                    // obj.scale.setTo(1.3);
-
-                    // basketballs
-                    obj.scale.setTo(0.3);
-
-                    obj.anchor.setTo(0.5);
-                    obj.inputEnabled = true;
-                    obj.events.onInputDown.add(() => {
-                        obj.kill();
-
-                        this.score += 1;
-
-                        var explosion = explosions.getFirstExists(false);
-                        explosion.reset(obj.body.x, obj.body.y);
-                        explosion.play('explode', 30, false, true);
-
-                        this.ws.send(JSON.stringify({
-                            message: 'score'
-                        }));
-                    });
-                });
-
-                return group;
-            },
             throwObject: () => {
-                if (this.game.time.now > nextFire && goodObjects.countDead() > 0) {
-                    if (goodObjects.countDead() > 0) {
+                if (this.game.time.now > nextFire && balloons.countDead() > 0) {
+                    if (balloons.countDead() > 0) {
                         nextFire = this.game.time.now + fireRate;
                         NinjaState.throwGoodObject();
                     }
                 }
             },
             throwGoodObject: () => {
-                var obj = goodObjects.getFirstDead();
-
+                var obj = balloons.getFirstDead();
                 obj.reset(this.game.world.centerX + Math.random() * 100 - Math.random() * 100, this.game.world.height);
                 this.game.physics.arcade.moveToXY(obj, this.game.world.centerX, this.game.world.centerY, (this.game.world.height + 56 - 568) * 0.5 + 450);
             }
         };
 
-        this.game.state.add('Play', PlayState);
         this.game.state.add('Title', TitleState);
         this.game.state.add('Ninja', NinjaState);
         this.game.state.start('Title');
