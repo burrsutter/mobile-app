@@ -23,11 +23,11 @@ declare var componentHandler: any;
                 </div>
             </header>
             <div class="mdl-layout__drawer">
-                <span class="mdl-layout-title">App</span>
+                <span class="mdl-layout-title">Red Hat Summit Demo</span>
                 <nav class="mdl-navigation">
-                    <a class="mdl-navigation__link" [routerLink]="['Main']" (click)="closeDrawer()">Main</a>
-                    <a class="mdl-navigation__link" [routerLink]="['Game']" (click)="closeDrawer()">Game</a>
-                    <a class="mdl-navigation__link" [routerLink]="['Selfie']" (click)="closeDrawer()">Selfie</a>
+                    <a class="mdl-navigation__link" [routerLink]="['Main']" (click)="closeDrawer()"><i class="material-icons">home</i><span>Main</span></a>
+                    <a class="mdl-navigation__link" [routerLink]="['Game']" (click)="closeDrawer()"><i class="material-icons">games</i><span>Game</span></a>
+                    <a class="mdl-navigation__link" [routerLink]="['Selfie']" (click)="closeDrawer()"><i class="material-icons">photo_camera</i><span>Selfie</span></a>
                 </nav>
             </div>
             <main class="mdl-layout__content">

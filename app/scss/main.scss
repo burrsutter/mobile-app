@@ -28,6 +28,44 @@ body {
 //  background: unquote("rgb(#{$palette-red-200})");
 }
 
+.mdl-layout__drawer{
+  &.is-visible{
+    width: calc(100vw - 56px);
+    border: none;
+  }
+  .mdl-layout-title{
+    background-image:
+      linear-gradient(to top, rgba(0,0,0,.3), transparent 60%),
+      url(../img/bg-pattern.png),
+      url(../img/bg-pattern.png),
+      linear-gradient(#abe3f4, #cfecf5);
+    background-color: #cfecf5;
+    background-repeat: no-repeat;
+    background-position: 0 0, -30px 0px, 110% -80px, 0 0;
+    background-size: 100%, 50%, 30%, 100%;
+    background-blend-mode: multiply, normal, normal, normal;
+    border-bottom: 1px solid #abe3f4;
+    height: 150px;
+    padding-top: 95px;
+    color: #fff;
+    text-shadow: 0 1px 1px rgba(0,0,0,.3);
+  }
+  .mdl-navigation{
+    .mdl-navigation__link{
+      height: 48px;
+      line-height: 48px;
+      margin: 0;
+      padding: 0 0 0 16px;
+    }
+    i{
+      line-height: 48px;
+      width: 56px;
+    }
+    span{
+    }
+  }
+}
+
 .game{
   background-image:
     url(../game/assets/clouds.png),
