@@ -22,8 +22,8 @@ $color-green-dark:          #2d7623;
 @import "../../node_modules/material-design-lite/src/color-definitions";
 
 $color-primary: "0,42,66" !default;
-$color-primary-dark: $palette-red-900 !default;
-$color-accent: $palette-red-A200 !default;
+$color-primary-dark: "0, 109, 171" !default;
+ $color-accent: "88, 47, 192" !default;
 
 @import "../../node_modules/material-design-lite/src/material-design-lite.scss";
 
@@ -124,5 +124,59 @@ $color-accent: $palette-red-A200 !default;
       font-weight: 300;
       font-size: 11px;
     }
+  }
+}
+
+// selfie
+
+.selfie{
+  input{
+    width: 100%;
+    height: 120px;
+    display: block;
+    position: relative;
+
+    &:before{
+      position: absolute;
+      text-align: center;
+      line-height: 160px;
+      pointer-events: none;
+      font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      text-transform: uppercase;
+      content: "Take a selfie";
+      top:0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      color: #fff;
+      z-index: 2;
+    }
+
+    &:after{
+      font-family: 'Material Icons';
+      font-weight: normal;
+      font-style: normal;
+      position: absolute;
+      text-align: center;
+      line-height: 95px;
+      color: #fff;
+      pointer-events: none;
+      font-size: 34px;
+      content: "\E439";
+      top:0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      color: #fff;
+      background: $color-violet-dark;
+      box-shadow: 0 3px 5px -3px rgba(0,0,0,.5);
+      border-radius: 3px;
+    }
+  }
+  button{
+    height: 48px;
+    width: 100%;
   }
 }

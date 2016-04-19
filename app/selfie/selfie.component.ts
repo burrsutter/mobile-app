@@ -7,14 +7,15 @@ declare var loadImage: any;
     providers: [ HTTP_PROVIDERS ],
     template: `
         <div class="mdl-grid">
-           <div class="mdl-cell">
+           <div class="mdl-cell selfie">
                <input type="file" capture="camera" accept="image/*" id="takePictureField" (change)="onChange($event)">
-               <button (click)="upload()">Upload</button>
-           </div>
-       </div>
-       <div class="mdl-grid">
-           <div class="mdl-cell mdl-cell--12-col" id="canvasContainer">
-               <canvas id="canvas"></canvas>
+
+<!-- TODO: Kyle can you make the picture and the upload btn appear together after the user chooses a picture -->
+               <div class="mdl-cell mdl-cell--12-col" id="canvasContainer">
+                   <canvas id="canvas"></canvas>
+               </div>
+               <button (click)="upload()" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">Upload</button>
+
            </div>
        </div>
     `,
