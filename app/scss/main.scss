@@ -153,7 +153,6 @@ $color-primary-dark: "0, 109, 171" !default;
       color: #fff;
       z-index: 2;
     }
-
     &:after{
       font-family: 'Material Icons';
       font-weight: normal;
@@ -175,7 +174,7 @@ $color-primary-dark: "0, 109, 171" !default;
       border-radius: 3px;
     }
   }
-  button{
+  button.upload{
     height: 48px;
     width: 100%;
   }
