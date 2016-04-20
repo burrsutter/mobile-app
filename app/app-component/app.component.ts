@@ -13,7 +13,7 @@ declare var componentHandler: any;
         <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
             <header class="mdl-layout__header">
                 <div class="mdl-layout__header-row">
-                    <span class="mdl-layout-title">App</span>
+                    <span class="mdl-layout-title">Redhat Keynote Demo</span>
                     <div class="mdl-layout-spacer"></div>
                     <!--<nav class="mdl-navigation mdl-layout--large-screen-only">
                         <a class="mdl-navigation__link" [routerLink]="['Main']">Main</a>

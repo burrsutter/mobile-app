@@ -93,8 +93,6 @@ $color-primary-dark: "0, 109, 171" !default;
   }
 }
 
-
-
 .game-score{
   list-style: none;
   padding: 0;
@@ -211,5 +209,12 @@ $color-primary-dark: "0, 109, 171" !default;
   button.upload{
     height: 48px;
     width: 100%;
+  }
+}
+
+.main{
+  .mdl-card{
+    width: 100%;
+    margin-bottom:8px;
   }
 }
