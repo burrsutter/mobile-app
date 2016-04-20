@@ -23,10 +23,15 @@ $color-green-dark:          #2d7623;
 
 $color-primary: "0,42,66" !default;
 $color-primary-dark: "0, 109, 171" !default;
- $color-accent: "88, 47, 192" !default;
+$color-accent: "88, 47, 192" !default;
 
 @import "../../node_modules/material-design-lite/src/material-design-lite.scss";
 
+
+body{
+  background-image:
+    linear-gradient(to top ,$color-background, $color-background-env);
+}
 
 .mdl-layout__drawer{
   &.is-visible{
@@ -40,14 +45,17 @@ $color-primary-dark: "0, 109, 171" !default;
       linear-gradient($color-background-env, $color-background);
     background-color: $color-background-env;
     background-repeat: no-repeat;
-    background-position: 0 0, -30px 0px, 110% -80px, 0 0;
+    background-position: 0 0, -30px 0px, 110% -20px, 0 0;
     background-size: 100%, 50%, 30%, 100%;
     background-blend-mode: multiply, normal, normal, normal;
     border-bottom: 1px solid $color-background-env;
     height: 150px;
-    padding-top: 95px;
-    color: #fff;
-    text-shadow: 0 1px 1px rgba(0,0,0,.3);
+    img{
+      width: 80px;
+      position: absolute;
+      bottom: 16px;
+      right: 16px;
+    }
   }
   .mdl-navigation{
     .mdl-navigation__link{
@@ -72,7 +80,7 @@ $color-primary-dark: "0, 109, 171" !default;
   background-size:100% auto;
   background-repeat: no-repeat;
   background-position: 50% 85%;
-  height: calc(100vh - 72px);
+  height: calc(100vh - 56px);
 }
 
 @mixin team-color($color, $color-dark) {
@@ -210,11 +218,82 @@ $color-primary-dark: "0, 109, 171" !default;
     height: 48px;
     width: 100%;
   }
+  button.back{
+    color: #fff;
+  }
+}
+
+.main{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  background-image:
+    linear-gradient(to top ,$color-background, $color-background-env);
+  height: calc(100vh - 56px);
+}
+
+.app-icon{
+  display: block;
+  width: 150px;
+  height: 150px;
+  text-align: center;
+  margin-bottom: 8px;
+  border-radius: 20%;
+  background-image:
+    linear-gradient(to top ,$color-violet-dark, $color-violet);
+  color: #fff;
+  position: relative;
+  overflow: visible;
+  box-shadow: 0 10px 10px -10px rgba(0,0,0,.5);
+  i{
+    font-size: 6em;
+    line-height: 150px;
+    text-shadow: 0 2px 8px rgba(0,0,0,.5);
+  }
+  span{
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -36px;
+    line-height: 36px;
+    z-index: 3;
+    color: $color-violet;
+  }
+  &:nth-of-type(1){
+    background-image:
+      linear-gradient(to top ,$color-teal-dark, $color-teal);
+    span{
+      color: $color-teal;
+    }
+  }
 }
 
 .main{
   .mdl-card{
     width: 100%;
     margin-bottom:8px;
+    &:nth-of-type(1){
+      .mdl-card__actions{
+        background: $color-violet;
+        color: $color-violet-dark;
+      }
+      .mdl-card__title{
+        background-image:
+          linear-gradient(45deg ,$color-violet-dark, $color-violet);
+        color: #fff;
+      }
+    }
+    &:nth-of-type(2){
+      .mdl-card__actions{
+        background: $color-teal;
+        color: $color-teal-dark;
+      }
+      .mdl-card__title{
+        background-image:
+          linear-gradient(45deg ,$color-teal-dark, $color-teal);
+        color: #fff;
+      }
+    }
   }
 }
