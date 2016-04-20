@@ -75,6 +75,26 @@ $color-primary-dark: "0, 109, 171" !default;
   height: calc(100vh - 72px);
 }
 
+@mixin team-color($color, $color-dark) {
+  li:not(:first-child){
+    background: $color;
+    color: $color-dark;
+    span{
+      background: $color-dark;
+      color: $color;
+    }
+  }
+}
+
+@mixin deploy-color($color, $color-dark) {
+  li:first-child{
+    background: $color!important;
+    color: $color-dark;
+  }
+}
+
+
+
 .game-score{
   list-style: none;
   padding: 0;
@@ -87,14 +107,45 @@ $color-primary-dark: "0, 109, 171" !default;
   flex-wrap: wrap;
   align-items: flex-start;
   align-content: flex-start;
+  &.team-teal{    @include team-color($color-teal, $color-teal-dark);}
+  &.team-orange{  @include team-color($color-orange, $color-orange-dark);}
+  &.team-violet{  @include team-color($color-violet, $color-violet-dark);}
+  &.team-green{   @include team-color($color-green, $color-green-dark);}
+  &.team-red{     @include team-color($color-red, $color-red-dark);}
+  &.team-yellow{  @include team-color($color-yellow, $color-yellow-dark);}
+  &.team-blue{    @include team-color($color-blue, $color-blue-dark);}
+
+  &.deploy-blue{    @include deploy-color($color-blue, $color-blue-dark);}
+  &.deploy-green{   @include deploy-color($color-green, $color-green-dark);}
+  &.deploy-canary{  @include deploy-color($color-yellow, $color-yellow-dark);}
+
   li{
     background: rgba(0,0,0,.1);
-    color: #fff;
+    border-radius: 0 0 4px 0;
+    font-size: 16px;
     padding: 5px 10px;
     margin: 1px;
     flex: 0 1 calc(50% - 22px);
-    font-size: 16px;
     font-weight: 600;
+    &:nth-child(2){
+      border-radius: 0 0 0 4px;
+    }
+    span{
+      text-transform: uppercase;
+    }
+    &:not(:first-child) span{
+      display: block;
+      font-weight: 600;
+      font-size: 11px;
+      margin: -5px -10px 4px -10px;
+      padding: 0 10px;
+      strong{
+        float: right;
+        font-weight: 300;
+      }
+    }
+
+    // Env indicator
     &:first-child{
       flex: 0 1 100%;
       border-radius: 4px 4px 0 0;
@@ -106,23 +157,6 @@ $color-primary-dark: "0, 109, 171" !default;
       span{
         font-weight: 600;
       }
-      &.canary{
-        background: $color-yellow;
-        color: $color-yellow-dark;
-      }
-      &.blue{
-        background: $color-green;
-        color: $color-green-dark;
-      }
-      &.green{
-        background: $color-blue;
-        color: $color-blue-dark;
-      }
-    }
-    span{
-      text-transform: uppercase;
-      font-weight: 300;
-      font-size: 11px;
     }
   }
 }
