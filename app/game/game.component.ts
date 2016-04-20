@@ -11,12 +11,12 @@ team-green
 team-violet
 team-orange
 AND
-deploy-green
-deploy-blue
-deploy-canary
+build-green
+build-blue
+build-canary
 -->
 
-        <ul class="game-score team-teal deploy-canary">
+        <ul class="game-score team-teal build-canary">
           <li>Build <span>Canary</span></li>
           <li>
             <span>

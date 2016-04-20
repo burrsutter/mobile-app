@@ -86,7 +86,7 @@ $color-primary-dark: "0, 109, 171" !default;
   }
 }
 
-@mixin deploy-color($color, $color-dark) {
+@mixin build-color($color, $color-dark) {
   li:first-child{
     background: $color!important;
     color: $color-dark;
@@ -115,9 +115,9 @@ $color-primary-dark: "0, 109, 171" !default;
   &.team-yellow{  @include team-color($color-yellow, $color-yellow-dark);}
   &.team-blue{    @include team-color($color-blue, $color-blue-dark);}
 
-  &.deploy-blue{    @include deploy-color($color-blue, $color-blue-dark);}
-  &.deploy-green{   @include deploy-color($color-green, $color-green-dark);}
-  &.deploy-canary{  @include deploy-color($color-yellow, $color-yellow-dark);}
+  &.build-blue{    @include build-color($color-blue, $color-blue-dark);}
+  &.build-green{   @include build-color($color-green, $color-green-dark);}
+  &.build-canary{  @include build-color($color-yellow, $color-yellow-dark);}
 
   li{
     background: rgba(0,0,0,.1);
