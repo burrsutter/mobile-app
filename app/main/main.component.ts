@@ -1,17 +1,19 @@
 import { Component } from 'angular2/core';
+import { ROUTER_DIRECTIVES } from 'angular2/router';
 
 @Component({
+    directives: [ROUTER_DIRECTIVES],
     template: `
         <div class="main">
-          <button class="mdl-button mdl-js-button app-icon">
+          <a [routerLink]="['Game']" class="mdl-button mdl-js-button app-icon">
             <i class="material-icons">videogame_asset</i>
             <span>Play Game</span>
-          </button>
+          </a>
 
-          <button class="mdl-button mdl-js-button app-icon">
+          <a [routerLink]="['Selfie']" class="mdl-button mdl-js-button app-icon">
             <i class="material-icons">photo</i>
             <span>Take a Selfie</span>
-          </button>
+          </a>
         </div>
     `
 })
