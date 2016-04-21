@@ -11,7 +11,7 @@ declare var loadImage: any;
                <input type="file" capture="camera" accept="image/*" id="takePictureField" (change)="onChange($event)">
 
 <!-- TODO: Kyle can you make the picture and the upload btn appear together after the user chooses a picture -->
-              <button class="mdl-button mdl-js-button mdl-button--icon">
+              <button class="mdl-button mdl-js-button mdl-button--icon back">
                 <i class="material-icons">arrow_back</i>
               </button>
                <div class="mdl-cell mdl-cell--12-col" id="canvasContainer">

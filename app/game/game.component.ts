@@ -4,15 +4,28 @@ declare var Phaser: any;
 
 @Component({
     template: `
-        <ul class="game-score">
-        <!--
-          <li class="blue">Build <span>Blue</span></li>
-          <li class="green">Build <span>Green</span></li>
-          <li class="canary">Build <span>Canary</span></li>
-        -->
-          <li>Build <span>Normal</span></li>
-          <li><span>Team Score</span> {{teamScore}}</li>
-          <li><span>Your Score</span> {{score}}</li>
+<!--
+TODO kyle the options are:
+team-teal
+team-green
+team-violet
+team-orange
+AND
+build-green
+build-blue
+build-canary
+-->
+
+        <ul class="game-score team-teal build-canary">
+          <li>Build <span>Canary</span></li>
+          <li>
+            <span>
+              <strong>1st place</strong>
+              Teal Team
+            </span>
+            {{teamScore}}
+          </li>
+          <li><span>You</span>{{score}}</li>
         </ul>
         <div id="game" class="game"></div>
     `
