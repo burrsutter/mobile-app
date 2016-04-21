@@ -230,7 +230,15 @@ body{
   justify-content: space-around;
   background-image:
     linear-gradient(to top ,$color-background, $color-background-env);
-  height: calc(100vh - 56px);
+  height: 100%;
+}
+
+.fullheight {
+    height: 100%;
+}
+
+.fullheight-minus-navbar {
+    height: calc(100% - 56px);
 }
 
 .app-icon{

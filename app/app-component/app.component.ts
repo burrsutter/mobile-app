@@ -36,8 +36,8 @@ declare var componentHandler: any;
                     <a class="mdl-navigation__link" [routerLink]="['Selfie']" (click)="closeDrawer()"><i class="material-icons">photo_camera</i><span>Selfie</span></a>
                 </nav>
             </div>
-            <main class="mdl-layout__content">
-                <div class="page-content">
+            <main class="mdl-layout__content fullheight-minus-navbar">
+                <div class="page-content fullheight">
                     <router-outlet></router-outlet>
                 </div>
             </main>
