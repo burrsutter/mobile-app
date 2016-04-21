@@ -14,7 +14,7 @@ declare var componentHandler: any;
             <header class="mdl-layout__header">
                 <div class="mdl-layout__header-row">
                     <span class="mdl-layout-title">
-                      Redhat Keynote Demo
+                      Red Hat Keynote Demo
                     </span>
 
                     <div class="mdl-layout-spacer"></div>
