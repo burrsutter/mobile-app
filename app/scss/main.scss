@@ -33,6 +33,10 @@ body{
     linear-gradient(to top ,$color-background, $color-background-env);
 }
 
+html.standalone {
+    padding-top: 20px;
+}
+
 .mdl-layout__drawer{
   &.is-visible{
     border: none;

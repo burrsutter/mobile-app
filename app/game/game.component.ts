@@ -1,4 +1,4 @@
-import { Component, OnInit } from 'angular2/core';
+import { Component, OnInit, OnDestroy } from 'angular2/core';
 
 declare var Phaser: any;
 
@@ -31,7 +31,7 @@ build-canary
     `
 })
 
-export class GameComponent implements OnInit {
+export class GameComponent implements OnInit, OnDestroy {
     game;
     score = 0;
     teamScore = 0;
@@ -141,13 +141,18 @@ export class GameComponent implements OnInit {
             },
             throwGoodObject: () => {
                 var obj = balloons.getFirstDead();
-                obj.reset(this.game.world.centerX + Math.random() * 100 - Math.random() * 100, this.game.world.height);
-                this.game.physics.arcade.moveToXY(obj, this.game.world.centerX, this.game.world.centerY, (this.game.world.height + 56 - 568) * 0.5 + 450);
+                obj.reset(this.game.world.centerX + this.game.rnd.integerInRange(-75, 75), this.game.world.height);
+                this.game.physics.arcade.moveToXY(obj, this.game.world.centerX + this.game.rnd.integerInRange(-50, 50), this.game.world.centerY, (this.game.world.height + 56 - 568) * 0.5 + 450);
             }
         };
 
         this.game.state.add('Title', TitleState);
         this.game.state.add('Ninja', NinjaState);
         this.game.state.start('Title');
+    }
+
+    ngOnDestroy () {
+        console.log('on destroy');
+        this.game.destroy();
     }
 }
