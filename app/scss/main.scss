@@ -311,24 +311,18 @@ html.standalone {
   }
 }
 
-$winner-size: 80px;
+
+@keyframes shine{
+  from{
+    text-shadow: (0px 0px 20px #fff);
+  }
+  to{
+    text-shadow: (0px 0px 2px gold)
+  }
+}
 .winner{
-  background-image:
-    linear-gradient(-135deg, yellow, gold 47%, rgba(0,0,0,.5) 47%,  transparent 50%);
-  position: absolute;
-  top:0;
-  right: 0;
-  width: $winner-size;
-  height: $winner-size;
-  z-index: 9999999;
   i{
-    color: darkgoldenrod;
-    position: absolute;
-    right: 0;
-    width: $winner-size / 1.8;
-    line-height: $winner-size / 1.8;
-    text-align: center;
-//    mix-blend-mode: multiply;
-//    background: blue;
+    color: yellow;
+    animation: shine 1s ease-in-out infinite alternate;
   }
 }
