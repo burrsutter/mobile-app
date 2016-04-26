@@ -10,6 +10,10 @@ declare var componentHandler: any;
 @Component({
     selector: 'rh-keynote-app',
     template: `
+    <div class="winner">
+      <!-- other option <i class="material-icons">child_care</i> -->
+      <i class="material-icons">sentiment_very_satisfied</i>
+    </div>
         <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
             <header class="mdl-layout__header">
                 <div class="mdl-layout__header-row">
