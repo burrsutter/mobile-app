@@ -38,7 +38,7 @@ export class GameComponent implements OnInit, OnDestroy {
     ws;
 
     constructor() {
-        this.ws = new WebSocket('ws://localhost:8000/');
+        this.ws = new WebSocket('ws://localhost:8081/game');
         this.ws.onopen = event => {
             console.log(event);
         };

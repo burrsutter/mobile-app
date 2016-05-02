@@ -72,7 +72,7 @@ export class SelfieComponent implements OnInit {
         });
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
-        let url = 'http://localhost:8080/upload';
+        let url = 'http://localhost:8081/upload';
 
         this.http.post(url, body, options)
             .toPromise()
