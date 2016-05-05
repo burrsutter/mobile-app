@@ -1,5 +1,5 @@
-import { Component, OnInit } from 'angular2/core';
-import { RouteConfig, ROUTER_DIRECTIVES } from 'angular2/router';
+import { Component, OnInit } from '@angular/core';
+import { RouteConfig, ROUTER_DIRECTIVES } from '@angular/router-deprecated';
 
 import { MainComponent } from '../main/main.component';
 import { GameComponent } from '../game/game.component';

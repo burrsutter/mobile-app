@@ -1,5 +1,5 @@
-import { Component, OnInit } from 'angular2/core';
-import { Http, HTTP_PROVIDERS, Headers, RequestOptions } from 'angular2/http';
+import { Component, OnInit } from '@angular/core';
+import { Http, HTTP_PROVIDERS, Headers, RequestOptions } from '@angular/http';
 
 declare var loadImage: any;
 
@@ -11,14 +11,13 @@ declare var loadImage: any;
                <input type="file" capture="camera" accept="image/*" id="takePictureField" (change)="onChange($event)">
 
 <!-- TODO: Kyle can you make the picture and the upload btn appear together after the user chooses a picture -->
-              <button class="mdl-button mdl-js-button mdl-button--icon back">
+              <!--<button class="mdl-button mdl-js-button mdl-button--icon back">
                 <i class="material-icons">arrow_back</i>
-              </button>
+              </button>-->
                <div class="mdl-cell mdl-cell--12-col" id="canvasContainer">
                    <canvas id="canvas"></canvas>
                </div>
-               <button (click)="upload()" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent upload">Upload</button>
-
+               <button (click)="upload()" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent upload" *ngIf="canUpload">Upload</button>
            </div>
        </div>
     `,
@@ -34,6 +33,7 @@ declare var loadImage: any;
 
 export class SelfieComponent implements OnInit {
     canvas = null;
+    canUpload = false;
 
     constructor(private http: Http) {}
 
@@ -59,6 +59,7 @@ export class SelfieComponent implements OnInit {
                 loadImage(file, data => {
                     this.canvas.parentNode.replaceChild(data, this.canvas);
                     this.canvas = data;
+                    this.canUpload = true;
                 }, options);
             });
         }
