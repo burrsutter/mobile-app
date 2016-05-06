@@ -10,36 +10,20 @@ declare var componentHandler: any;
 @Component({
     selector: 'rh-keynote-app',
     template: `
-<!--
-    <div class="winner">
-      <i class="material-icons">star</i>
-    </div>
--->
         <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
             <header class="mdl-layout__header">
                 <div class="mdl-layout__header-row">
-                    <span class="mdl-layout-title">
-                      Red Hat Keynote Demo
-                    </span>
-
+                    <span class="mdl-layout-title">Red Hat Keynote Demo</span>
                     <div class="mdl-layout-spacer"></div>
-
                     <div class="winner">
                       <i class="material-icons">star</i>
                     </div>
-
-                    <!--<nav class="mdl-navigation mdl-layout--large-screen-only">
-                        <a class="mdl-navigation__link" [routerLink]="['Main']">Main</a>
-                        <a class="mdl-navigation__link" [routerLink]="['Game']">Game</a>
-                        <a class="mdl-navigation__link" [routerLink]="['Selfie']">Selfie</a>
-                    </nav>-->
                 </div>
             </header>
             <div class="mdl-layout__drawer">
                 <span class="mdl-layout-title">
                   <img src="app/img/Logotype_Event_RHSummit_RGB_Red.svg" alt="RedHat Summit">
                 </span>
-
                 <nav class="mdl-navigation">
                     <a class="mdl-navigation__link" [routerLink]="['Main']" (click)="closeDrawer()"><i class="material-icons">home</i><span>Main</span></a>
                     <a class="mdl-navigation__link" [routerLink]="['Game']" (click)="closeDrawer()"><i class="material-icons">games</i><span>Game</span></a>

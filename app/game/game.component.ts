@@ -39,8 +39,13 @@ export class GameComponent implements OnInit, OnDestroy {
 
     constructor() {
         this.ws = new WebSocket('ws://localhost:8081/game');
+
         this.ws.onopen = event => {
             console.log(event);
+        };
+
+        this.ws.onclose = event => {
+            console.log('web socket closed', event);
         };
 
         this.ws.onmessage = event => {
@@ -51,6 +56,8 @@ export class GameComponent implements OnInit, OnDestroy {
             }
 
             if (data.message === 'configuration') {
+                localStorage.setItem('player-id', data.playerId);
+
                 if (this.game.stage && data.configuration.backgroundColor) {
                     this.game.stage.backgroundColor = data.configuration.backgroundColor;
                 }
