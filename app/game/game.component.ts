@@ -111,6 +111,8 @@ export class GameComponent implements OnInit, OnDestroy {
 
                 balloons.setAll('checkWorldBounds', true);
                 balloons.setAll('outOfBoundsKill', true);
+                balloons.setAll('blendMode', Phaser.blendModes.OVERLAY);
+                balloons.setAll('alpha', 0.85);
 
                 balloons.children.forEach(balloon => {
                     balloon.scale.setTo(0.3);
