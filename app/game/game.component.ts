@@ -70,6 +70,7 @@ export class GameComponent implements OnInit, OnDestroy {
         this.game = new Phaser.Game(window.innerWidth, window.innerHeight - 56, Phaser.AUTO, 'game', null, true);
         const fireRate = 100;
         const numBalloons = 4;
+        const balloonRotationSpeed = 100;
         let balloons = null;
         let explosions = null;
         let nextFire = 0;
@@ -156,6 +157,7 @@ export class GameComponent implements OnInit, OnDestroy {
             throwGoodObject: () => {
                 var obj = balloons.getFirstDead();
                 obj.reset(this.game.world.centerX + this.game.rnd.integerInRange(-75, 75), this.game.world.height);
+                obj.body.angularVelocity = (Math.random() - 0.5) * balloonRotationSpeed;
                 this.game.physics.arcade.moveToXY(obj, this.game.world.centerX + this.game.rnd.integerInRange(-50, 50), this.game.world.centerY, (this.game.world.height + 56 - 568) * 0.5 + 450);
             }
         };
