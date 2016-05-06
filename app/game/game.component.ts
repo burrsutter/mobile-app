@@ -79,6 +79,11 @@ export class GameComponent implements OnInit, OnDestroy {
                 this.game.load.image('btn-start', './app/game/assets/btn-start.png');
             },
             create: () => {
+
+                //  Phaser will automatically pause if the browser tab the game
+                //  is in loses focus. You can disable that here:
+                this.game.stage.disableVisibilityChange = true;
+
                 let btnStart = this.game.add.sprite(Math.floor(this.game.world.width / 2), Math.floor(this.game.world.height / 2), 'btn-start');
                 btnStart.anchor.setTo(0.5);
                 btnStart.scale.setTo(0.5);
