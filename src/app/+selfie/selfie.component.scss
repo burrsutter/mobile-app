@@ -1,0 +1,11 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+#canvasContainer {
+  display: -webkit-flex;
+  diplay: flex;
+  -webkit-justify-content: center;
+  justify-content: center;
+}

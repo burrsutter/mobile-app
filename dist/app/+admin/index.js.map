@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sourceRoot":"","sources":["index.ts"],"names":[],"mappings":";AAAA,gCAA+B,mBAAmB,CAAC;AAA1C,0DAA0C","sourcesContent":["export { AdminComponent } from './admin.component';\n"]}

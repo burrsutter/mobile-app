@@ -1,0 +1,26 @@
+:host {
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.mdl-card {
+  width: calc(100% - 16px);
+  min-width: 300px;
+  max-width: 500px;
+  margin: auto;
+  margin-bottom: 16px;
+}
+
+.states {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-justify-content: space-around;
+  justify-content: space-around;
+}
+
+button {
+  margin: 8px;
+}
