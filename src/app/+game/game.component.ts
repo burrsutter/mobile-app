@@ -72,22 +72,14 @@ export class GameComponent implements OnInit, OnDestroy {
 
     const fireRate = 100;
     const numBalloons = 4;
+    const balloonRotationSpeed = 100;
     let balloons = null;
     let explosions = null;
     let nextFire = 0;
 
     let TitleState = {
-      preload: () => {
-        // this.game.load.image('btn-start', './app/game/assets/btn-start.png');
-      },
       create: () => {
-        // let btnStart = this.game.add.sprite(Math.floor(this.game.world.width / 2), Math.floor(this.game.world.height / 2), 'btn-start');
-        // btnStart.anchor.setTo(0.5);
-        // btnStart.scale.setTo(0.5);
-        // btnStart.inputEnabled = true;
-        // btnStart.events.onInputDown.add(() => {
-        //     this.game.state.start('Play');
-        // });
+        this.game.stage.disableVisibilityChange = true;
       }
     };
 
@@ -108,6 +100,8 @@ export class GameComponent implements OnInit, OnDestroy {
 
         balloons.setAll('checkWorldBounds', true);
         balloons.setAll('outOfBoundsKill', true);
+        balloons.setAll('blendMode', Phaser.blendModes.OVERLAY);
+        balloons.setAll('alpha', 0.85);
 
         balloons.children.forEach(balloon => {
           balloon.scale.setTo(0.3);
@@ -151,6 +145,7 @@ export class GameComponent implements OnInit, OnDestroy {
       throwGoodObject: () => {
         var obj = balloons.getFirstDead();
         obj.reset(this.game.world.centerX + this.game.rnd.integerInRange(-75, 75), this.game.world.height);
+        obj.body.angularVelocity = (Math.random() - 0.5) * balloonRotationSpeed;
         this.game.physics.arcade.moveToXY(obj, this.game.world.centerX + this.game.rnd.integerInRange(-50, 50), this.game.world.centerY, (this.game.world.height + 56 - 568) * 0.5 + 450);
       }
     };

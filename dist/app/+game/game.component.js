@@ -57,21 +57,13 @@ var GameComponent = (function () {
         this.game = new Phaser.Game(window.innerWidth, window.innerHeight - 56, Phaser.AUTO, 'game', null, true);
         var fireRate = 100;
         var numBalloons = 4;
+        var balloonRotationSpeed = 100;
         var balloons = null;
         var explosions = null;
         var nextFire = 0;
         var TitleState = {
-            preload: function () {
-                // this.game.load.image('btn-start', './app/game/assets/btn-start.png');
-            },
             create: function () {
-                // let btnStart = this.game.add.sprite(Math.floor(this.game.world.width / 2), Math.floor(this.game.world.height / 2), 'btn-start');
-                // btnStart.anchor.setTo(0.5);
-                // btnStart.scale.setTo(0.5);
-                // btnStart.inputEnabled = true;
-                // btnStart.events.onInputDown.add(() => {
-                //     this.game.state.start('Play');
-                // });
+                _this.game.stage.disableVisibilityChange = true;
             }
         };
         var PlayState = {
@@ -89,6 +81,8 @@ var GameComponent = (function () {
                 }
                 balloons.setAll('checkWorldBounds', true);
                 balloons.setAll('outOfBoundsKill', true);
+                balloons.setAll('blendMode', Phaser.blendModes.OVERLAY);
+                balloons.setAll('alpha', 0.85);
                 balloons.children.forEach(function (balloon) {
                     balloon.scale.setTo(0.3);
                     balloon.anchor.setTo(0.5);
@@ -126,6 +120,7 @@ var GameComponent = (function () {
             throwGoodObject: function () {
                 var obj = balloons.getFirstDead();
                 obj.reset(_this.game.world.centerX + _this.game.rnd.integerInRange(-75, 75), _this.game.world.height);
+                obj.body.angularVelocity = (Math.random() - 0.5) * balloonRotationSpeed;
                 _this.game.physics.arcade.moveToXY(obj, _this.game.world.centerX + _this.game.rnd.integerInRange(-50, 50), _this.game.world.centerY, (_this.game.world.height + 56 - 568) * 0.5 + 450);
             }
         };
