@@ -117,7 +117,8 @@ export class GameComponent implements OnInit, OnDestroy {
             explosion.play('explode', 30, false, true);
 
             this.ws.send(JSON.stringify({
-              type: 'score'
+              type: 'score',
+              score: this.score
             }));
           });
         });
