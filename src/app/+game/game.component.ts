@@ -1,4 +1,5 @@
 import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
+import { AchievementComponent } from './achievement/achievement.component';
 
 declare var Phaser: any;
 
@@ -6,7 +7,8 @@ declare var Phaser: any;
   moduleId: module.id,
   selector: 'app-game',
   templateUrl: 'game.component.html',
-  styleUrls: ['game.component.css']
+  styleUrls: ['game.component.css'],
+  directives: [AchievementComponent]
 })
 
 export class GameComponent implements OnInit, OnDestroy {
@@ -15,6 +17,7 @@ export class GameComponent implements OnInit, OnDestroy {
   score = 0;
   teamScore = 0;
   ws;
+  achievements = [];
 
   constructor() {
     this.ws = new WebSocket('ws://localhost:8081/game');
@@ -76,6 +79,7 @@ export class GameComponent implements OnInit, OnDestroy {
     let balloons = null;
     let explosions = null;
     let nextFire = 0;
+    let consecutive = 0;
 
     let TitleState = {
       create: () => {
@@ -107,9 +111,14 @@ export class GameComponent implements OnInit, OnDestroy {
           balloon.scale.setTo(0.3);
           balloon.anchor.setTo(0.5);
           balloon.inputEnabled = true;
+          balloon.events.onOutOfBounds.add(() => {
+            consecutive = 0;
+          });
+
           balloon.events.onInputDown.add(() => {
             balloon.kill();
 
+            consecutive += 1;
             this.score += 1;
 
             var explosion = explosions.getFirstExists(false);
@@ -118,8 +127,17 @@ export class GameComponent implements OnInit, OnDestroy {
 
             this.ws.send(JSON.stringify({
               type: 'score',
-              score: this.score
+              score: this.score,
+              consecutive: consecutive
             }));
+
+            // purely for demo purposes
+            if (consecutive % 5 === 0) {
+              this.achievements = [{
+                type: 'consecutive',
+                message: `Nice job! ${consecutive} pops in a row!`
+              }];
+            }
           });
         });
 

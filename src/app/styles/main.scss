@@ -28,13 +28,13 @@ $color-accent: "88, 47, 192" !default;
 
 
 body{
-  // background-image:
-  //   linear-gradient(to top ,$color-background, $color-background-env);
   background-color: #FAFAFA;
 }
 
 html.standalone {
     padding-top: 20px;
+    background-image:
+      linear-gradient(to top ,$color-background, $color-background-env);
 }
 
 .dark-bg {
