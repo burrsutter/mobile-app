@@ -18,6 +18,7 @@ export class GameComponent implements OnInit, OnDestroy {
   teamScore = 0;
   ws;
   achievements = [];
+  username;
 
   constructor() {
     this.ws = new WebSocket('ws://localhost:8081/game');
@@ -62,6 +63,9 @@ export class GameComponent implements OnInit, OnDestroy {
 
       if (data.type === 'configuration') {
         localStorage.setItem('player-id', data.playerId);
+        localStorage.setItem('username', data.username);
+
+        this.username = data.username;
 
         if (this.game.stage && data.configuration.backgroundColor) {
           this.game.stage.backgroundColor = data.configuration.backgroundColor;
