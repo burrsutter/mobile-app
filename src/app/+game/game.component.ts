@@ -21,7 +21,7 @@ export class GameComponent implements OnInit, OnDestroy {
   username;
 
   constructor() {
-    this.ws = new WebSocket('ws://localhost:8081/game');
+    this.ws = new WebSocket('ws://localhost:9001/game');
     this.currentState = 'title';
 
     this.ws.onopen = event => {
