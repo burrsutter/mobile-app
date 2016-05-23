@@ -4,6 +4,7 @@ import { GameComponent } from './+game';
 import { SelfieComponent } from './+selfie';
 import { HomeComponent } from './+home';
 import { AdminComponent } from './+admin';
+import { LeaderboardComponent } from './+leaderboard';
 
 declare var componentHandler: any;
 
@@ -16,11 +17,12 @@ declare var componentHandler: any;
 })
 
 @Routes([
-  new Route({path: '/game', component: GameComponent}),
-  new Route({path: '/selfie', component: SelfieComponent}),
-  new Route({path: '/admin', component: AdminComponent}),
-  new Route({path: '/', component: HomeComponent}),
-  new Route({path: '*', component: HomeComponent})
+  {path: '/game', component: GameComponent},
+  {path: '/selfie', component: SelfieComponent},
+  {path: '/leaderboard', component: LeaderboardComponent},
+  {path: '/admin', component: AdminComponent},
+  {path: '/', component: HomeComponent},
+  {path: '*', component: HomeComponent}
 ])
 
 export class RhKeynoteDemoAppComponent implements OnInit {
