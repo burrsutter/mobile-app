@@ -90,6 +90,21 @@ html.standalone {
   background-repeat: no-repeat;
   background-position: 50% 85%;
   height: calc(100vh - 56px);
+  &.blue{
+    background-image: url(../+game/assets/bg-build-blue.png);
+    background-color: lighten($color-blue, 10%);
+    background-position:left bottom;
+  }
+  &.green{
+    background-image: url(../+game/assets/bg-build-green.png);
+    background-color: lighten($color-green, 10%);
+    background-position:left bottom;
+  }
+  &.canary{
+    background-image: url(../+game/assets/bg-build-canary.png);
+    background-color: lighten($color-yellow, 10%);
+    background-position:left bottom;
+  }
 }
 
 @mixin team-color($color, $color-dark) {
