@@ -1,0 +1,14 @@
+Achievements
+
+<ul>
+  <li class="achievement" *ngFor="let achievement of achievements" [ngClass]="{active: achievement.achieved}">
+    {{achievement.description}}
+  </li>
+</ul>
+
+Leaderboard
+<ol>
+  <li *ngFor="let score of topScores">
+    {{score.name}} - {{score.points}}
+  </li>
+</ol>
