@@ -108,6 +108,26 @@ html.standalone {
   }
 }
 
+.game-over{
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  z-index: 90;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  color: $color-background;
+  > div{ flex: 100%; margin-bottom: 30px;}
+  h1{
+    font-size: 40px;
+    margin: 0;
+    font-weight: 700;
+  }
+  p{
+    margin: 0 0 10px 0;
+  }
+}
+
 @mixin team-color($color, $color-dark) {
   li:not(:first-child){
     background: $color;
