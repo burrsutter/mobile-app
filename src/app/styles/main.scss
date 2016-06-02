@@ -17,6 +17,10 @@ $color-blue-dark:           #008bad;
 $color-green:               #92d400;
 $color-green-dark:          #2d7623;
 
+$font-size-base:            12px;
+$font-weight-light:         300;
+$font-weight-normal:        400;
+$font-weight-bold:          600;
 
 @import "../../../node_modules/material-design-lite/src/color-definitions";
 
@@ -372,5 +376,122 @@ html.standalone {
   i{
     color: yellow;
     animation: shine 1s ease-in-out infinite alternate;
+  }
+}
+
+
+// leaderboard ===========================
+
+
+.leaderboard{
+  color: $color-text;
+  background: $color-background;
+  padding: 16px;
+  h3{
+    font-size: $font-size-base * 1;
+    margin: 0;
+    line-height: 1em;
+    text-transform: uppercase;
+    color: #fff;
+  }
+  ol{
+    padding: 0;
+    border-radius: 4px;
+    list-style: none;
+    border-top: 1px solid $color-background;
+    background: $color-background-env;
+
+//  position: relative;
+    > li{
+//    background: rgba(0,0,0,.2);
+      border-bottom: 1px solid $color-background;
+//    width: 100%;
+      display: flex;
+      align-items: center;
+      align-content: center;
+    }
+  }
+  small, sup{
+    font-size: .5em;
+    text-transform: uppercase;
+    font-weight: $font-weight-light;
+    line-height: 1em;
+  }
+  sup{
+    vertical-align: super;
+    font-size: .3em;
+  }
+}
+
+.leaderboard-position{
+  box-shadow: 5px 0px 6px -3px rgba(0,0,0,.5);
+  flex: 1 0 80px;
+  text-align: center;
+  line-height: 56px;
+  font-size: $font-size-base * 2.8;
+  font-weight: $font-weight-bold;
+//  background: tan;
+}
+
+.leaderboard-details{
+//  background: orange;
+  flex: 0 1 calc(85% - 20px);
+  padding-left: 20px;
+}
+
+.leaderboard-name{
+//  background: yellow;
+  font-size: $font-size-base * 1;
+  line-height: 1em;
+  padding-bottom: 5px;
+//  font-weight: $font-weight-bold;
+}
+
+.leaderboard-points{
+//  background: pink;
+  font-size: $font-size-base * 1.6;
+  line-height: 1em;
+//  font-weight: $font-weight-light;
+}
+
+.achievement{
+  margin-bottom: 30px;
+  li{
+    margin-right: 10px;
+    flex: 0 0 25%;
+    align-items: flex-start;
+    i{
+      font-size: $font-size-base * 3;
+    }
+  }
+}
+
+.leaderboard-achievement{
+  padding: 0;
+  margin-right: 10px;
+  list-style: none;
+//  flex: 1 0 60%;
+  display: flex;
+  li{
+//    display: flex;
+
+    &:nth-child(1){ color: $color-green;}
+    &:nth-child(2){ color: $color-yellow;}
+    &:nth-child(3){ color: $color-red;}
+    &:nth-child(4){ color: $color-violet;}
+    &.off{
+      color: rgba(255,255,255,.1)!important;
+    }
+    i{
+//      margin-right: 10px;
+    }
+    .legend{
+      line-height: 1em;
+      filter: opacity(60%);
+    }
+    strong{
+      display: block;
+      line-height: 1em;
+    }
   }
 }
