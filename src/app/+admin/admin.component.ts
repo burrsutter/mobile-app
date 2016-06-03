@@ -103,6 +103,11 @@ export class AdminComponent implements AfterViewInit {
     this.publishConfigurationChange();
   }
 
+  updateSpeed(evt) {
+    this.configuration.speed = evt.target.value;
+    this.publishConfigurationChange();
+  }
+
   changeState(state) {
     if (state.name !== 'pause') {
       this.isPaused = false;

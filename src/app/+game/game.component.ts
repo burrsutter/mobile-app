@@ -21,6 +21,7 @@ export class GameComponent implements OnInit, OnDestroy {
   username;
   opacity;
   scale;
+  speed;
   background;
   balloons;
   explosions;
@@ -84,6 +85,10 @@ export class GameComponent implements OnInit, OnDestroy {
 
         if (data.configuration.scale) {
           this.scale = parseFloat(data.configuration.scale);
+        }
+
+        if (data.configuration.speed) {
+          this.speed = parseInt(data.configuration.speed, 10);
         }
 
         if (data.configuration.background) {
@@ -200,7 +205,9 @@ export class GameComponent implements OnInit, OnDestroy {
           obj.scale.y = this.scale;
         }
 
-        this.game.physics.arcade.moveToXY(obj, this.game.world.centerX + this.game.rnd.integerInRange(-50, 50), this.game.world.centerY, (this.game.world.height + 56 - 568) * 0.5 + 450);
+        const speed = (this.game.world.height + 56 - 568) * 0.5 + (450 + (this.speed - 50) * 5);
+
+        this.game.physics.arcade.moveToXY(obj, this.game.world.centerX + this.game.rnd.integerInRange(-50, 50), this.game.world.centerY, speed);
       }
     };
 

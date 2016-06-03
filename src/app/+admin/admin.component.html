@@ -46,7 +46,10 @@
           </div>
         </div>
         <div>
-          <h6>Speed</h6>
+          <h6>Speed - {{configuration.speed}}</h6>
+          <div>
+            <input class="mdl-slider mdl-js-slider" type="range" min="1" max="100" [attr.value]="configuration.speed" tabindex="0" (change)="updateSpeed($event)">
+          </div>
         </div>
         <div>
           <h6>Points</h6>
