@@ -74,10 +74,8 @@ export class GameComponent implements OnInit, OnDestroy {
         localStorage.setItem('player-id', data.playerId);
         localStorage.setItem('username', data.username);
 
-        this.username = data.username;
-
-        if (this.game.stage && data.configuration.backgroundColor) {
-          this.game.stage.backgroundColor = data.configuration.backgroundColor;
+        if (data.username) {
+          this.username = data.username;
         }
 
         if (data.configuration.opacity) {
@@ -86,12 +84,6 @@ export class GameComponent implements OnInit, OnDestroy {
 
         if (data.configuration.scale) {
           this.scale = parseFloat(data.configuration.scale);
-
-          if (this.balloons) {
-            this.balloons.children.forEach(balloon => {
-              balloon.scale.setTo(this.scale);
-            });
-          }
         }
 
         if (data.configuration.background) {
@@ -195,11 +187,17 @@ export class GameComponent implements OnInit, OnDestroy {
       },
       throwGoodObject: () => {
         var obj = this.balloons.getFirstDead();
+
         obj.reset(this.game.world.centerX + this.game.rnd.integerInRange(-75, 75), this.game.world.height);
         obj.body.angularVelocity = (Math.random() - 0.5) * balloonRotationSpeed;
 
         if (this.opacity) {
           obj.alpha = this.opacity / 100;
+        }
+
+        if (this.scale) {
+          obj.scale.x = this.scale;
+          obj.scale.y = this.scale;
         }
 
         this.game.physics.arcade.moveToXY(obj, this.game.world.centerX + this.game.rnd.integerInRange(-50, 50), this.game.world.centerY, (this.game.world.height + 56 - 568) * 0.5 + 450);
