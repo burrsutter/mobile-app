@@ -1,11 +1,9 @@
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
   <header class="mdl-layout__header">
     <div class="mdl-layout__header-row">
-      <span class="mdl-layout-title">Red Hat Keynote Demo</span>
+      <span class="mdl-layout-title">Red Hat Keynote</span>
       <div class="mdl-layout-spacer"></div>
-      <div class="winner">
-        <i class="material-icons">star</i>
-      </div>
+      <!-- <app-winner></app-winner> -->
     </div>
   </header>
   <div class="mdl-layout__drawer">
@@ -16,7 +14,7 @@
       <a class="mdl-navigation__link" [routerLink]="['/home']" (click)="closeDrawer()"><i class="material-icons">home</i><span>Main</span></a>
       <a class="mdl-navigation__link" [routerLink]="['/game']" (click)="closeDrawer()"><i class="material-icons">games</i><span>Game</span></a>
       <a class="mdl-navigation__link" [routerLink]="['/leaderboard']" (click)="closeDrawer()"><i class="material-icons">format_list_numbered</i><span>Leaderboard</span></a>
-      <a class="mdl-navigation__link" [routerLink]="['/selfie']" (click)="closeDrawer()"><i class="material-icons">photo_camera</i><span>Selfie</span></a>
+      <a class="mdl-navigation__link" [routerLink]="['/playerid']" (click)="closeDrawer()"><i class="material-icons">photo_camera</i><span>Player ID</span></a>
     </nav>
   </div>
   <main class="mdl-layout__content fullheight-minus-navbar">

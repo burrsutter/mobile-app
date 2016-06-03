@@ -14,7 +14,7 @@ module.exports = function(defaults) {
       '@angular/**/*.js',
       'material-design-lite/material.min.js',
       'blueimp-load-image/js/load-image.all.min.js',
-      'phaser/dist/phaser.min.js'
+      'phaser/build/phaser.min.js'
     ]
   });
 };

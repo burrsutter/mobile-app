@@ -5,6 +5,7 @@ import { SelfieComponent } from './+selfie';
 import { HomeComponent } from './+home';
 import { AdminComponent } from './+admin';
 import { LeaderboardComponent } from './+leaderboard';
+import { WinnerComponent } from './winner/winner.component';
 
 declare var componentHandler: any;
 
@@ -13,12 +14,12 @@ declare var componentHandler: any;
   selector: 'rh-keynote-demo-app',
   templateUrl: 'rh-keynote-demo.component.html',
   styleUrls: ['rh-keynote-demo.component.css'],
-  directives: [ROUTER_DIRECTIVES]
+  directives: [ROUTER_DIRECTIVES, WinnerComponent]
 })
 
 @Routes([
   {path: '/game', component: GameComponent},
-  {path: '/selfie', component: SelfieComponent},
+  {path: '/playerid', component: SelfieComponent},
   {path: '/leaderboard', component: LeaderboardComponent},
   {path: '/admin', component: AdminComponent},
   {path: '/', component: HomeComponent},

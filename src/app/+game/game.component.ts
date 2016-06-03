@@ -19,9 +19,15 @@ export class GameComponent implements OnInit, OnDestroy {
   ws;
   achievements = [];
   username;
+  opacity;
+  scale;
+  background;
+  balloons;
+  explosions;
 
   constructor() {
-    this.ws = new WebSocket('ws://localhost:9001/game');
+    // this.ws = new WebSocket('ws://localhost:9001/game');
+    this.ws = new WebSocket('ws://localhost:8081/game');
     this.currentState = 'title';
 
     this.ws.onopen = event => {
@@ -41,10 +47,12 @@ export class GameComponent implements OnInit, OnDestroy {
         switch (this.currentState) {
           case 'title':
             this.game.state.start('Title');
+            this.game.paused = false;
             break;
 
           case 'play':
             this.game.state.start('Play');
+            this.game.paused = false;
             break;
 
           case 'pause':
@@ -53,6 +61,7 @@ export class GameComponent implements OnInit, OnDestroy {
 
           case 'game-over':
             this.game.state.start('GameOver');
+            this.game.paused = false;
             break;
         }
       }
@@ -70,8 +79,28 @@ export class GameComponent implements OnInit, OnDestroy {
         if (this.game.stage && data.configuration.backgroundColor) {
           this.game.stage.backgroundColor = data.configuration.backgroundColor;
         }
+
+        if (data.configuration.opacity) {
+          this.opacity = parseInt(data.configuration.opacity, 10);
+        }
+
+        if (data.configuration.scale) {
+          this.scale = parseFloat(data.configuration.scale);
+
+          if (this.balloons) {
+            this.balloons.children.forEach(balloon => {
+              balloon.scale.setTo(this.scale);
+            });
+          }
+        }
+
+        if (data.configuration.background) {
+          this.background = data.configuration.background;
+        }
       }
     };
+
+    this.ws.onmessage = this.ws.onmessage.bind(this);
   }
 
   ngOnInit() {
@@ -80,8 +109,6 @@ export class GameComponent implements OnInit, OnDestroy {
     const fireRate = 100;
     const numBalloons = 4;
     const balloonRotationSpeed = 100;
-    let balloons = null;
-    let explosions = null;
     let nextFire = 0;
     let consecutive = 0;
 
@@ -97,36 +124,37 @@ export class GameComponent implements OnInit, OnDestroy {
         this.game.load.spritesheet('explosion', './app/+game/assets/explosion.png', 128, 128, 10);
       },
       create: () => {
+        this.game.stage.disableVisibilityChange = true;
         this.game.physics.arcade.gravity.y = 300;
 
-        balloons = this.game.add.group();
-        balloons.enableBody = true;
-        balloons.physicsBodyType = Phaser.Physics.ARCADE;
+        this.balloons = this.game.add.group();
+        this.balloons.enableBody = true;
+        this.balloons.physicsBodyType = Phaser.Physics.ARCADE;
         for (var i = 0; i < numBalloons; i += 1) {
-          balloons.create(0, 0, 'balloons', i, false);
+          this.balloons.create(0, 0, 'balloons', i, false);
         }
 
-        balloons.setAll('checkWorldBounds', true);
-        balloons.setAll('outOfBoundsKill', true);
-        balloons.setAll('blendMode', Phaser.blendModes.OVERLAY);
-        balloons.setAll('alpha', 0.85);
+        this.balloons.setAll('checkWorldBounds', true);
+        this.balloons.setAll('outOfBoundsKill', true);
+        this.balloons.setAll('blendMode', Phaser.blendModes.OVERLAY);
+        this.balloons.setAll('alpha', this.opacity);
 
-        balloons.children.forEach(balloon => {
-          balloon.scale.setTo(0.3);
+        this.balloons.children.forEach(balloon => {
+          balloon.scale.setTo(this.scale);
           balloon.anchor.setTo(0.5);
           balloon.inputEnabled = true;
           balloon.events.onOutOfBounds.add(() => {
             consecutive = 0;
           });
 
-          balloon.events.onInputDown.add(() => {
+          balloon.events.onInputDown.add(evt => {
             balloon.kill();
 
             consecutive += 1;
             this.score += 1;
 
-            var explosion = explosions.getFirstExists(false);
-            explosion.reset(balloon.body.x, balloon.body.y);
+            var explosion = this.explosions.getFirstExists(false);
+            explosion.reset(evt.world.x, evt.world.y);
             explosion.play('explode', 30, false, true);
 
             this.ws.send(JSON.stringify({
@@ -145,10 +173,10 @@ export class GameComponent implements OnInit, OnDestroy {
           });
         });
 
-        explosions = this.game.add.group();
-        explosions.createMultiple(4, 'explosion');
-        explosions.children.forEach(explosion => {
-          explosion.anchor.set(-0.125);
+        this.explosions = this.game.add.group();
+        this.explosions.createMultiple(4, 'explosion');
+        this.explosions.children.forEach(explosion => {
+          explosion.anchor.set(0.5);
           explosion.animations.add('explode');
         });
 
@@ -158,31 +186,36 @@ export class GameComponent implements OnInit, OnDestroy {
         PlayState.throwObject();
       },
       throwObject: () => {
-        if (this.game.time.now > nextFire && balloons.countDead() > 0) {
-          if (balloons.countDead() > 0) {
+        if (this.game.time.now > nextFire && this.balloons.countDead() > 0) {
+          if (this.balloons.countDead() > 0) {
             nextFire = this.game.time.now + fireRate;
             PlayState.throwGoodObject();
           }
         }
       },
       throwGoodObject: () => {
-        var obj = balloons.getFirstDead();
+        var obj = this.balloons.getFirstDead();
         obj.reset(this.game.world.centerX + this.game.rnd.integerInRange(-75, 75), this.game.world.height);
         obj.body.angularVelocity = (Math.random() - 0.5) * balloonRotationSpeed;
+
+        if (this.opacity) {
+          obj.alpha = this.opacity / 100;
+        }
+
         this.game.physics.arcade.moveToXY(obj, this.game.world.centerX + this.game.rnd.integerInRange(-50, 50), this.game.world.centerY, (this.game.world.height + 56 - 568) * 0.5 + 450);
       }
     };
 
     let GameOverState = {
-      create: () => {
-        console.log('GameOverState');
-      }
+      create: () => {}
     };
 
     this.game.state.add('Title', TitleState);
     this.game.state.add('Play', PlayState);
     this.game.state.add('GameOver', GameOverState);
     this.game.state.start('Title');
+
+    PlayState.throwGoodObject = PlayState.throwGoodObject.bind(this);
   }
 
   ngOnDestroy() {

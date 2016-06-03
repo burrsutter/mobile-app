@@ -1,7 +1,7 @@
 <div class="admin">
   <div class="mdl-card mdl-shadow--2dp">
     <div class="mdl-card__title">
-      <h2 class="mdl-card__title-text">Selfie Admin</h2>
+      <h2 class="mdl-card__title-text">Player ID Admin</h2>
     </div>
     <div class="mdl-card__actions mdl-card--border">
       <div class="states">
@@ -11,16 +11,75 @@
       </div>
     </div>
   </div>
+
   <div class="mdl-card mdl-shadow--2dp">
     <div class="mdl-card__title">
       <h2 class="mdl-card__title-text">Game Admin</h2>
     </div>
     <div class="mdl-card__actions mdl-card--border">
       <div class="states">
-        <button class="mdl-button mdl-js-button mdl-button--raised" *ngFor="let state of gameStates" (click)="changeState(state)" [class.mdl-button--accent]="state.name === currentGameState">
-          {{state.display}}
+        <button class="mdl-button mdl-js-button mdl-button--raised" *ngFor="let state of gameStates" (click)="changeState(state)" [class.mdl-button--accent]="state.name === currentGameState.name" [disabled]="state.name === 'play' && isPlaying">
+          <span *ngIf="state.name !== 'pause'">{{state.display}}</span>
+          <i class="material-icons" *ngIf="state.name === 'pause' && !isPaused">pause</i>
+          <i class="material-icons" *ngIf="state.name === 'pause' && isPaused">play_arrow</i>
         </button>
       </div>
     </div>
   </div>
+
+  <div class="mdl-card mdl-shadow--2dp" *ngIf="configuration">
+    <div class="mdl-card__title">
+      <h2 class="mdl-card__title-text">Game Configuration</h2>
+    </div>
+    <div class="mdl-card__actions mdl-card--border">
+      <div class="mdl-card__supporting-text">
+        <div>
+          <h6>Opacity - {{configuration.opacity}}</h6>
+          <div>
+            <input class="mdl-slider mdl-js-slider" type="range" min="1" max="85" [attr.value]="configuration.opacity" tabindex="0" (change)="updateOpacity($event)">
+          </div>
+        </div>
+        <div>
+          <h6>Size - {{configuration.scale}}</h6>
+          <div>
+            <input class="mdl-slider mdl-js-slider" type="range" min="0.1" max="1" step="0.1" [attr.value]="configuration.scale" tabindex="0" (change)="updateScale($event)">
+          </div>
+        </div>
+        <div>
+          <h6>Speed</h6>
+        </div>
+        <div>
+          <h6>Points</h6>
+        </div>
+        <div>
+          <h6>Background</h6>
+          <div>
+            <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-1">
+              <input type="radio" id="option-1" class="mdl-radio__button" name="options" value="default" [attr.checked]="configuration.background === 'default'" (change)="updateBackground($event)">
+              <span class="mdl-radio__label">Default</span>
+            </label>
+          </div>
+          <div>
+            <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-2">
+              <input type="radio" id="option-2" class="mdl-radio__button" name="options" value="blue" [attr.checked]="configuration.background === 'blue'" (change)="updateBackground($event)">
+              <span class="mdl-radio__label">Blue</span>
+            </label>
+          </div>
+          <div>
+            <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-3">
+              <input type="radio" id="option-3" class="mdl-radio__button" name="options" value="green" [attr.checked]="configuration.background === 'green'" (change)="updateBackground($event)">
+              <span class="mdl-radio__label">Green</span>
+            </label>
+          </div>
+          <div>
+            <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-4">
+              <input type="radio" id="option-4" class="mdl-radio__button" name="options" value="canary" [attr.checked]="configuration.background === 'canary'" (change)="updateBackground($event)">
+              <span class="mdl-radio__label">Canary</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>

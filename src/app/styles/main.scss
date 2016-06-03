@@ -87,10 +87,14 @@ html.standalone {
 }
 
 .game{
+  // background-image:
+  //   url(../+game/assets/clouds.png),
+  //   linear-gradient(to bottom, transparent, #fff),
+  //   radial-gradient(circle, #f1e6d1 5%, #e5da7a 20%, #c99380 50%, transparent);
   background-image:
     url(../+game/assets/clouds.png),
-    linear-gradient(to bottom, transparent, #fff),
-    radial-gradient(circle, #f1e6d1 5%, #e5da7a 20%, #c99380 50%, transparent);
+    linear-gradient(to bottom, rgba(255, 255, 255, 0), #fff),
+    radial-gradient(circle, #f1e6d1 5%, #e5da7a 20%, #c99380 50%, rgba(255, 255, 255, 0));
   background-color: #7bb2f2;
   background-size:100% auto;
   background-repeat: no-repeat;
@@ -118,16 +122,20 @@ html.standalone {
   position: absolute;
   z-index: 90;
   text-align: center;
+  display: -webkit-flex;
   display: flex;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-align-items: center;
   align-items: center;
   color: $color-background;
-  > div{ flex: 100%; margin-bottom: 30px;}
-  h1{
+
+  h1 {
     font-size: 40px;
     margin: 0;
     font-weight: 700;
   }
-  p{
+  p {
     margin: 0 0 10px 0;
   }
 }
@@ -237,7 +245,7 @@ html.standalone {
       font-size: 14px;
       font-weight: 500;
       text-transform: uppercase;
-      content: "Take a selfie";
+      content: "Take Your Picture";
       top:0;
       left: 0;
       right: 0;
