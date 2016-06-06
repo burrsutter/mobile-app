@@ -109,7 +109,7 @@ html.standalone {
     background-color: lighten($color-blue, 10%);
   }
   &.green{
-    background-color: lighten($color-green, 10%);
+    background-color: lighten($color-green-dark, 10%);
   }
   &.canary{
     background-color: lighten($color-yellow, 10%);
