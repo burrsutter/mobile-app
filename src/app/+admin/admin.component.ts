@@ -58,6 +58,7 @@ export class AdminComponent implements AfterViewInit {
 
     // this.ws = new WebSocket('ws://localhost:9001/game/admin');
     this.ws = new WebSocket('ws://localhost:8081/game/admin');
+    // this.ws = new WebSocket('ws://game-server-demo.apps.demo.aws.paas.ninja/game/admin');
     this.ws.onmessage = event => {
       let message = JSON.parse(event.data);
 
@@ -105,6 +106,17 @@ export class AdminComponent implements AfterViewInit {
 
   updateSpeed(evt) {
     this.configuration.speed = evt.target.value;
+    this.publishConfigurationChange();
+  }
+
+  updatePoints() {
+    setTimeout(() => {
+      this.publishConfigurationChange();
+    }, 0);
+  }
+
+  updateGoldenSnitch(evt) {
+    this.configuration.goldenSnitch = evt.target.checked;
     this.publishConfigurationChange();
   }
 

@@ -53,6 +53,45 @@
         </div>
         <div>
           <h6>Points</h6>
+          <div>
+            <div>
+              Red:
+              <div class="mdl-textfield mdl-js-textfield">
+                <input class="mdl-textfield__input" type="number" min="0" [ngModel]="configuration.points.red" (ngModelChange)="configuration.points.red = $event" (change)="updatePoints()">
+              </div>
+            </div>
+            <div>
+              Blue:
+              <div class="mdl-textfield mdl-js-textfield">
+                <input class="mdl-textfield__input" type="number" min="0" [ngModel]="configuration.points.blue" (ngModelChange)="configuration.points.blue = $event" (change)="updatePoints()">
+              </div>
+            </div>
+            <div>
+              Green:
+              <div class="mdl-textfield mdl-js-textfield">
+                <input class="mdl-textfield__input" type="number" min="0" [ngModel]="configuration.points.green" (ngModelChange)="configuration.points.green = $event" (change)="updatePoints()">
+              </div>
+            </div>
+            <div>
+              Yellow:
+              <div class="mdl-textfield mdl-js-textfield">
+                <input class="mdl-textfield__input" type="number" min="0" [ngModel]="configuration.points.yellow" (ngModelChange)="configuration.points.yellow = $event" (change)="updatePoints()">
+              </div>
+            </div>
+            <div>
+              Golden Snitch:
+              <div class="mdl-textfield mdl-js-textfield">
+                <input class="mdl-textfield__input" type="number" min="0" [ngModel]="configuration.points.goldenSnitch" (ngModelChange)="configuration.points.goldenSnitch = $event" (change)="updatePoints()">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h6>Golden Snitch</h6>
+          <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-1">
+            <input type="checkbox" id="switch-1" class="mdl-switch__input" [ngModel]="configuration.goldenSnitch" (change)="updateGoldenSnitch($event)">
+            <span class="mdl-switch__label"></span>
+          </label>
         </div>
         <div>
           <h6>Background</h6>

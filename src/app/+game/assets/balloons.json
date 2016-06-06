@@ -31,6 +31,14 @@
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":172,"h":172},
 	"sourceSize": {"w":172,"h":172}
+},
+"balloon_golden":
+{
+	"frame": {"x":688,"y":0,"w":172,"h":172},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":172,"h":172},
+	"sourceSize": {"w":172,"h":172}
 }},
 "meta": {
 	"app": "http://www.codeandweb.com/texturepacker",

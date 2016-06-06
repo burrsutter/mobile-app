@@ -22,13 +22,25 @@ export class GameComponent implements OnInit, OnDestroy {
   opacity;
   scale;
   speed;
+  goldenSnitch;
+  goldenSnitchCreated = false;
+  goldenSnitchChance = 0.1;
   background;
   balloons;
   explosions;
+  pointsHash;
 
   constructor() {
+    /*
+     * stage device that receives blue, green and canary
+     * if ?stage=true&latest=true
+     *
+     * stage devices
+     * if ?stage=true
+     */
     // this.ws = new WebSocket('ws://localhost:9001/game');
     this.ws = new WebSocket('ws://localhost:8081/game');
+    // this.ws = new WebSocket('ws://game-server-demo.apps.demo.aws.paas.ninja/game');
     this.currentState = 'title';
 
     this.ws.onopen = event => {
@@ -94,6 +106,20 @@ export class GameComponent implements OnInit, OnDestroy {
         if (data.configuration.background) {
           this.background = data.configuration.background;
         }
+
+        if ('goldenSnitch' in data.configuration) {
+          this.goldenSnitch = data.configuration.goldenSnitch;
+        }
+
+        if (data.configuration.points) {
+          this.pointsHash = {
+            'balloon_red': data.configuration.points.red,
+            'balloon_blue': data.configuration.points.blue,
+            'balloon_yellow': data.configuration.points.yellow,
+            'balloon_green': data.configuration.points.green,
+            'balloon_golden': data.configuration.points.goldenSnitch,
+          }
+        }
       }
     };
 
@@ -136,39 +162,7 @@ export class GameComponent implements OnInit, OnDestroy {
         this.balloons.setAll('blendMode', Phaser.blendModes.OVERLAY);
         this.balloons.setAll('alpha', this.opacity);
 
-        this.balloons.children.forEach(balloon => {
-          balloon.scale.setTo(this.scale);
-          balloon.anchor.setTo(0.5);
-          balloon.inputEnabled = true;
-          balloon.events.onOutOfBounds.add(() => {
-            consecutive = 0;
-          });
-
-          balloon.events.onInputDown.add(evt => {
-            balloon.kill();
-
-            consecutive += 1;
-            this.score += 1;
-
-            var explosion = this.explosions.getFirstExists(false);
-            explosion.reset(evt.world.x, evt.world.y);
-            explosion.play('explode', 30, false, true);
-
-            this.ws.send(JSON.stringify({
-              type: 'score',
-              score: this.score,
-              consecutive: consecutive
-            }));
-
-            // purely for demo purposes
-            if (consecutive % 5 === 0) {
-              this.achievements = [{
-                type: 'consecutive',
-                message: `Nice job! ${consecutive} pops in a row!`
-              }];
-            }
-          });
-        });
+        this.balloons.children.forEach(PlayState.setupBalloon);
 
         this.explosions = this.game.add.group();
         this.explosions.createMultiple(4, 'explosion');
@@ -182,6 +176,50 @@ export class GameComponent implements OnInit, OnDestroy {
       update: () => {
         PlayState.throwObject();
       },
+      setupBalloon: balloon => {
+        balloon.checkWorldBounds = true;
+        balloon.outOfBoundsKill = true;
+        balloon.scale.setTo(this.scale);
+        balloon.anchor.setTo(0.5);
+        balloon.inputEnabled = true;
+        balloon.events.onOutOfBounds.add(() => {
+          if (balloon.frameName === 'balloon_golden') {
+            this.balloons.remove(balloon);
+            this.goldenSnitchCreated = false;
+          }
+          consecutive = 0;
+        });
+
+        balloon.events.onInputDown.add(evt => {
+          balloon.kill();
+
+          if (balloon.frameName === 'balloon_golden') {
+            this.balloons.remove(balloon);
+            this.goldenSnitchCreated = false;
+          }
+
+          consecutive += 1;
+          this.score += this.pointsHash[balloon.frameName];
+
+          var explosion = this.explosions.getFirstExists(false);
+          explosion.reset(evt.world.x, evt.world.y);
+          explosion.play('explode', 30, false, true);
+
+          this.ws.send(JSON.stringify({
+            type: 'score',
+            score: this.score,
+            consecutive: consecutive
+          }));
+
+          // purely for demo purposes
+          if (consecutive % 5 === 0) {
+            this.achievements = [{
+              type: 'consecutive',
+              message: `Nice job! ${consecutive} pops in a row!`
+            }];
+          }
+        });
+      },
       throwObject: () => {
         if (this.game.time.now > nextFire && this.balloons.countDead() > 0) {
           if (this.balloons.countDead() > 0) {
@@ -191,7 +229,15 @@ export class GameComponent implements OnInit, OnDestroy {
         }
       },
       throwGoodObject: () => {
-        var obj = this.balloons.getFirstDead();
+        let obj;
+
+        if (this.goldenSnitch && Math.random() < this.goldenSnitchChance && !this.goldenSnitchCreated) {
+          obj = this.balloons.create(0, 0, 'balloons', 4, false);
+          PlayState.setupBalloon(obj);
+          this.goldenSnitchCreated = true;
+        } else {
+          obj = this.balloons.getFirstDead();
+        }
 
         obj.reset(this.game.world.centerX + this.game.rnd.integerInRange(-75, 75), this.game.world.height);
         obj.body.angularVelocity = (Math.random() - 0.5) * balloonRotationSpeed;
