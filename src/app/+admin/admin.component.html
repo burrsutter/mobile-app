@@ -97,25 +97,25 @@
           <h6>Background</h6>
           <div>
             <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-1">
-              <input type="radio" id="option-1" class="mdl-radio__button" name="options" value="default" [attr.checked]="configuration.background === 'default'" (change)="updateBackground($event)">
+              <input type="radio" id="option-1" class="mdl-radio__button" name="options" value="default" [ngModel]="{checked: configuration.background === 'default'}" (change)="updateBackground($event)">
               <span class="mdl-radio__label">Default</span>
             </label>
           </div>
           <div>
             <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-2">
-              <input type="radio" id="option-2" class="mdl-radio__button" name="options" value="blue" [attr.checked]="configuration.background === 'blue'" (change)="updateBackground($event)">
+              <input type="radio" id="option-2" class="mdl-radio__button" name="options" value="blue" [ngModel]="{checked: configuration.background === 'blue'}" (change)="updateBackground($event)">
               <span class="mdl-radio__label">Blue</span>
             </label>
           </div>
           <div>
             <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-3">
-              <input type="radio" id="option-3" class="mdl-radio__button" name="options" value="green" [attr.checked]="configuration.background === 'green'" (change)="updateBackground($event)">
+              <input type="radio" id="option-3" class="mdl-radio__button" name="options" value="green" [ngModel]="{checked: configuration.background === 'green'}" (change)="updateBackground($event)">
               <span class="mdl-radio__label">Green</span>
             </label>
           </div>
           <div>
             <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-4">
-              <input type="radio" id="option-4" class="mdl-radio__button" name="options" value="canary" [attr.checked]="configuration.background === 'canary'" (change)="updateBackground($event)">
+              <input type="radio" id="option-4" class="mdl-radio__button" name="options" value="canary" [ngModel]="{checked: configuration.background === 'canary'}" (change)="updateBackground($event)">
               <span class="mdl-radio__label">Canary</span>
             </label>
           </div>
