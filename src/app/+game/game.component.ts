@@ -84,11 +84,14 @@ export class GameComponent implements OnInit, OnDestroy {
       }
 
       if (data.type === 'configuration') {
-        localStorage.setItem('player-id', data.playerId);
-        localStorage.setItem('username', data.username);
 
         if (data.username) {
+          localStorage.setItem('username', data.username);
           this.username = data.username;
+        }
+
+        if (data.playerId) {
+          localStorage.setItem('player-id', data.playerId);
         }
 
         if (data.configuration.opacity) {
