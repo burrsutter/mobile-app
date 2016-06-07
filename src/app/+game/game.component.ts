@@ -17,6 +17,7 @@ export class GameComponent implements OnInit, OnDestroy {
   score = 0;
   teamScore = 0;
   ws;
+  playerId;
   achievements = [];
   username;
   opacity;
@@ -38,13 +39,24 @@ export class GameComponent implements OnInit, OnDestroy {
      * stage devices
      * if ?stage=true
      */
-    // this.ws = new WebSocket('ws://localhost:9001/game');
-    this.ws = new WebSocket('ws://localhost:8081/game');
+    this.ws = new WebSocket('ws://localhost:9001/game');
+    // this.ws = new WebSocket('ws://localhost:8081/game');
     // this.ws = new WebSocket('ws://game-server-demo.apps.demo.aws.paas.ninja/game');
     this.currentState = 'title';
+    this.playerId = localStorage.getItem('player-id');
 
     this.ws.onopen = event => {
       console.log(event);
+
+      let message = {
+        type: 'register'
+      };
+
+      if (this.playerId) {
+        message['id'] = this.playerId;
+      }
+
+      this.ws.send(JSON.stringify(message));
     };
 
     this.ws.onclose = event => {

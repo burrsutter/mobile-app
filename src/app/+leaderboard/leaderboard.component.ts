@@ -11,11 +11,12 @@ import 'rxjs/add/operator/toPromise';
 })
 export class LeaderboardComponent {
   error:Boolean = false;
-  playerId:String;
-  achievementsUrl:String = 'http://achievement-server-demo.apps.demo.aws.paas.ninja/api/achievement';
-  achievements:any[];
-  playerAchievements:any[];
-  topScores:any[] = [
+  playerId: String;
+  achievementsUrl: String = 'http://achievement-server-demo.apps.demo.aws.paas.ninja/api/achievement';
+  achievements: any[];
+  playerAchievements: any[];
+  achievementIcons: string[] = ['sentiment_very_satisfied', 'local_play', 'whatshot', 'local_florist', 'local_pizza'];
+  topScores: any[] = [
     {
       "name": "Kyle",
       "points": "100"

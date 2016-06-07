@@ -55,7 +55,7 @@ export class SelfieComponent implements OnInit {
   upload() {
     let image = this.canvas.toDataURL('image/jpeg', 0.1);
     let body = JSON.stringify({
-      image: image ,
+      image: image,
       id: localStorage.getItem('id') || null
     });
     let headers = new Headers({ 'Content-Type': 'application/json' });

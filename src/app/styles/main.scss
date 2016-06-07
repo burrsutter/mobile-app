@@ -464,12 +464,32 @@ html.standalone {
 
 .achievement{
   margin-bottom: 30px;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-justify-content: center;
+  justify-content: center;
+  align-items: stretch;
+  -webkit-flex-wrap: wrap;
+  flex-wrap: wrap;
+
   li{
-    margin-right: 10px;
-    flex: 0 0 25%;
-    align-items: flex-start;
+    // margin-right: 10px;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-align-items: center;
+    align-items: center;
+    flex: 1;
+    margin: 16px;
+    // flex: 0 0 25%;
+    // align-items: flex-start;
+    text-align: center;
     i{
       font-size: $font-size-base * 3;
+      margin-bottom: 8px;
     }
   }
 }

@@ -1,38 +1,13 @@
 
 <div class="leaderboard">
 
-<h3>Achievements</h3>
-<!--
-<ul>
-  <li class="achievement" *ngFor="let achievement of achievements" [ngClass]="{active: achievement.achieved}">
-    {{achievement.description}}
-  </li>
-</ul>
--->
+<h3>Your Achievements</h3>
 
 <ul class="achievement leaderboard-achievement">
-  <li>
-    <i class="material-icons">sentiment_very_satisfied</i>
+  <li *ngFor="let achievement of achievements; #i = index" [ngClass]="{off: !achievement.achieved}">
+    <i class="material-icons">{{achievementIcons[i]}}</i>
     <div class="legend">
-      <strong>10</strong> consecutive points
-    </div>
-  </li>
-  <li>
-    <i class="material-icons">local_play</i>
-    <div class="legend">
-      <strong>50</strong> consecutive points
-    </div>
-  </li>
-  <li class="off">
-    <i class="material-icons">whatshot</i>
-    <div class="legend">
-      <strong>100</strong> points
-    </div>
-  </li>
-  <li class="off">
-    <i class="material-icons">local_pizza</i>
-    <div class="legend">
-      <strong>500</strong> points
+      {{achievement.description}}
     </div>
   </li>
 </ul>
