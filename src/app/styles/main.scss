@@ -117,8 +117,9 @@ html.standalone {
 }
 
 .game-over{
+  padding: 0 16px;
   height: 100%;
-  width: 100%;
+  width: calc(100% - 32px);
   position: absolute;
   z-index: 90;
   text-align: center;
@@ -129,7 +130,15 @@ html.standalone {
   -webkit-align-items: center;
   align-items: center;
   color: $color-background;
-
+  &.game-over-success{
+    color: $color-violet;
+  }
+  &.game-over-danger{
+    color: lighten($color-red, 30%);
+    .game-over-icon{
+      border-color: lighten($color-red, 30%);
+    }
+  }
   h1 {
     font-size: 40px;
     margin: 0;
@@ -137,6 +146,17 @@ html.standalone {
   }
   p {
     margin: 0 0 10px 0;
+  }
+}
+.game-over-icon{
+  display: inline-block;
+  width: 80px;
+  margin-bottom: 10px;
+  border: 1px solid $color-violet;
+  border-radius: 50%;
+  i{
+    font-size: $font-size-base * 4;
+    line-height: 80px;
   }
 }
 

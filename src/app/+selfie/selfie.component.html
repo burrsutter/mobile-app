@@ -1,3 +1,18 @@
+<!-- TODO: Kyle: put this block wherever it goes in the flow -->
+<div class="game-over game-over-danger"><!-- or game-over-success -->
+  <div class="game-over-container">
+    <div class="game-over-icon">
+      <i class="material-icons">thumb_down</i><!-- or thumb_up -->
+    </div>
+    <h1>Sucessfully fail</h1>
+    <p>Here goes the message</p>
+    <p>
+      <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">Take another selfie</button>
+    </p>
+  </div>
+</div>
+
+
 <div class="mdl-grid">
   <div class="mdl-cell selfie">
     <input type="file" capture="camera" accept="image/*" id="takePictureField" (change)="onChange($event)">
