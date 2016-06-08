@@ -18,11 +18,19 @@
     </div>
     <div class="mdl-card__actions mdl-card--border">
       <div class="states">
-        <button class="mdl-button mdl-js-button mdl-button--raised" *ngFor="let state of gameStates" (click)="changeState(state)" [class.mdl-button--accent]="state.name === currentGameState.name" [disabled]="state.name === 'play' && isPlaying">
+        <button class="mdl-button mdl-js-button mdl-button--raised" (click)="changeState('title')" [class.mdl-button--accent]="currentGameState.name === 'title'">Title</button>
+        <button class="mdl-button mdl-js-button mdl-button--raised" (click)="changeState('demo')" [class.mdl-button--accent]="currentGameState.name === 'demo'">Demo</button>
+        <button class="mdl-button mdl-js-button mdl-button--raised" (click)="changeState('play')" [class.mdl-button--accent]="currentGameState.name === 'play'" [disabled]="currentGameState.name === 'play' && isPlaying">Start Game</button>
+        <button class="mdl-button mdl-js-button mdl-button--raised" (click)="changeState('pause')" [class.mdl-button--accent]="currentGameState.name === 'pause' || currentGameState.name === 'play'">
+          <i class="material-icons" *ngIf="currentGameState.name !== 'pause'">pause</i>
+          <i class="material-icons" *ngIf="currentGameState.name === 'pause'">play_arrow</i>
+        </button>
+        <button class="mdl-button mdl-js-button mdl-button--raised" (click)="changeState('game-over')" [class.mdl-button--accent]="currentGameState.name === 'game-over'">Game Over</button>
+        <!-- <button class="mdl-button mdl-js-button mdl-button--raised" *ngFor="let state of gameStates" (click)="changeState(state)" [class.mdl-button--accent]="state.name === currentGameState.name" [disabled]="state.name === 'play' && isPlaying">
           <span *ngIf="state.name !== 'pause'">{{state.display}}</span>
           <i class="material-icons" *ngIf="state.name === 'pause' && !isPaused">pause</i>
           <i class="material-icons" *ngIf="state.name === 'pause' && isPaused">play_arrow</i>
-        </button>
+        </button> -->
       </div>
     </div>
   </div>

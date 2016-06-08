@@ -76,12 +76,15 @@ export class GameComponent implements OnInit, OnDestroy {
             break;
 
           case 'play':
-            this.game.state.start('Play');
+            if (this.game.state.current !== 'Play') {
+              this.game.state.start('Play');
+            }
+
             this.game.paused = false;
             break;
 
           case 'pause':
-            this.game.paused = !this.game.paused;
+            this.game.paused = true;
             break;
 
           case 'game-over':
@@ -236,6 +239,7 @@ export class GameComponent implements OnInit, OnDestroy {
         });
       },
       throwObject: () => {
+        // console.log(this);
         if (this.game.time.now > nextFire && this.balloons.countDead() > 0) {
           if (this.balloons.countDead() > 0) {
             nextFire = this.game.time.now + fireRate;
@@ -281,11 +285,12 @@ export class GameComponent implements OnInit, OnDestroy {
     this.game.state.add('GameOver', GameOverState);
     this.game.state.start('Title');
 
-    PlayState.throwGoodObject = PlayState.throwGoodObject.bind(this);
+    // PlayState.throwGoodObject = PlayState.throwGoodObject.bind(this);
   }
 
   ngOnDestroy() {
     this.game.destroy();
+      this.ws.close();
   }
 
   nameLoaded(event) {

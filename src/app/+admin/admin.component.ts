@@ -83,6 +83,11 @@ export class AdminComponent implements AfterViewInit {
           this.isPaused = false;
           this.isPlaying = true;
         }
+
+        if (message.state === 'pause') {
+          this.isPaused = true;
+          this.isPlaying = false;
+        }
       }
 
       if (message.type === 'configuration') {
@@ -131,28 +136,29 @@ export class AdminComponent implements AfterViewInit {
   }
 
   changeState(state) {
-    if (state.name !== 'pause') {
+    if (state !== 'pause') {
       this.isPaused = false;
     }
 
-    if (state.name === 'play') {
+    if (state === 'play') {
       this.isPlaying = true;
     } else {
       this.isPlaying = false;
     }
 
-    if (state.name === 'pause' && !this.isPaused) {
+    if (state === 'pause' && !this.isPaused) {
       this.isPaused = true;
-    } else if (state.name === 'pause' && this.isPaused) {
+    } else if (state === 'pause' && this.isPaused) {
       this.isPaused = false;
       this.isPlaying = true;
+      state = 'play';
     }
 
-    this.currentGameState = state.name;
+    this.currentGameState = state;
 
     const message = {
       type: 'state-change',
-      state: state.name
+      state: state
     };
 
     this.ws.send(JSON.stringify(message));
