@@ -299,12 +299,11 @@ html.standalone {
       border-radius: 3px;
     }
   }
-  button.upload{
+  button.upload,
+  button.back{
     height: 48px;
     width: 100%;
-  }
-  button.back{
-    color: #fff;
+    color: white;
   }
 }
 

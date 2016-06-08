@@ -1,24 +1,36 @@
-<!-- TODO: Kyle: put this block wherever it goes in the flow -->
-<div class="game-over game-over-danger"><!-- or game-over-success -->
-  <div class="game-over-container">
-    <div class="game-over-icon">
-      <i class="material-icons">thumb_down</i><!-- or thumb_up -->
+<div class="mdl-grid" *ngIf="!imageUploaded">
+  <div class="mdl-cell selfie">
+    <input type="file" capture="camera" accept="image/*" id="takePictureField" (change)="onChange($event)" *ngIf="!canUpload">
+    <div *ngIf="canUpload">
+      <div class="mdl-cell mdl-cell--12-col" id="canvasContainer">
+        <canvas id="canvas"></canvas>
+      </div>
+      <div>
+        <button (click)="upload()" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent upload">Upload</button>
+      </div>
+      <div>
+        <button class="mdl-button mdl-js-button back" (click)="tryAgain()">Take Another Picture</button>
+      </div>
     </div>
-    <h1>Sucessfully fail</h1>
-    <p>Here goes the message</p>
-    <p>
-      <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">Take another selfie</button>
-    </p>
   </div>
 </div>
 
-
-<div class="mdl-grid">
-  <div class="mdl-cell selfie">
-    <input type="file" capture="camera" accept="image/*" id="takePictureField" (change)="onChange($event)">
-    <div class="mdl-cell mdl-cell--12-col" id="canvasContainer">
-      <canvas id="canvas"></canvas>
+<div class="game-over" *ngIf="imageUploaded" [ngClass]="{'game-over-success': !error, 'game-over-danger': error}"><!-- or game-over-success -->
+  <div class="game-over-container">
+    <div class="game-over-icon">
+      <i class="material-icons" *ngIf="!error">thumb_up</i>
+      <i class="material-icons" *ngIf="error">thumb_down</i><!-- or thumb_up -->
     </div>
-    <button (click)="upload()" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent upload">Upload</button>
+    <div *ngIf="!error">
+      <h1>Upload success!</h1>
+      <p>Thank you for participating</p>
+    </div>
+    <div *ngIf="error">
+      <h1>Image upload failed...</h1>
+      <p>Please try again</p>
+    </div>
+    <p>
+      <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" (click)="tryAgain()">Take another selfie</button>
+    </p>
   </div>
 </div>

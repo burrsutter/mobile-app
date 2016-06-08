@@ -15,17 +15,22 @@ declare var loadImage: any;
 export class SelfieComponent implements OnInit {
   canvas;
   uploadBtn;
-  canUpload = false;
+  imageUploaded: boolean = false;
+  error: boolean = false;
+  uploading: boolean = false;
+  canUpload: boolean = false;
 
   constructor(private http: Http) {}
 
   ngOnInit() {
-    this.canvas = document.getElementById('canvas');
-    this.uploadBtn = document.querySelector('.upload');
-    this.uploadBtn.style.display = 'none';
+    // this.canvas = document.getElementById('canvas');
+    // this.uploadBtn = document.querySelector('.upload');
+    // this.uploadBtn.style.display = 'none';
   }
 
   onChange(event) {
+    const self = this;
+
     if (event.target.files.length === 1 && event.target.files[0].type.indexOf('image/') === 0) {
       let file = event.target.files[0];
       let options = {
@@ -41,12 +46,12 @@ export class SelfieComponent implements OnInit {
         }
 
         loadImage(file, data => {
-          console.log(data);
-          this.canvas.parentNode.replaceChild(data, this.canvas);
-          this.canvas = data;
-          this.canUpload = true;
-
-          this.uploadBtn.style.display = 'block';
+          self.canUpload = true;
+          setTimeout(() => {
+            self.canvas = document.getElementById('canvas');
+            self.canvas.parentNode.replaceChild(data, this.canvas);
+            self.canvas = data;
+          }, 0);
         }, options);
       });
     }
@@ -62,11 +67,30 @@ export class SelfieComponent implements OnInit {
     let options = new RequestOptions({ headers: headers });
     let url = 'http://localhost:8085/upload';
 
+    this.uploading = true;
+
     this.http.post(url, body, options)
       .toPromise()
       .then(res => {
         let data = res.json();
-        localStorage.setItem('id', data.id);
+        this.uploading = false;
+
+        if (data.success) {
+          this.imageUploaded = true;
+          localStorage.setItem('id', data.id);
+        }
+      })
+      .catch(err => {
+        this.uploading = false;
+        this.imageUploaded = true;
+        this.error = true;
       });
+  }
+
+  tryAgain() {
+    this.canUpload = false;
+    this.imageUploaded = false;
+    this.error = false;
+    this.uploading = false;
   }
 }
