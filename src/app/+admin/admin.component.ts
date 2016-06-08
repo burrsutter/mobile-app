@@ -59,6 +59,16 @@ export class AdminComponent implements AfterViewInit {
     this.ws = new WebSocket('ws://localhost:9001/game/admin');
     // this.ws = new WebSocket('ws://localhost:8081/game/admin');
     // this.ws = new WebSocket('ws://game-server-demo.apps.demo.aws.paas.ninja/game/admin');
+    this.ws.onopen = event => {
+      console.log(event);
+
+      let message = {
+        type: 'register'
+      };
+
+      this.ws.send(JSON.stringify(message));
+    };
+
     this.ws.onmessage = event => {
       let message = JSON.parse(event.data);
 
