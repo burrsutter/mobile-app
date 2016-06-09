@@ -58,10 +58,10 @@ export class SelfieComponent implements OnInit {
   }
 
   upload() {
-    let image = this.canvas.toDataURL('image/jpeg', 0.1);
+    let image = this.canvas.toDataURL('image/png', 0.1);
     let body = JSON.stringify({
       image: image,
-      id: localStorage.getItem('id') || null
+      id: localStorage.getItem('id') || ''
     });
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
