@@ -17,18 +17,9 @@ export class GameComponent implements OnInit, OnDestroy {
   game;
   score = 0;
   teamScore = 0;
-  ws;
-  playerId;
-  team;
   achievements = [];
-  username;
-  opacity;
-  scale;
-  speed;
-  goldenSnitch;
   goldenSnitchCreated = false;
   goldenSnitchChance = 0.1;
-  background;
   balloons;
   explosions;
   pointsHash;
