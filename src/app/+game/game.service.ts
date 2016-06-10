@@ -7,6 +7,7 @@ export class GameService {
   private _playerScoreKey: string = 'player-score';
   private _playerTeamKey: string = 'player-team';
   private _teamsArray: Array<string> = ['Orange', 'Teal', 'Violet', 'Green'];
+  private _teamsClassArray: Array<string> = ['team-orange', 'team-teal', 'team-violet', 'team-green'];
 
   ws: any;
   currentState: string = 'title';
@@ -85,6 +86,7 @@ export class GameService {
       if (data.team) {
         let team = {
           name: this._teamsArray[data.team - 1],
+          class: this._teamsClassArray[data.team - 1],
           number: data.team
         };
 

@@ -235,6 +235,7 @@ html.standalone {
 
     // Env indicator
     &:first-child{
+      display: none;
       flex: 0 1 100%;
       border-radius: 4px 4px 0 0;
       padding: 0px 10px;
