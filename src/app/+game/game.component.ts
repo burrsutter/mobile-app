@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { AchievementComponent } from './achievement/achievement.component';
+import { GameService } from './game.service';
 
 declare var Phaser: any;
 
@@ -8,11 +9,11 @@ declare var Phaser: any;
   selector: 'app-game',
   templateUrl: 'game.component.html',
   styleUrls: ['game.component.css'],
-  directives: [AchievementComponent]
+  directives: [AchievementComponent],
 })
 
 export class GameComponent implements OnInit, OnDestroy {
-  currentState;
+  currentState = 'title';
   game;
   score = 0;
   teamScore = 0;
@@ -31,132 +32,27 @@ export class GameComponent implements OnInit, OnDestroy {
   balloons;
   explosions;
   pointsHash;
+  configuration;
 
-  constructor() {
-    /*
-     * stage device that receives blue, green and canary
-     * if ?stage=true&latest=true
-     *
-     * stage devices
-     * if ?stage=true
-     */
-    this.ws = new WebSocket('ws://localhost:9001/game');
-    // this.ws = new WebSocket('ws://localhost:8081/game');
-    // this.ws = new WebSocket('ws://game-server-demo.apps.demo.aws.paas.ninja/game');
-    this.currentState = 'title';
-    this.playerId = localStorage.getItem('player-id');
-    this.team = localStorage.getItem('team');
-    this.username = localStorage.getItem('username');
+  constructor(private gameService: GameService) {
+    this.currentState = this.gameService.currentState;
+    this.configuration = this.gameService.configuration;
 
-    this.ws.onopen = event => {
-      console.log(event);
-
-      let message = {
-        type: 'register'
-      };
-
-      if (this.playerId) {
-        message['id'] = this.playerId;
+    if (this.configuration.points) {
+      this.pointsHash = {
+        'balloon_red': this.configuration.points.red,
+        'balloon_blue': this.configuration.points.blue,
+        'balloon_yellow': this.configuration.points.yellow,
+        'balloon_green': this.configuration.points.green,
+        'balloon_golden': this.configuration.points.goldenSnitch,
       }
+    }
 
-      if (this.team) {
-        message['team'] = this.team;
-      }
+    this.stateChangeHandler = this.stateChangeHandler.bind(this);
+    this.configurationChangeHandler = this.configurationChangeHandler.bind(this);
 
-      if (this.username) {
-        message['username'] = this.username;
-      }
-
-      this.ws.send(JSON.stringify(message));
-    };
-
-    this.ws.onclose = event => {
-      console.log('web socket closed', event);
-    };
-
-    this.ws.onmessage = event => {
-      let data = JSON.parse(event.data);
-
-      if (data.type === 'state') {
-        this.currentState = data.state;
-
-        switch (this.currentState) {
-          case 'title':
-            this.game.state.start('Title');
-            this.game.paused = false;
-            break;
-
-          case 'play':
-            if (this.game.state.current !== 'Play') {
-              this.game.state.start('Play');
-            }
-
-            this.game.paused = false;
-            break;
-
-          case 'pause':
-            this.game.paused = true;
-            break;
-
-          case 'game-over':
-            this.game.state.start('GameOver');
-            this.game.paused = false;
-            break;
-        }
-      }
-
-      if (data.type === 'team-score') {
-        this.teamScore = data.score;
-      }
-
-      if (data.type === 'configuration') {
-
-        if (data.username) {
-          localStorage.setItem('username', data.username);
-          this.username = data.username;
-        }
-
-        if (data.playerId) {
-          localStorage.setItem('player-id', data.playerId);
-        }
-
-        if (data.team) {
-          localStorage.setItem('team', data.team);
-        }
-
-        if (data.configuration.opacity) {
-          this.opacity = parseInt(data.configuration.opacity, 10);
-        }
-
-        if (data.configuration.scale) {
-          this.scale = parseFloat(data.configuration.scale);
-        }
-
-        if (data.configuration.speed) {
-          this.speed = parseInt(data.configuration.speed, 10);
-        }
-
-        if (data.configuration.background) {
-          this.background = data.configuration.background;
-        }
-
-        if ('goldenSnitch' in data.configuration) {
-          this.goldenSnitch = data.configuration.goldenSnitch;
-        }
-
-        if (data.configuration.points) {
-          this.pointsHash = {
-            'balloon_red': data.configuration.points.red,
-            'balloon_blue': data.configuration.points.blue,
-            'balloon_yellow': data.configuration.points.yellow,
-            'balloon_green': data.configuration.points.green,
-            'balloon_golden': data.configuration.points.goldenSnitch,
-          }
-        }
-      }
-    };
-
-    this.ws.onmessage = this.ws.onmessage.bind(this);
+    this.gameService.stateChange.subscribe(this.stateChangeHandler);
+    this.gameService.configurationChange.subscribe(this.configurationChangeHandler);
   }
 
   ngOnInit() {
@@ -186,6 +82,7 @@ export class GameComponent implements OnInit, OnDestroy {
         this.balloons = this.game.add.group();
         this.balloons.enableBody = true;
         this.balloons.physicsBodyType = Phaser.Physics.ARCADE;
+
         for (var i = 0; i < numBalloons; i += 1) {
           this.balloons.create(0, 0, 'balloons', i, false);
         }
@@ -193,7 +90,7 @@ export class GameComponent implements OnInit, OnDestroy {
         this.balloons.setAll('checkWorldBounds', true);
         this.balloons.setAll('outOfBoundsKill', true);
         this.balloons.setAll('blendMode', Phaser.blendModes.OVERLAY);
-        this.balloons.setAll('alpha', this.opacity);
+        this.balloons.setAll('alpha', this.configuration.opacity);
 
         this.balloons.children.forEach(PlayState.setupBalloon);
 
@@ -212,7 +109,7 @@ export class GameComponent implements OnInit, OnDestroy {
       setupBalloon: balloon => {
         balloon.checkWorldBounds = true;
         balloon.outOfBoundsKill = true;
-        balloon.scale.setTo(this.scale);
+        balloon.scale.setTo(this.configuration.scale);
         balloon.anchor.setTo(0.5);
         balloon.inputEnabled = true;
         balloon.events.onOutOfBounds.add(() => {
@@ -238,11 +135,11 @@ export class GameComponent implements OnInit, OnDestroy {
           explosion.reset(evt.world.x, evt.world.y);
           explosion.play('explode', 30, false, true);
 
-          this.ws.send(JSON.stringify({
+          this.gameService.sendMessage({
             type: 'score',
             score: this.score,
             consecutive: consecutive
-          }));
+          });
 
           // purely for demo purposes
           if (consecutive % 5 === 0) {
@@ -265,7 +162,7 @@ export class GameComponent implements OnInit, OnDestroy {
       throwGoodObject: () => {
         let obj;
 
-        if (this.goldenSnitch && Math.random() < this.goldenSnitchChance && !this.goldenSnitchCreated) {
+        if (this.configuration.goldenSnitch && Math.random() < this.goldenSnitchChance && !this.goldenSnitchCreated) {
           obj = this.balloons.create(0, 0, 'balloons', 4, false);
           PlayState.setupBalloon(obj);
           this.goldenSnitchCreated = true;
@@ -276,16 +173,16 @@ export class GameComponent implements OnInit, OnDestroy {
         obj.reset(this.game.world.centerX + this.game.rnd.integerInRange(-75, 75), this.game.world.height);
         obj.body.angularVelocity = (Math.random() - 0.5) * balloonRotationSpeed;
 
-        if (this.opacity) {
-          obj.alpha = this.opacity / 100;
+        if (this.configuration.opacity) {
+          obj.alpha = this.configuration.opacity / 100;
         }
 
-        if (this.scale) {
-          obj.scale.x = this.scale;
-          obj.scale.y = this.scale;
+        if (this.configuration.scale) {
+          obj.scale.x = this.configuration.scale;
+          obj.scale.y = this.configuration.scale;
         }
 
-        const speed = (this.game.world.height + 56 - 568) * 0.5 + (450 + (this.speed - 50) * 5);
+        const speed = (this.game.world.height + 56 - 568) * 0.5 + (450 + (this.configuration.speed - 50) * 5);
 
         this.game.physics.arcade.moveToXY(obj, this.game.world.centerX + this.game.rnd.integerInRange(-50, 50), this.game.world.centerY, speed);
       }
@@ -298,14 +195,62 @@ export class GameComponent implements OnInit, OnDestroy {
     this.game.state.add('Title', TitleState);
     this.game.state.add('Play', PlayState);
     this.game.state.add('GameOver', GameOverState);
-    this.game.state.start('Title');
+    // this.game.state.start('Title');
+
+    this.stateChangeHandler({
+      state: this.currentState
+    });
 
     // PlayState.throwGoodObject = PlayState.throwGoodObject.bind(this);
   }
 
+  stateChangeHandler(evt) {
+    this.currentState = evt.state;
+
+    switch (evt.state) {
+      case 'title':
+        this.game.state.start('Title');
+        this.game.paused = false;
+        break;
+
+      case 'play':
+        if (this.game.state.current !== 'Play') {
+          this.game.state.start('Play');
+        }
+
+        this.game.paused = false;
+        break;
+
+      case 'pause':
+        if (this.game.isRunning) {
+          this.game.paused = true;
+        }
+
+        break;
+
+      case 'game-over':
+        this.game.state.start('GameOver');
+        this.game.paused = false;
+        break;
+    }
+  }
+
+  configurationChangeHandler(evt) {
+    this.configuration = evt.configuration;
+
+    if (this.configuration.points) {
+      this.pointsHash = {
+        'balloon_red': this.configuration.points.red,
+        'balloon_blue': this.configuration.points.blue,
+        'balloon_yellow': this.configuration.points.yellow,
+        'balloon_green': this.configuration.points.green,
+        'balloon_golden': this.configuration.points.goldenSnitch,
+      }
+    }
+  }
+
   ngOnDestroy() {
     this.game.destroy();
-      this.ws.close();
   }
 
   nameLoaded(event) {

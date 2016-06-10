@@ -6,6 +6,7 @@ import { HomeComponent } from './+home';
 import { AdminComponent } from './+admin';
 import { LeaderboardComponent } from './+leaderboard';
 import { WinnerComponent } from './winner/winner.component';
+import { GameService } from './+game';
 
 declare var componentHandler: any;
 
@@ -28,7 +29,7 @@ declare var componentHandler: any;
 
 export class RhKeynoteDemoAppComponent implements OnInit {
   title = 'Something';
-  constructor(private router: Router) {}
+  constructor(private router: Router, private gameService: GameService) {}
 
   ngOnInit() {
     componentHandler.upgradeDom();
