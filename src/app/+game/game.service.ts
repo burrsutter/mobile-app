@@ -6,6 +6,7 @@ export class GameService {
   private _playerIdKey: string = 'player-id';
   private _playerScoreKey: string = 'player-score';
   private _playerTeamKey: string = 'player-team';
+  private _teamsArray: Array<string> = ['Orange', 'Teal', 'Violet', 'Green'];
 
   ws: any;
   currentState: string = 'title';
@@ -13,7 +14,7 @@ export class GameService {
   playerUsername: string = localStorage.getItem(this._usernameKey);
   playerScore: number = parseInt(localStorage.getItem(this._playerScoreKey), 10) || 0;
   playerId: string = localStorage.getItem(this._playerIdKey);
-  playerTeam: string = localStorage.getItem(this._playerTeamKey);
+  playerTeam: any = JSON.parse(localStorage.getItem(this._playerTeamKey)) || null;
   configuration: Object = {};
 
   @Output() stateChange = new EventEmitter();
@@ -40,7 +41,7 @@ export class GameService {
     }
 
     if (this.playerTeam) {
-      message['team'] = this.playerTeam;
+      message['team'] = this.playerTeam.number;
     }
 
     if (this.playerUsername) {
@@ -82,8 +83,13 @@ export class GameService {
       }
 
       if (data.team) {
-        localStorage.setItem(this._playerTeamKey, data.team);
-        this.playerTeam = data.team;
+        let team = {
+          name: this._teamsArray[data.team - 1],
+          number: data.team
+        };
+
+        localStorage.setItem(this._playerTeamKey, JSON.stringify(team));
+        this.playerTeam = team;
       }
 
       this.configuration = data.configuration;
