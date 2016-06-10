@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ROUTER_DIRECTIVES} from '@angular/router';
+import { GameService } from '../+game';
 
 @Component({
   moduleId: module.id,
@@ -8,4 +9,8 @@ import { ROUTER_DIRECTIVES} from '@angular/router';
   styleUrls: ['home.component.css'],
   directives: [ROUTER_DIRECTIVES]
 })
-export class HomeComponent {}
+export class HomeComponent {
+
+  constructor(private gameService: GameService) {}
+
+}

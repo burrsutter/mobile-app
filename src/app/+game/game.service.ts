@@ -11,6 +11,7 @@ export class GameService {
 
   ws: any;
   currentState: string = 'title';
+  currentSelfieState: string = 'closed';
   teamScore: number = 0;
   playerUsername: string = localStorage.getItem(this._usernameKey);
   playerScore: number = parseInt(localStorage.getItem(this._playerScoreKey), 10) || 0;
@@ -65,6 +66,11 @@ export class GameService {
         state: this.currentState
       });
 
+      return;
+    }
+
+    if (data.type === 'selfie-state') {
+      this.currentSelfieState = data.state;
       return;
     }
 

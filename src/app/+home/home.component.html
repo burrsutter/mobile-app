@@ -4,7 +4,7 @@
       <span>Play Game</span>
   </a>
 
-  <a [routerLink]="['/playerid']" class="mdl-button mdl-js-button app-icon">
+  <a [routerLink]="['/playerid']" class="mdl-button mdl-js-button app-icon" *ngIf="gameService.currentSelfieState === 'open'">
     <i class="material-icons">photo</i>
       <span>Player ID</span>
   </a>
