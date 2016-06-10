@@ -129,7 +129,8 @@ export class GameComponent implements OnInit, OnDestroy {
           this.gameService.sendMessage({
             type: 'score',
             score: this.score,
-            consecutive: consecutive
+            consecutive: consecutive,
+            goldenSnitchPopped: (balloon.frameName === 'balloon_golden') ? true : false
           });
 
           // purely for demo purposes
