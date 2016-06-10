@@ -23,7 +23,13 @@ export class GameService {
   @Output() configurationChange = new EventEmitter();
 
   constructor() {
-    this.ws = new WebSocket('ws://localhost:9001/game');
+    if (location.search.indexOf('canary=true') > -1) {
+      // this will be whatever we need the canary to connect to
+      // this.ws = new WebSocket('ws://localhost:9001/game');
+    } else {
+      this.ws = new WebSocket('ws://localhost:9001/game');
+    }
+
     this.ws.onopen = this.onOpen.bind(this);
     this.ws.onclose = this.onClose.bind(this);
     this.ws.onmessage = this.onMessage.bind(this);
