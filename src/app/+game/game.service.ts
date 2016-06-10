@@ -5,6 +5,7 @@ export class GameService {
   private _usernameKey: string = 'username';
   private _playerIdKey: string = 'player-id';
   private _playerScoreKey: string = 'player-score';
+  private _playerFinalScoreKey: string = 'player-final-score';
   private _playerTeamKey: string = 'player-team';
   private _canaryKey: string = 'canary';
   private _teamsArray: Array<string> = ['Orange', 'Teal', 'Violet', 'Green'];
@@ -16,6 +17,7 @@ export class GameService {
   teamScore: number = 0;
   playerUsername: string = localStorage.getItem(this._usernameKey);
   playerScore: number = parseInt(localStorage.getItem(this._playerScoreKey), 10) || 0;
+  playerFinalScore: number = parseInt(localStorage.getItem(this._playerFinalScoreKey), 10) || 0;;
   playerId: string = localStorage.getItem(this._playerIdKey);
   playerTeam: any = JSON.parse(localStorage.getItem(this._playerTeamKey)) || null;
   canary: boolean = JSON.parse(localStorage.getItem(this._canaryKey)) || false;
@@ -42,6 +44,11 @@ export class GameService {
 
   sendMessage(message: any) {
     this.ws.send(JSON.stringify(message));
+  }
+
+  updatePlayerScore(score: number) {
+    this.playerScore = score;
+    localStorage.setItem(this._playerScoreKey, JSON.stringify(score));
   }
 
   setCanary(value: boolean) {
@@ -90,6 +97,15 @@ export class GameService {
       this.stateChange.emit({
         state: this.currentState
       });
+
+      if (this.currentState === 'game-over') {
+        if (this.playerScore) {
+          this.playerFinalScore = this.playerScore;
+          localStorage.setItem(this._playerFinalScoreKey, JSON.stringify(this.playerFinalScore));
+        }
+        
+        this.updatePlayerScore(0);
+      }
 
       return;
     }

@@ -8,13 +8,13 @@
     </span>
     {{teamScore}}
   </li>
-  <li><span>{{gameService.playerUsername}} (You)</span>{{score}}</li>
+  <li><span>{{gameService.playerUsername}} (You)</span>{{gameService.playerScore}}</li>
 </ul>
 <div class="game-over" *ngIf="currentState === 'game-over'">
   <div class="game-over-container">
     <h1>Game Over</h1>
     <p>
-      <strong>{{score}}</strong> points |
+      <strong>{{gameService.playerFinalScore}}</strong> points |
       <strong>353th</strong> place
     </p>
     <p>

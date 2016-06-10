@@ -15,7 +15,6 @@ declare var Phaser: any;
 export class GameComponent implements OnInit, OnDestroy {
   currentState = 'title';
   game;
-  score = 0;
   teamScore = 0;
   achievements = [];
   goldenSnitchCreated = false;
@@ -120,7 +119,7 @@ export class GameComponent implements OnInit, OnDestroy {
           }
 
           consecutive += 1;
-          this.score += this.pointsHash[balloon.frameName];
+          this.gameService.playerScore += this.pointsHash[balloon.frameName];
 
           var explosion = this.explosions.getFirstExists(false);
           explosion.reset(evt.world.x, evt.world.y);
@@ -128,10 +127,12 @@ export class GameComponent implements OnInit, OnDestroy {
 
           this.gameService.sendMessage({
             type: 'score',
-            score: this.score,
+            score: this.gameService.playerScore,
             consecutive: consecutive,
             goldenSnitchPopped: (balloon.frameName === 'balloon_golden') ? true : false
           });
+
+          this.gameService.updatePlayerScore(this.gameService.playerScore);
 
           // purely for demo purposes
           if (consecutive % 5 === 0) {
