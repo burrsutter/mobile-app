@@ -6,6 +6,7 @@ export class GameService {
   private _playerIdKey: string = 'player-id';
   private _playerScoreKey: string = 'player-score';
   private _playerTeamKey: string = 'player-team';
+  private _canaryKey: string = 'canary';
   private _teamsArray: Array<string> = ['Orange', 'Teal', 'Violet', 'Green'];
   private _teamsClassArray: Array<string> = ['team-orange', 'team-teal', 'team-violet', 'team-green'];
 
@@ -17,15 +18,19 @@ export class GameService {
   playerScore: number = parseInt(localStorage.getItem(this._playerScoreKey), 10) || 0;
   playerId: string = localStorage.getItem(this._playerIdKey);
   playerTeam: any = JSON.parse(localStorage.getItem(this._playerTeamKey)) || null;
+  canary: boolean = JSON.parse(localStorage.getItem(this._canaryKey)) || false;
   configuration: Object = {};
 
   @Output() stateChange = new EventEmitter();
   @Output() configurationChange = new EventEmitter();
 
   constructor() {
-    if (location.search.indexOf('canary=true') > -1) {
+    if (location.search.indexOf('canary=true') > -1 || this.canary) {
+      this.canary = true;
+      localStorage.setItem(this._canaryKey, 'true');
+
       // this will be whatever we need the canary to connect to
-      // this.ws = new WebSocket('ws://localhost:9001/game');
+      this.ws = new WebSocket('ws://localhost:9001/game');
     } else {
       this.ws = new WebSocket('ws://localhost:9001/game');
     }
@@ -37,6 +42,20 @@ export class GameService {
 
   sendMessage(message: any) {
     this.ws.send(JSON.stringify(message));
+  }
+
+  setCanary(value: boolean) {
+    if (value) {
+      this.canary = true;
+      localStorage.setItem(this._canaryKey, 'true');
+
+      window.location.href = `${window.location.href}?canary=true`;
+    } else {
+      this.canary = false;
+      localStorage.removeItem(this._canaryKey);
+
+      window.location.reload();
+    }
   }
 
   private onOpen(evt) {

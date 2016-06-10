@@ -26,11 +26,6 @@
           <i class="material-icons" *ngIf="currentGameState.name === 'pause'">play_arrow</i>
         </button>
         <button class="mdl-button mdl-js-button mdl-button--raised" (click)="changeState('game-over')" [class.mdl-button--accent]="currentGameState.name === 'game-over'">Game Over</button>
-        <!-- <button class="mdl-button mdl-js-button mdl-button--raised" *ngFor="let state of gameStates" (click)="changeState(state)" [class.mdl-button--accent]="state.name === currentGameState.name" [disabled]="state.name === 'play' && isPlaying">
-          <span *ngIf="state.name !== 'pause'">{{state.display}}</span>
-          <i class="material-icons" *ngIf="state.name === 'pause' && !isPaused">pause</i>
-          <i class="material-icons" *ngIf="state.name === 'pause' && isPaused">play_arrow</i>
-        </button> -->
       </div>
     </div>
   </div>
@@ -128,6 +123,21 @@
             </label>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mdl-card mdl-shadow--2dp">
+    <div class="mdl-card__title">
+      <h2 class="mdl-card__title-text">Canary Connection</h2>
+    </div>
+    <div class="mdl-card__actions mdl-card--border">
+      <div class="mdl-card__supporting-text">
+        <h6>Connect to Canary</h6>
+        <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-canary">
+          <input type="checkbox" id="switch-canary" class="mdl-switch__input" [ngModel]="gameService.canary" (change)="updateCanary($event)">
+          <span class="mdl-switch__label"></span>
+        </label>
       </div>
     </div>
   </div>

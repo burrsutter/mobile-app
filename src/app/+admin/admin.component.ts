@@ -1,4 +1,5 @@
 import { Component, AfterViewInit } from '@angular/core';
+import { GameService } from '../+game';
 
 declare var componentHandler: any;
 
@@ -51,7 +52,7 @@ export class AdminComponent implements AfterViewInit {
     }
   ];
 
-  constructor() {
+  constructor(private gameService: GameService) {
     this.currentGameState = {
       name: null,
       display: null
@@ -138,6 +139,10 @@ export class AdminComponent implements AfterViewInit {
   updateGoldenSnitch(evt) {
     this.configuration.goldenSnitch = evt.target.checked;
     this.publishConfigurationChange();
+  }
+
+  updateCanary(evt) {
+    this.gameService.setCanary(evt.target.checked);
   }
 
   changeState(state) {
