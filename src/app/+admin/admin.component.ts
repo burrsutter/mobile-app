@@ -11,6 +11,7 @@ declare var componentHandler: any;
 
 export class AdminComponent implements AfterViewInit {
   ws;
+  currentSelfieState;
   currentGameState;
   configuration = null;
   opacity: number = 85;
@@ -23,8 +24,8 @@ export class AdminComponent implements AfterViewInit {
       display: 'Open'
     },
     {
-      name: 'close',
-      display: 'Close'
+      name: 'closed',
+      display: 'Closed'
     }
   ];
   gameStates = [
@@ -88,6 +89,10 @@ export class AdminComponent implements AfterViewInit {
           this.isPaused = true;
           this.isPlaying = false;
         }
+      }
+
+      if (message.type === 'selfie-state') {
+        this.currentSelfieState = message.state;
       }
 
       if (message.type === 'configuration') {
@@ -159,6 +164,15 @@ export class AdminComponent implements AfterViewInit {
     const message = {
       type: 'state-change',
       state: state
+    };
+
+    this.ws.send(JSON.stringify(message));
+  }
+
+  changeSelfieState(state) {
+    const message = {
+      type: 'selfie-state-change',
+      state: state.name
     };
 
     this.ws.send(JSON.stringify(message));
