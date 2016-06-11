@@ -10,6 +10,7 @@ export class GameService {
   private _canaryKey: string = 'canary';
   private _teamsArray: Array<string> = ['Orange', 'Teal', 'Violet', 'Green'];
   private _teamsClassArray: Array<string> = ['team-orange', 'team-teal', 'team-violet', 'team-green'];
+  private _reconnectInterval: number = 5000;
 
   ws: any;
   currentState: string = 'title';
@@ -27,6 +28,10 @@ export class GameService {
   @Output() configurationChange = new EventEmitter();
 
   constructor() {
+    this.connect();
+  }
+
+  connect() {
     if (location.search.indexOf('canary=true') > -1 || this.canary) {
       this.canary = true;
       localStorage.setItem(this._canaryKey, 'true');
@@ -86,7 +91,19 @@ export class GameService {
   }
 
   private onClose(evt) {
-    console.log('web socket closed', evt);
+    let intervalHandler = () => {
+      if (this.ws.readyState === WebSocket.CLOSED) {
+        this.connect();
+        return;
+      }
+
+      if (this.ws.readyState === WebSocket.OPEN) {
+        clearInterval(interval);
+      }
+    }
+
+    intervalHandler = intervalHandler.bind(this);
+    const interval = setInterval(intervalHandler, this._reconnectInterval);
   }
 
   private onMessage(evt) {
@@ -103,7 +120,7 @@ export class GameService {
           this.playerFinalScore = this.playerScore;
           localStorage.setItem(this._playerFinalScoreKey, JSON.stringify(this.playerFinalScore));
         }
-        
+
         this.updatePlayerScore(0);
       }
 

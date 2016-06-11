@@ -11,10 +11,11 @@ declare var componentHandler: any;
 })
 
 export class AdminComponent implements AfterViewInit {
+  private _reconnectInterval: number = 5000;
   ws;
   currentSelfieState;
   currentGameState;
-  configuration = null;
+  configuration: any = null;
   opacity: number = 85;
   size: number = 0.3;
   isPaused: boolean = false;
@@ -58,51 +59,76 @@ export class AdminComponent implements AfterViewInit {
       display: null
     };
 
+    this.connect();
+  }
+
+  connect() {
     this.ws = new WebSocket('ws://localhost:9001/game/admin');
     // this.ws = new WebSocket('ws://localhost:8081/game/admin');
     // this.ws = new WebSocket('ws://game-server-demo.apps.demo.aws.paas.ninja/game/admin');
-    this.ws.onopen = event => {
-      console.log(event);
 
-      let message = {
-        type: 'register'
-      };
+    this.ws.onopen = this.onOpen.bind(this);
+    this.ws.onmessage = this.onMessage.bind(this);
+    this.ws.onclose = this.onClose.bind(this);
+  }
 
-      this.ws.send(JSON.stringify(message));
+  onOpen(evt) {
+    console.log(evt);
+
+    let message = {
+      type: 'register'
     };
 
-    this.ws.onmessage = event => {
-      let message = JSON.parse(event.data);
+    this.ws.send(JSON.stringify(message));
+  }
 
-      if (message.type === 'state') {
-        this.gameStates.forEach(gameState => {
-          if (message.state === gameState.name) {
-            this.currentGameState = gameState;
-          }
-        });
+  onClose(evt) {
+    let intervalHandler = () => {
+      if (this.ws.readyState === WebSocket.CLOSED) {
+        this.connect();
+        return;
+      }
 
-        if (message.state === 'play') {
-          this.isPaused = false;
-          this.isPlaying = true;
+      if (this.ws.readyState === WebSocket.OPEN) {
+        clearInterval(interval);
+      }
+    }
+
+    intervalHandler = intervalHandler.bind(this);
+    const interval = setInterval(intervalHandler, this._reconnectInterval);
+  }
+
+  onMessage(evt) {
+    let message = JSON.parse(evt.data);
+
+    if (message.type === 'state') {
+      this.gameStates.forEach(gameState => {
+        if (message.state === gameState.name) {
+          this.currentGameState = gameState;
         }
+      });
 
-        if (message.state === 'pause') {
-          this.isPaused = true;
-          this.isPlaying = false;
-        }
+      if (message.state === 'play') {
+        this.isPaused = false;
+        this.isPlaying = true;
       }
 
-      if (message.type === 'selfie-state') {
-        this.currentSelfieState = message.state;
+      if (message.state === 'pause') {
+        this.isPaused = true;
+        this.isPlaying = false;
       }
+    }
 
-      if (message.type === 'configuration') {
-        this.configuration = message.configuration;
+    if (message.type === 'selfie-state') {
+      this.currentSelfieState = message.state;
+    }
 
-        setTimeout(() => {
-          componentHandler.upgradeDom();
-        }, 0);
-      }
+    if (message.type === 'configuration') {
+      this.configuration = message.configuration;
+
+      setTimeout(() => {
+        componentHandler.upgradeDom();
+      }, 0);
     }
   }
 
