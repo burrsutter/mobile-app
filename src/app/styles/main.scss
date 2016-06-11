@@ -103,7 +103,7 @@ html.standalone {
   &.blue, &.green, &.canary{
   background-image:
     url(../+game/assets/clouds.png),
-    linear-gradient(to bottom, transparent, #fff);
+    linear-gradient(to bottom, rgba(255, 255, 255, 0), #fff);
   }
   &.blue{
     background-color: lighten($color-blue, 10%);
