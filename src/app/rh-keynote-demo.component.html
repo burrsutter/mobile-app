@@ -14,7 +14,7 @@
       <a class="mdl-navigation__link" [routerLink]="['/home']" (click)="closeDrawer()"><i class="material-icons">home</i><span>Main</span></a>
       <a class="mdl-navigation__link" [routerLink]="['/game']" (click)="closeDrawer()"><i class="material-icons">games</i><span>Game</span></a>
       <a class="mdl-navigation__link" [routerLink]="['/leaderboard']" (click)="closeDrawer()"><i class="material-icons">format_list_numbered</i><span>Leaderboard</span></a>
-      <a class="mdl-navigation__link" [routerLink]="['/playerid']" (click)="closeDrawer()" *ngIf="gameService.currentSelfieState === 'open'"><i class="material-icons">photo_camera</i><span>Player ID</span></a>
+      <a class="mdl-navigation__link" [routerLink]="['/playerid']" (click)="closeDrawer()" *ngIf="gameService.currentSelfieState === 'open' || gameService.selfieAdmin"><i class="material-icons">photo_camera</i><span>Player ID</span></a>
     </nav>
   </div>
   <main class="mdl-layout__content fullheight-minus-navbar">
