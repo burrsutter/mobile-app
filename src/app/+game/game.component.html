@@ -1,5 +1,5 @@
 <img class="game-name loading" src="/app/+game/assets/enterprise-splash-platform.svg" *ngIf="currentState === 'title'" (load)="nameLoaded($event)">
-<ul class="game-score" [ngClass]="gameService.playerTeam.class" *ngIf="currentState === 'play' || currentState === 'pause'">
+<ul class="game-score" [ngClass]="gameService.playerTeam.class" *ngIf="currentState === 'start-game' || currentState === 'play' || currentState === 'pause'">
   <li>Build <span>Canary</span></li>
   <li>
     <span>

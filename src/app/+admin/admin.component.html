@@ -20,7 +20,7 @@
       <div class="states">
         <button class="mdl-button mdl-js-button mdl-button--raised" (click)="changeState('title')" [class.mdl-button--accent]="currentGameState.name === 'title'">Title</button>
         <button class="mdl-button mdl-js-button mdl-button--raised" (click)="changeState('demo')" [class.mdl-button--accent]="currentGameState.name === 'demo'">Demo</button>
-        <button class="mdl-button mdl-js-button mdl-button--raised" (click)="changeState('play')" [class.mdl-button--accent]="currentGameState.name === 'play'" [disabled]="currentGameState.name === 'play' && isPlaying">Start Game</button>
+        <button class="mdl-button mdl-js-button mdl-button--raised" (click)="changeState('start-game')" [class.mdl-button--accent]="currentGameState.name === 'play'" [disabled]="currentGameState.name === 'play' && isPlaying">Start Game</button>
         <button class="mdl-button mdl-js-button mdl-button--raised" (click)="changeState('pause')" [class.mdl-button--accent]="currentGameState.name === 'pause' || currentGameState.name === 'play'">
           <i class="material-icons" *ngIf="currentGameState.name !== 'pause'">pause</i>
           <i class="material-icons" *ngIf="currentGameState.name === 'pause'">play_arrow</i>

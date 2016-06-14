@@ -61,6 +61,12 @@ export class GameService {
     localStorage.setItem(this._playerScoreKey, JSON.stringify(score));
   }
 
+  resetPlayerScore() {
+    this.updatePlayerScore(0);
+    this.playerFinalScore = 0;
+    localStorage.setItem(this._playerFinalScoreKey, JSON.stringify(this.playerFinalScore));
+  }
+
   setCanary(value: boolean) {
     if (value) {
       this.canary = true;
@@ -119,6 +125,10 @@ export class GameService {
       this.stateChange.emit({
         state: this.currentState
       });
+
+      if (this.currentState === 'start-game') {
+        this.resetPlayerScore();
+      }
 
       if (this.currentState === 'game-over') {
         if (this.playerScore) {
