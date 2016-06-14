@@ -28,7 +28,8 @@ declare var componentHandler: any;
 ])
 
 export class RhKeynoteDemoAppComponent implements OnInit {
-  title = 'Something';
+  title: String = 'Red Hat Keynote';
+
   constructor(private router: Router, private gameService: GameService) {}
 
   ngOnInit() {
