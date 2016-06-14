@@ -15,6 +15,7 @@ export class GameService {
   ws: any;
   currentState: string = 'title';
   currentSelfieState: string = 'closed';
+  selfieAdmin: boolean = false;
   teamScore: number = 0;
   playerUsername: string = localStorage.getItem(this._usernameKey);
   playerScore: number = parseInt(localStorage.getItem(this._playerScoreKey), 10) || 0;
@@ -40,6 +41,10 @@ export class GameService {
       this.ws = new WebSocket('ws://localhost:9001/game');
     } else {
       this.ws = new WebSocket('ws://localhost:9001/game');
+    }
+
+    if (location.search.indexOf('selfie=true') > -1) {
+      this.selfieAdmin = true;
     }
 
     this.ws.onopen = this.onOpen.bind(this);
