@@ -59,6 +59,13 @@ export class GameService {
   incrementPlayerScore(score: number) {
     this.playerScore += score;
     localStorage.setItem(this._playerScoreKey, JSON.stringify(score));
+
+    this.sendMessage({
+      type: 'score',
+      score: this.playerScore,
+      consecutive: 0,
+      goldenSnitchPopped: false
+    });
   }
 
   updatePlayerScore(score: number) {
