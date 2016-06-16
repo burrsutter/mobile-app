@@ -56,6 +56,11 @@ export class GameService {
     this.ws.send(JSON.stringify(message));
   }
 
+  incrementPlayerScore(score: number) {
+    this.playerScore += score;
+    localStorage.setItem(this._playerScoreKey, JSON.stringify(score));
+  }
+
   updatePlayerScore(score: number) {
     this.playerScore = score;
     localStorage.setItem(this._playerScoreKey, JSON.stringify(score));

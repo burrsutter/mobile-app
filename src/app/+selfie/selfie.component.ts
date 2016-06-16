@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Http, HTTP_PROVIDERS, Headers, RequestOptions } from '@angular/http';
+import { GameService } from '../+game/game.service';
 
 declare var loadImage: any;
 
@@ -12,21 +13,16 @@ declare var loadImage: any;
   providers: [ HTTP_PROVIDERS ]
 })
 
-export class SelfieComponent implements OnInit {
+export class SelfieComponent {
   canvas;
   uploadBtn;
   imageUploaded: boolean = false;
   error: boolean = false;
   uploading: boolean = false;
   canUpload: boolean = false;
+  scoreIncrement: number = 500;
 
-  constructor(private http: Http) {}
-
-  ngOnInit() {
-    // this.canvas = document.getElementById('canvas');
-    // this.uploadBtn = document.querySelector('.upload');
-    // this.uploadBtn.style.display = 'none';
-  }
+  constructor(private http: Http, private gameService: GameService) {}
 
   onChange(event) {
     const self = this;
@@ -78,6 +74,9 @@ export class SelfieComponent implements OnInit {
         if (data.success) {
           this.imageUploaded = true;
           localStorage.setItem('id', data.id);
+
+          // give the user some points for uploading their player id
+          this.gameService.incrementPlayerScore(this.scoreIncrement);
         }
       })
       .catch(err => {
