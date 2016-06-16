@@ -8,6 +8,7 @@ export class GameService {
   private _playerFinalScoreKey: string = 'player-final-score';
   private _playerTeamKey: string = 'player-team';
   private _canaryKey: string = 'canary';
+  private _achievementsKey: string = 'achievements';
   private _teamsArray: Array<string> = ['Orange', 'Teal', 'Violet', 'Green'];
   private _teamsClassArray: Array<string> = ['team-orange', 'team-teal', 'team-violet', 'team-green'];
   private _reconnectInterval: number = 5000;
@@ -23,10 +24,12 @@ export class GameService {
   playerId: string = localStorage.getItem(this._playerIdKey);
   playerTeam: any = JSON.parse(localStorage.getItem(this._playerTeamKey)) || null;
   canary: boolean = JSON.parse(localStorage.getItem(this._canaryKey)) || false;
+  achievements: Array<any> = JSON.parse(localStorage.getItem(this._achievementsKey)) || [];
   configuration: Object = {};
 
   @Output() stateChange = new EventEmitter();
   @Output() configurationChange = new EventEmitter();
+  @Output() achievementsChange = new EventEmitter();
 
   constructor() {
     this.connect();
@@ -91,6 +94,16 @@ export class GameService {
 
       window.location.reload();
     }
+  }
+
+  private updateAchievements(achievement) {
+    const achievementParts = achievement.desc.split('!');
+    achievement.desc = achievementParts[0];
+    achievement.text = achievementParts[1];
+
+    this.achievements.push(achievement);
+    localStorage.setItem(this._achievementsKey, JSON.stringify(this.achievements));
+    this.achievementsChange.emit(achievement);
   }
 
   private onOpen(evt) {
@@ -189,6 +202,24 @@ export class GameService {
 
       this.configurationChange.emit({
         configuration: this.configuration
+      });
+    }
+
+    if (data.type === 'achievements') {
+      data.achievements.forEach(messageAchievement => {
+        let found = false;
+
+        this.achievements.forEach(achievement => {
+            if (messageAchievement.type === achievement.type) {
+              found = true;
+            }
+        });
+
+        if (found) {
+          return;
+        }
+
+        this.updateAchievements(messageAchievement);
       });
     }
   }

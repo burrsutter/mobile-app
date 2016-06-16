@@ -1,4 +1,5 @@
 import { Component, Input, OnChanges, SimpleChange, ElementRef } from '@angular/core';
+import { GameService } from '../game.service';
 
 @Component({
   moduleId: module.id,
@@ -8,23 +9,76 @@ import { Component, Input, OnChanges, SimpleChange, ElementRef } from '@angular/
 })
 export class AchievementComponent {
   element: ElementRef;
-  @Input() achievements: any;
+  achievements: Array<any> = [];
 
-  constructor(private _element: ElementRef) {
+  constructor(private _element: ElementRef, private gameService: GameService) {
     this.element = _element;
 
-    this.element.nativeElement.addEventListener('animationend', event => {
-      if (event.target.classList.contains('visible')) {
-        setTimeout(() => {
-          event.target.classList.remove('visible');
-        }, 3000);
-      }
-    });
+    this.achievementChangeHandler = this.achievementChangeHandler.bind(this);
+    this.animationEndHandler = this.animationEndHandler.bind(this);
+    this.transitionEndHandler = this.transitionEndHandler.bind(this);
+
+    this.gameService.achievementsChange.subscribe(this.achievementChangeHandler);
+    this.element.nativeElement.addEventListener(this.whichAnimationEvent(), this.animationEndHandler);
+    this.element.nativeElement.addEventListener(this.whichTransitionEvent(), this.transitionEndHandler);
   }
 
-  ngOnChanges(changes: {[achievements: string]: SimpleChange}) {
-    if (changes['achievements'].currentValue.length > 0) {
-      this.element.nativeElement.classList.add('visible');
+  achievementChangeHandler(achievement) {
+    this.achievements.push(achievement);
+    this.showAchievement();
+  }
+
+  showAchievement() {
+    this.element.nativeElement.classList.add('visible');
+  }
+
+  animationEndHandler(evt) {
+    if (evt.target.classList.contains('visible')) {
+      setTimeout(() => {
+        evt.target.classList.remove('visible');
+      }, 3000);
+    }
+  }
+
+  transitionEndHandler(evt) {
+    this.achievements.shift();
+
+    if (this.achievements.length > 0) {
+      this.showAchievement();
+    }
+  }
+
+  whichTransitionEvent() {
+    var t;
+    var el = document.createElement('fakeelement');
+    var transitions = {
+      'transition':'transitionend',
+      'OTransition':'oTransitionEnd',
+      'MozTransition':'transitionend',
+      'WebkitTransition':'webkitTransitionEnd'
+    }
+
+    for (t in transitions){
+      if ( el.style[t] !== undefined ) {
+        return transitions[t];
+      }
+    }
+  }
+
+  whichAnimationEvent() {
+    var t;
+    var el = document.createElement('fakeelement');
+    var transitions = {
+      'animation':'animationend',
+      'OAnimation':'oAnimationEnd',
+      'MozAnimation':'animationend',
+      'WebkitAnimation':'webkitAnimationEnd'
+    }
+
+    for (t in transitions){
+      if ( el.style[t] !== undefined ) {
+        return transitions[t];
+      }
     }
   }
 
