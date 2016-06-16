@@ -58,7 +58,7 @@ export class GameService {
 
   incrementPlayerScore(score: number) {
     this.playerScore += score;
-    localStorage.setItem(this._playerScoreKey, JSON.stringify(score));
+    localStorage.setItem(this._playerScoreKey, JSON.stringify(this.playerScore));
 
     this.sendMessage({
       type: 'score',
