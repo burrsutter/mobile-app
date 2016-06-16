@@ -144,7 +144,6 @@ export class GameComponent implements OnInit, OnDestroy {
         });
       },
       throwObject: () => {
-        // console.log(this);
         if (this.game.time.now > nextFire && this.balloons.countDead() > 0) {
           if (this.balloons.countDead() > 0) {
             nextFire = this.game.time.now + fireRate;

@@ -4,13 +4,17 @@
 <h3>Your Achievements</h3>
 
 <ul class="achievement leaderboard-achievement">
-  <li *ngFor="let achievement of achievements; #i = index" [ngClass]="{off: !achievement.achieved}">
+  <li *ngFor="let achievement of gameService.achievements; let i = index">
     <i class="material-icons">{{achievementIcons[i]}}</i>
     <div class="legend">
-      {{achievement.description}}
+      {{achievement.desc}}
     </div>
   </li>
 </ul>
+
+<div class="no-achievements" *ngIf="!gameService.achievements.length">
+  No achievements yet!
+</div>
 
 <h3>Leaderboard</h3>
 <!--

@@ -73,8 +73,6 @@ export class AdminComponent implements AfterViewInit {
   }
 
   onOpen(evt) {
-    console.log(evt);
-
     let message = {
       type: 'register'
     };
