@@ -526,10 +526,15 @@ html.standalone {
   li{
 //    display: flex;
 
-    &:nth-child(1){ color: $color-green;}
-    &:nth-child(2){ color: $color-yellow;}
+    &:nth-child(1){ color: $color-yellow;}
+    &:nth-child(2){ color: $color-green;}
     &:nth-child(3){ color: $color-red;}
     &:nth-child(4){ color: $color-violet;}
+    &:nth-child(5){ color: $color-teal;}
+    &:nth-child(6){ color: $color-yellow;}
+    &:nth-child(7){ color: $color-green;}
+    &:nth-child(8){ color: $color-red;}
+    &:nth-child(9){ color: $color-teal;}
     &.off{
       color: rgba(255,255,255,.1)!important;
     }

@@ -12,7 +12,7 @@ import 'rxjs/add/operator/toPromise';
 })
 export class LeaderboardComponent {
   error:Boolean = false;
-  achievementIcons: string[] = ['sentiment_very_satisfied', 'local_play', 'whatshot', 'local_florist', 'local_pizza'];
+  achievementIcons: string[] = ['star_border', 'star_half', 'star', 'sentiment_satisfied', 'mood', 'sentiment_very_satisfied', 'cake', 'local_play', 'whatshot', 'local_florist', 'local_pizza'];
 
   constructor(private http:Http, private gameService: GameService) {
     // let promises = [];
