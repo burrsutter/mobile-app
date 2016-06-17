@@ -129,7 +129,7 @@ export class AdminComponent implements AfterViewInit {
       }, 0);
 
       const data = {
-        message: 'Configuration Updated!'
+        message: 'Game Configuration Updated!'
       };
 
       this.elementRef.nativeElement.querySelector('#toast')
