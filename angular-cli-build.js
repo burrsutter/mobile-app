@@ -13,8 +13,7 @@ module.exports = function(defaults) {
       'rxjs/**/*.js',
       '@angular/**/*.js',
       'material-design-lite/material.min.js',
-      'blueimp-load-image/js/load-image.all.min.js',
-      'phaser/build/phaser.min.js'
+      'blueimp-load-image/js/load-image.all.min.js'
     ]
   });
 };
