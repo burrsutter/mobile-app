@@ -1,5 +1,5 @@
 import { Component, AfterViewInit, ElementRef } from '@angular/core';
-import { GameService } from '../+game';
+import { GameService } from '../+game/service/game.service';
 
 declare var componentHandler: any;
 

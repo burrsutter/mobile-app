@@ -6,7 +6,7 @@ import { HomeComponent } from './+home';
 import { AdminComponent } from './+admin';
 import { LeaderboardComponent } from './+leaderboard';
 import { WinnerComponent } from './winner/winner.component';
-import { GameService } from './+game';
+import { GameService } from './+game/service/game.service';
 
 declare var componentHandler: any;
 
@@ -15,7 +15,8 @@ declare var componentHandler: any;
   selector: 'rh-keynote-demo-app',
   templateUrl: 'rh-keynote-demo.component.html',
   styleUrls: ['rh-keynote-demo.component.css'],
-  directives: [ROUTER_DIRECTIVES, WinnerComponent]
+  directives: [ROUTER_DIRECTIVES, WinnerComponent],
+  providers: [GameService]
 })
 
 @Routes([

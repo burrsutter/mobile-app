@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { AchievementComponent } from './achievement/achievement.component';
-import { GameService } from './game.service';
+import { GameService } from './service/game.service';
 
 declare var Phaser: any;
 

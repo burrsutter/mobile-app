@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Http, HTTP_PROVIDERS, Headers, RequestOptions } from '@angular/http';
-import { GameService } from '../+game/game.service';
+import { GameService } from '../+game/service/game.service';
 
 declare var loadImage: any;
 

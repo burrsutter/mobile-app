@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ROUTER_DIRECTIVES} from '@angular/router';
-import { GameService } from '../+game';
+import { GameService } from '../+game/service/game.service';
 
 @Component({
   moduleId: module.id,

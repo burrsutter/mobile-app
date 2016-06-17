@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Http } from '@angular/http';
-import { GameService } from '../+game';
+import { GameService } from '../+game/service/game.service';
 
 import 'rxjs/add/operator/toPromise';
 

@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, SimpleChange, ElementRef } from '@angular/core';
-import { GameService } from '../game.service';
+import { GameService } from '../service/game.service';
 
 @Component({
   moduleId: module.id,
