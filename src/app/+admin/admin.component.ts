@@ -1,5 +1,6 @@
 import { Component, AfterViewInit, ElementRef } from '@angular/core';
 import { GameService } from '../+game/service/game.service';
+import { environment } from '../environment'
 
 declare var componentHandler: any;
 
@@ -20,6 +21,7 @@ export class AdminComponent implements AfterViewInit {
   size: number = 0.3;
   isPaused: boolean = false;
   isPlaying: boolean = false;
+  socketUrl: string = (environment.production) ? 'ws://gamebus-production.apps-test.redhatkeynote.com/' : 'ws://localhost:9001/game/admin';
   selfieStates = [
     {
       name: 'open',
@@ -63,7 +65,7 @@ export class AdminComponent implements AfterViewInit {
   }
 
   connect() {
-    this.ws = new WebSocket('ws://localhost:9001/game/admin');
+    this.ws = new WebSocket(this.socketUrl);
     // this.ws = new WebSocket('ws://localhost:8081/game/admin');
     // this.ws = new WebSocket('ws://game-server-demo.apps.demo.aws.paas.ninja/game/admin');
 

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Http, HTTP_PROVIDERS, Headers, RequestOptions } from '@angular/http';
 import { GameService } from '../+game/service/game.service';
+import { environment } from '../environment'
 
 declare var loadImage: any;
 
@@ -21,6 +22,7 @@ export class SelfieComponent {
   uploading: boolean = false;
   canUpload: boolean = false;
   scoreIncrement: number = 500;
+  uploadUrl: string = (environment.production) ? 'http://player-id-production.apps-test.redhatkeynote.com/upload' : 'http://localhost:8085/upload';
 
   constructor(private http: Http, private gameService: GameService) {}
 

@@ -1,4 +1,5 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
+import { environment } from '../../environment'
 
 @Injectable()
 export class GameService {
@@ -27,6 +28,7 @@ export class GameService {
   achievements: Array<any> = JSON.parse(localStorage.getItem(this._achievementsKey)) || [];
   achievementIcons: string[] = ['star_border', 'star_half', 'star', 'sentiment_satisfied', 'mood', 'sentiment_very_satisfied', 'cake', 'local_play', 'whatshot', 'local_florist', 'local_pizza'];
   configuration: Object = {};
+  socketUrl: string = (environment.production) ? 'ws://gamebus-production.apps-test.redhatkeynote.com/' : 'ws://localhost:9001/game';
 
   @Output() stateChange = new EventEmitter();
   @Output() configurationChange = new EventEmitter();
@@ -42,9 +44,9 @@ export class GameService {
       localStorage.setItem(this._canaryKey, 'true');
 
       // this will be whatever we need the canary to connect to
-      this.ws = new WebSocket('ws://localhost:9001/game');
+      this.ws = new WebSocket(this.socketUrl);
     } else {
-      this.ws = new WebSocket('ws://localhost:9001/game');
+      this.ws = new WebSocket(this.socketUrl);
     }
 
     if (location.search.indexOf('selfie=true') > -1) {
