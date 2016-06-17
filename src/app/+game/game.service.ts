@@ -25,6 +25,7 @@ export class GameService {
   playerTeam: any = JSON.parse(localStorage.getItem(this._playerTeamKey)) || null;
   canary: boolean = JSON.parse(localStorage.getItem(this._canaryKey)) || false;
   achievements: Array<any> = JSON.parse(localStorage.getItem(this._achievementsKey)) || [];
+  achievementIcons: string[] = ['star_border', 'star_half', 'star', 'sentiment_satisfied', 'mood', 'sentiment_very_satisfied', 'cake', 'local_play', 'whatshot', 'local_florist', 'local_pizza'];
   configuration: Object = {};
 
   @Output() stateChange = new EventEmitter();

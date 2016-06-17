@@ -3,7 +3,6 @@
   <li>Build <span>Canary</span></li>
   <li>
     <span>
-      <!-- <strong>1st place</strong> -->
       {{gameService.playerTeam.name}} Team
     </span>
     {{gameService.teamScore}}
@@ -14,14 +13,17 @@
   <div class="game-over-container">
     <h1>Game Over</h1>
     <p>
-      <strong>{{gameService.playerFinalScore}}</strong> points |
-      <strong>353th</strong> place
+      <strong>{{gameService.playerUsername}}</strong> |
+      <strong>{{gameService.playerFinalScore}}</strong> points
     </p>
-    <p>
-      <i class="material-icons">face</i>
-      <i class="material-icons">face</i>
-      <i class="material-icons">face</i>
-    </p>
+    <ul class="achievement leaderboard-achievement">
+      <li *ngFor="let achievement of gameService.achievements; let i = index">
+        <i class="material-icons">{{gameService.achievementIcons[i]}}</i>
+        <div class="legend">
+          {{achievement.desc}}
+        </div>
+      </li>
+    </ul>
   </div>
 </div>
 <div id="game" class="game" [ngClass]="configuration.background"></div>

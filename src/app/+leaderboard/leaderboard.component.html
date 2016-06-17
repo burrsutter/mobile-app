@@ -5,7 +5,7 @@
 
 <ul class="achievement leaderboard-achievement">
   <li *ngFor="let achievement of gameService.achievements; let i = index">
-    <i class="material-icons">{{achievementIcons[i]}}</i>
+    <i class="material-icons">{{gameService.achievementIcons[i]}}</i>
     <div class="legend">
       {{achievement.desc}}
     </div>

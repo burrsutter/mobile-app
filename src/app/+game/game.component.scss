@@ -25,6 +25,13 @@ $animation-duration: 0.35s;
   animation-duration: $animation-duration;
 }
 
+.leaderboard-achievement {
+  margin-right: 0;
+  background: rgba(255, 255, 255, 0.75);
+  border-radius: 4px;
+}
+
+
 @keyframes bouncy {
   0% {
     -webkit-transform: scale(0.75);
