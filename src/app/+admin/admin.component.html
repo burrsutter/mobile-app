@@ -123,6 +123,15 @@
             </label>
           </div>
         </div>
+        <div>
+          <h6>Traffic Percentage</h6>
+          <div>
+            Total:
+            <div class="mdl-textfield mdl-js-textfield">
+              <input class="mdl-textfield__input" type="number" min="0" max="100" [ngModel]="configuration.trafficPercentage" (ngModelChange)="configuration.trafficPercentage = $event">
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="mdl-card__actions mdl-card--border">
