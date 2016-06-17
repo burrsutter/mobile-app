@@ -125,6 +125,11 @@
         </div>
       </div>
     </div>
+    <div class="mdl-card__actions mdl-card--border">
+      <div class="mdl-card__supporting-text">
+        <button class="mdl-button mdl-js-button mdl-button--raised" (click)="publishConfigurationChange()">Update Configuration</button>
+      </div>
+    </div>
   </div>
 
   <div class="mdl-card mdl-shadow--2dp">
@@ -154,4 +159,9 @@
       <p>Attempting to reconnect...</p>
     </div>
   </div>
+</div>
+
+<div id="toast" class="mdl-js-snackbar mdl-snackbar">
+  <div class="mdl-snackbar__text"></div>
+  <button class="mdl-snackbar__action" type="button"></button>
 </div>

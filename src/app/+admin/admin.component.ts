@@ -1,4 +1,4 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, ElementRef } from '@angular/core';
 import { GameService } from '../+game';
 
 declare var componentHandler: any;
@@ -53,7 +53,7 @@ export class AdminComponent implements AfterViewInit {
     }
   ];
 
-  constructor(private gameService: GameService) {
+  constructor(private gameService: GameService, private elementRef: ElementRef) {
     this.currentGameState = {
       name: null,
       display: null
@@ -127,6 +127,13 @@ export class AdminComponent implements AfterViewInit {
       setTimeout(() => {
         componentHandler.upgradeDom();
       }, 0);
+
+      const data = {
+        message: 'Configuration Updated!'
+      };
+
+      this.elementRef.nativeElement.querySelector('#toast')
+        .MaterialSnackbar.showSnackbar(data);
     }
   }
 
@@ -136,33 +143,24 @@ export class AdminComponent implements AfterViewInit {
 
   updateOpacity(evt) {
     this.configuration.opacity = evt.target.value;
-    this.publishConfigurationChange();
   }
 
   updateScale(evt) {
     this.configuration.scale = evt.target.value;
-    this.publishConfigurationChange();
   }
 
   updateBackground(evt) {
     this.configuration.background = evt.target.value;
-    this.publishConfigurationChange();
   }
 
   updateSpeed(evt) {
     this.configuration.speed = evt.target.value;
-    this.publishConfigurationChange();
   }
 
-  updatePoints() {
-    setTimeout(() => {
-      this.publishConfigurationChange();
-    }, 0);
-  }
+  updatePoints() {}
 
   updateGoldenSnitch(evt) {
     this.configuration.goldenSnitch = evt.target.checked;
-    this.publishConfigurationChange();
   }
 
   updateCanary(evt) {
