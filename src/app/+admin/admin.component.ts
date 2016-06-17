@@ -21,7 +21,7 @@ export class AdminComponent implements AfterViewInit {
   size: number = 0.3;
   isPaused: boolean = false;
   isPlaying: boolean = false;
-  socketUrl: string = (environment.production) ? 'ws://gamebus-production.apps-test.redhatkeynote.com/' : 'ws://localhost:9001/game/admin';
+  socketUrl: string = (environment.production) ? 'ws://gamebus-production.apps-test.redhatkeynote.com/game/admin' : 'ws://localhost:9001/game/admin';
   selfieStates = [
     {
       name: 'open',
