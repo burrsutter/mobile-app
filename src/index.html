@@ -68,18 +68,6 @@
         media="(device-width: 320px) and (device-height: 480px)
                and (-webkit-device-pixel-ratio: 1)"
         rel="apple-touch-startup-image">
-
-  <!-- Service worker support is disabled by default.
-       Install the worker script and uncomment to enable.
-       Only enable service workers in production.
-  <script type="text/javascript">
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/worker.js').catch(function(err) {
-        console.log('Error installing service worker: ', err);
-      });
-    }
-  </script>
-  -->
 </head>
 <body>
   <rh-keynote-demo-app>Loading...</rh-keynote-demo-app>
@@ -88,7 +76,6 @@
   <script src="vendor/reflect-metadata/Reflect.js"></script>
   <script src="vendor/systemjs/dist/system.src.js"></script>
   <script src="vendor/zone.js/dist/zone.js"></script>
-  <script src="vendor/material-design-lite/material.min.js"></script>
   <script src="vendor/blueimp-load-image/js/load-image.all.min.js"></script>
 
   <script>
@@ -101,6 +88,7 @@
     }
   </script>
 
-  <script src="//cdn.jsdelivr.net/phaser/2.5.0/phaser.min.js"></script>
+  <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/phaser/2.5.0/phaser.min.js"></script>
 </body>
 </html>
