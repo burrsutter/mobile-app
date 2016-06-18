@@ -100,7 +100,7 @@ export class GameService {
   }
 
   private updateAchievements(achievement) {
-    const achievementParts = achievement.desc.split('!');
+    const achievementParts = achievement.description.split('!');
     achievement.desc = achievementParts[0];
     achievement.text = achievementParts[1];
 
