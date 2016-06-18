@@ -10,7 +10,9 @@
     "format": "clang-format -i -style=file --glob=src/**/*.ts",
     "pree2e": "webdriver-manager update",
     "e2e": "protractor",
-    "build": "ng build -prod"
+    "build": "ng build -prod && npm run scss && npm run minify",
+    "scss": "node-sass --output-style compressed -o dist/app/ src/app/",
+    "minify": "html-minifier --collapse-whitespace --remove-comments --minify-js --minify-css -o dist/index.html src/index.html"
   },
   "private": true,
   "dependencies": {
@@ -35,6 +37,7 @@
     "clang-format": "^1.0.35",
     "codelyzer": "0.0.14",
     "ember-cli-inject-live-reload": "^1.4.0",
+    "html-minifier": "^2.1.4",
     "jasmine-core": "^2.4.1",
     "jasmine-spec-reporter": "^2.4.0",
     "karma": "^0.13.15",
