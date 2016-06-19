@@ -28,7 +28,7 @@ export class GameService {
   achievements: Array<any> = JSON.parse(localStorage.getItem(this._achievementsKey)) || [];
   achievementIcons: string[] = ['star_border', 'star_half', 'star', 'sentiment_satisfied', 'mood', 'sentiment_very_satisfied', 'cake', 'local_play', 'whatshot', 'local_florist', 'local_pizza'];
   configuration: Object = {};
-  socketUrl: string = (environment.production) ? 'ws://gamebus-production.apps-test.redhatkeynote.com/game' : 'ws://localhost:9001/game';
+  socketUrl: string = (environment.production) ? 'wss://gamebus-production.apps-test.redhatkeynote.com/game' : 'ws://localhost:9001/game';
 
   @Output() stateChange = new EventEmitter();
   @Output() configurationChange = new EventEmitter();
