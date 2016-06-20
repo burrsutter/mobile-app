@@ -169,6 +169,10 @@ export class AdminComponent implements AfterViewInit {
     this.gameService.setCanary(evt.target.checked);
   }
 
+  updateDemo(evt) {
+    this.gameService.setDemoDevice(evt.target.checked);
+  }
+
   changeState(state) {
     if (state !== 'pause') {
       this.isPaused = false;
@@ -214,5 +218,9 @@ export class AdminComponent implements AfterViewInit {
     };
 
     this.ws.send(JSON.stringify(message));
+  }
+
+  clearLocalStorage() {
+    localStorage.clear();
   }
 }

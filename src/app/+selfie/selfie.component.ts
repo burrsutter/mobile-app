@@ -22,7 +22,7 @@ export class SelfieComponent {
   uploading: boolean = false;
   canUpload: boolean = false;
   scoreIncrement: number = 500;
-  uploadUrl: string = (environment.production) ? 'http://player-id-production.apps-test.redhatkeynote.com/upload' : 'http://localhost:8085/upload';
+  uploadUrl: string = (environment.production) ? 'http://player-id-server-demo.apps-test.redhatkeynote.com/upload' : 'http://localhost:8085/upload';
 
   constructor(private http: Http, private gameService: GameService) {}
 
@@ -63,11 +63,10 @@ export class SelfieComponent {
     });
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    let url = 'http://localhost:8085/upload';
 
     this.uploading = true;
 
-    this.http.post(url, body, options)
+    this.http.post(this.uploadUrl, body, options)
       .toPromise()
       .then(res => {
         let data = res.json();

@@ -44,7 +44,7 @@
         "sizes": "1080x1920",
         "density": 3
     }],
-    "start_url": "/index.html",
+    "start_url": "/mobile/index.html",
     "display": "standalone",
     "theme_color": "#002A42",
     "lang": "en-US",

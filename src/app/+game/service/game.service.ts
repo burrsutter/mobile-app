@@ -9,6 +9,7 @@ export class GameService {
   private _playerFinalScoreKey: string = 'player-final-score';
   private _playerTeamKey: string = 'player-team';
   private _canaryKey: string = 'canary';
+  private _demoDeviceKey: string = 'demo';
   private _achievementsKey: string = 'achievements';
   private _teamsArray: Array<string> = ['Orange', 'Teal', 'Violet', 'Green'];
   private _teamsClassArray: Array<string> = ['team-orange', 'team-teal', 'team-violet', 'team-green'];
@@ -25,6 +26,7 @@ export class GameService {
   playerId: string = localStorage.getItem(this._playerIdKey);
   playerTeam: any = JSON.parse(localStorage.getItem(this._playerTeamKey)) || null;
   canary: boolean = JSON.parse(localStorage.getItem(this._canaryKey)) || false;
+  demoDevice: boolean = JSON.parse(localStorage.getItem(this._demoDeviceKey)) || false;
   achievements: Array<any> = JSON.parse(localStorage.getItem(this._achievementsKey)) || [];
   achievementIcons: string[] = ['star_border', 'star_half', 'star', 'sentiment_satisfied', 'mood', 'sentiment_very_satisfied', 'cake', 'local_play', 'whatshot', 'local_florist', 'local_pizza'];
   configuration: Object = {};
@@ -47,6 +49,11 @@ export class GameService {
       this.ws = new WebSocket(this.socketUrl);
     } else {
       this.ws = new WebSocket(this.socketUrl);
+    }
+
+    if (location.search.indexOf('demo=true') > -1 || this.demoDevice) {
+      this.demoDevice = true;
+      localStorage.setItem(this._demoDeviceKey, 'true');
     }
 
     if (location.search.indexOf('selfie=true') > -1) {
@@ -83,6 +90,16 @@ export class GameService {
     this.updatePlayerScore(0);
     this.playerFinalScore = 0;
     localStorage.setItem(this._playerFinalScoreKey, JSON.stringify(this.playerFinalScore));
+  }
+
+  setDemoDevice(value: boolean) {
+    if (value) {
+      this.demoDevice = true;
+      localStorage.setItem(this._demoDeviceKey, 'true');
+    } else {
+      this.demoDevice = false;
+      localStorage.removeItem(this._demoDeviceKey);
+    }
   }
 
   setCanary(value: boolean) {
@@ -202,6 +219,16 @@ export class GameService {
       }
 
       this.configuration = data.configuration;
+
+      if (this.demoDevice) {
+        if (this.canary) {
+          this.configurationChange.emit({
+            configuration: this.configuration
+          });
+        }
+
+        return;
+      }
 
       this.configurationChange.emit({
         configuration: this.configuration

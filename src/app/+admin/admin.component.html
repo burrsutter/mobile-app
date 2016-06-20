@@ -143,15 +143,31 @@
 
   <div class="mdl-card mdl-shadow--2dp">
     <div class="mdl-card__title">
-      <h2 class="mdl-card__title-text">Canary Connection</h2>
+      <h2 class="mdl-card__title-text">Demo Options</h2>
     </div>
     <div class="mdl-card__actions mdl-card--border">
       <div class="mdl-card__supporting-text">
+        <h6>Demo Device</h6>
+        <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-demo">
+          <input type="checkbox" id="switch-demo" class="mdl-switch__input" [ngModel]="gameService.demoDevice" (change)="updateDemo($event)">
+          <span class="mdl-switch__label"></span>
+        </label>
         <h6>Connect to Canary</h6>
         <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-canary">
           <input type="checkbox" id="switch-canary" class="mdl-switch__input" [ngModel]="gameService.canary" (change)="updateCanary($event)">
           <span class="mdl-switch__label"></span>
         </label>
+      </div>
+    </div>
+  </div>
+
+  <div class="mdl-card mdl-shadow--2dp">
+    <div class="mdl-card__title">
+      <h2 class="mdl-card__title-text">Clear Local Storage</h2>
+    </div>
+    <div class="mdl-card__actions mdl-card--border">
+      <div class="mdl-card__supporting-text">
+        <button class="mdl-button mdl-js-button mdl-button--raised" (click)="clearLocalStorage()">Clear Local Storage</button>
       </div>
     </div>
   </div>
