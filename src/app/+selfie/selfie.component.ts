@@ -29,6 +29,7 @@ export class SelfieComponent {
 
   onChange(event) {
     const self = this;
+    console.log(this);
 
     if (event.target.files.length === 1 && event.target.files[0].type.indexOf('image/') === 0) {
       let file = event.target.files[0];
