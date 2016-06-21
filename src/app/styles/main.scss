@@ -525,16 +525,23 @@ html.standalone {
   display: flex;
   li{
 //    display: flex;
-
-    &:nth-child(1){ color: $color-yellow;}
-    &:nth-child(2){ color: $color-green;}
-    &:nth-child(3){ color: $color-red;}
-    &:nth-child(4){ color: $color-violet;}
-    &:nth-child(5){ color: $color-teal;}
-    &:nth-child(6){ color: $color-yellow;}
+    &:nth-child(1){ color: $color-green;}
+    &:nth-child(2){ color: $color-teal;}
+    &:nth-child(3){ color: $color-yellow;}
+    &:nth-child(4){ color: $color-blue;}
+    &:nth-child(5){ color: $color-violet;}
+    &:nth-child(6){ color: $color-orange;}
     &:nth-child(7){ color: $color-green;}
-    &:nth-child(8){ color: $color-red;}
-    &:nth-child(9){ color: $color-teal;}
+    &:nth-child(8){ color: $color-teal;}
+    &:nth-child(9){ color: $color-yellow;}
+    &.pops1 { color: $color-teal; }
+    &.pops2 { color: $color-yellow; }
+    &.pops3 { color: $color-green; }
+    &.score1 { color: $color-blue; }
+    &.score3 { color: $color-violet; }
+    &.score2 { color: $color-orange; }
+    &.gold { color: $color-orange; }
+
     &.off{
       color: rgba(255,255,255,.1)!important;
     }
@@ -550,4 +557,9 @@ html.standalone {
       line-height: 1em;
     }
   }
+}
+
+.golden-balloon {
+  height: 36px;
+  margin-bottom: 8px;
 }

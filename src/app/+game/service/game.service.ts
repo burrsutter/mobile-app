@@ -28,7 +28,15 @@ export class GameService {
   canary: boolean = JSON.parse(localStorage.getItem(this._canaryKey)) || false;
   demoDevice: boolean = JSON.parse(localStorage.getItem(this._demoDeviceKey)) || false;
   achievements: Array<any> = JSON.parse(localStorage.getItem(this._achievementsKey)) || [];
-  achievementIcons: string[] = ['star_border', 'star_half', 'star', 'sentiment_satisfied', 'mood', 'sentiment_very_satisfied', 'cake', 'local_play', 'whatshot', 'local_florist', 'local_pizza'];
+  achievementIconsHash: any = {
+    pops1: 'local_play',
+    pops2: 'whatshot',
+    pops3: 'sentiment_very_satisfied',
+    score1: 'star_border',
+    score2: 'star_half',
+    score3: 'star',
+    gold: 'golden'
+  };
   configuration: Object = {};
   socketUrl: string = (environment.production) ? 'ws://gamebus-production.apps-test.redhatkeynote.com/game' : 'ws://localhost:9001/game';
 
@@ -123,8 +131,13 @@ export class GameService {
 
   private updateAchievements(achievement) {
     const achievementParts = achievement.description.split('!');
-    achievement.desc = achievementParts[0];
-    achievement.text = achievementParts[1];
+
+    if (achievementParts.length) {
+      achievement.desc = achievementParts[0];
+      achievement.text = achievementParts[1];
+    } else {
+      achievement.desc = achievement.description;
+    }
 
     this.achievements.push(achievement);
     localStorage.setItem(this._achievementsKey, JSON.stringify(this.achievements));
