@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 import { Http, HTTP_PROVIDERS, Headers, RequestOptions } from '@angular/http';
 import { GameService } from '../+game/service/game.service';
 import { environment } from '../environment'
@@ -25,7 +25,7 @@ export class SelfieComponent {
   scoreIncrement: number = 500;
   uploadUrl: string = (environment.production) ? 'http://player-id-server-demo.apps-test.redhatkeynote.com/upload' : 'http://localhost:8085/upload';
 
-  constructor(private http: Http, private gameService: GameService) {}
+  constructor(private http: Http, private gameService: GameService, private elementRef: ElementRef) {}
 
   onChange(event) {
     const self = this;
@@ -48,6 +48,7 @@ export class SelfieComponent {
         loadImage(file, data => {
           self.canUpload = true;
           setTimeout(() => {
+            console.log(self.elementRef.nativeElement.querySelector('#canvas'));
             self.canvas = document.getElementById('canvas');
             self.canvas.parentNode.replaceChild(data, this.canvas);
             self.canvas = data;

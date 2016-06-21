@@ -1,7 +1,7 @@
 <div class="mdl-grid" *ngIf="!imageUploaded">
   <div class="mdl-cell selfie">
     <input type="file" capture="camera" accept="image/*" id="takePictureField" (change)="onChange($event)" *ngIf="!canUpload">
-    <div class="controls" *ngIf="canUpload">
+    <div class="controls">
       <div class="mdl-cell mdl-cell--12-col" id="canvasContainer">
         <canvas id="canvas"></canvas>
       </div>
