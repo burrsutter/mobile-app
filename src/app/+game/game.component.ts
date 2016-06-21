@@ -67,7 +67,7 @@ export class GameComponent implements OnInit, OnDestroy {
       },
       create: () => {
         this.game.stage.disableVisibilityChange = true;
-        this.game.physics.arcade.gravity.y = 300;
+        this.game.physics.arcade.gravity.y = 500;
 
         this.balloons = this.game.add.group();
         this.balloons.enableBody = true;
@@ -174,7 +174,7 @@ export class GameComponent implements OnInit, OnDestroy {
           obj.scale.y = this.configuration.scale;
         }
 
-        const speed = (this.game.world.height + 56 - 568) * 0.5 + (450 + (this.configuration.speed - 50) * 5);
+        const speed = (this.game.world.height + 56 - 568) * 0.5 + (575 + (this.configuration.speed - 50) * 5);
 
         this.game.physics.arcade.moveToXY(obj, this.game.world.centerX + this.game.rnd.integerInRange(-50, 50), this.game.world.centerY, speed);
       }
