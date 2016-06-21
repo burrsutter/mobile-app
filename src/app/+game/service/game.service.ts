@@ -92,6 +92,11 @@ export class GameService {
     localStorage.setItem(this._playerFinalScoreKey, JSON.stringify(this.playerFinalScore));
   }
 
+  resetAchievements() {
+    this.achievements = [];
+    localStorage.removeItem(this._achievementsKey);
+  }
+
   setDemoDevice(value: boolean) {
     if (value) {
       this.demoDevice = true;
@@ -173,6 +178,8 @@ export class GameService {
 
       if (this.currentState === 'start-game') {
         this.resetPlayerScore();
+        this.resetAchievements();
+        this.teamScore = 0;
       }
 
       if (this.currentState === 'game-over') {
