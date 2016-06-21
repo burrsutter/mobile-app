@@ -4,6 +4,7 @@ import { GameService } from '../+game/service/game.service';
 import { environment } from '../environment'
 
 declare var loadImage: any;
+declare var componentHandler: any;
 
 @Component({
   moduleId: module.id,
@@ -65,6 +66,10 @@ export class SelfieComponent {
     let options = new RequestOptions({ headers: headers });
 
     this.uploading = true;
+
+    setTimeout(() => {
+      componentHandler.upgradeDom();
+    }, 0);
 
     this.http.post(this.uploadUrl, body, options)
       .toPromise()

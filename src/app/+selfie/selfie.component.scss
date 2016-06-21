@@ -20,3 +20,12 @@
     padding: 0 4px;
   }
 }
+
+.controls {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  align-items: center;
+}

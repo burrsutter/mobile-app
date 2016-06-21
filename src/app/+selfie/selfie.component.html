@@ -1,16 +1,19 @@
 <div class="mdl-grid" *ngIf="!imageUploaded">
   <div class="mdl-cell selfie">
     <input type="file" capture="camera" accept="image/*" id="takePictureField" (change)="onChange($event)" *ngIf="!canUpload">
-    <div *ngIf="canUpload">
+    <div class="controls" *ngIf="canUpload">
       <div class="mdl-cell mdl-cell--12-col" id="canvasContainer">
         <canvas id="canvas"></canvas>
       </div>
-      <div>
-        <button (click)="upload()" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent upload">Upload</button>
+      <div *ngIf="!uploading">
+        <div>
+          <button (click)="upload()" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent upload">Upload</button>
+        </div>
+        <div>
+          <button class="mdl-button mdl-js-button back" (click)="tryAgain()">Take Another Picture</button>
+        </div>
       </div>
-      <div>
-        <button class="mdl-button mdl-js-button back" (click)="tryAgain()">Take Another Picture</button>
-      </div>
+      <div *ngIf="uploading" class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active light"></div>
     </div>
   </div>
 </div>

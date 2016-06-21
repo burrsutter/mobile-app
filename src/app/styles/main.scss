@@ -563,3 +563,10 @@ html.standalone {
   height: 36px;
   margin-bottom: 8px;
 }
+
+.mdl-spinner--single-color.light .mdl-spinner__layer-1,
+.mdl-spinner--single-color.light .mdl-spinner__layer-2,
+.mdl-spinner--single-color.light .mdl-spinner__layer-3,
+.mdl-spinner--single-color.light .mdl-spinner__layer-4 {
+  border-color: #efefef;
+}
