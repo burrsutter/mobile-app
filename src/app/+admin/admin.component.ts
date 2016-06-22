@@ -200,6 +200,12 @@ export class AdminComponent implements AfterViewInit {
     };
 
     this.ws.send(JSON.stringify(message));
+
+    if (state === 'start-game') {
+      this.configuration.gameId = this.guid();
+    }
+
+    this.publishConfigurationChange();
   }
 
   changeSelfieState(state) {
@@ -222,5 +228,15 @@ export class AdminComponent implements AfterViewInit {
 
   clearLocalStorage() {
     localStorage.clear();
+  }
+
+  private guid() {
+    function s4() {
+      return Math.floor((1 + Math.random()) * 0x10000)
+        .toString(16)
+        .substring(1);
+    }
+
+    return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
   }
 }

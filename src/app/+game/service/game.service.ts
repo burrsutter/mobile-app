@@ -11,6 +11,7 @@ export class GameService {
   private _canaryKey: string = 'canary';
   private _demoDeviceKey: string = 'demo';
   private _achievementsKey: string = 'achievements';
+  private _gameIdKey: string = 'game-id';
   private _teamsArray: Array<string> = ['Orange', 'Teal', 'Violet', 'Green'];
   private _teamsClassArray: Array<string> = ['team-orange', 'team-teal', 'team-violet', 'team-green'];
   private _reconnectInterval: number = 5000;
@@ -28,6 +29,7 @@ export class GameService {
   canary: boolean = JSON.parse(localStorage.getItem(this._canaryKey)) || false;
   demoDevice: boolean = JSON.parse(localStorage.getItem(this._demoDeviceKey)) || false;
   achievements: Array<any> = JSON.parse(localStorage.getItem(this._achievementsKey)) || [];
+  gameId: string = localStorage.getItem(this._gameIdKey) || null;
   achievementIconsHash: any = {
     pops1: 'local_play',
     pops2: 'whatshot',
@@ -239,6 +241,17 @@ export class GameService {
       }
 
       this.configuration = data.configuration;
+
+      if (data.configuration && data.configuration.gameId) {
+        if (this.gameId && this.gameId !== data.configuration.gameId) {
+          this.resetPlayerScore();
+          this.resetAchievements();
+          this.teamScore = 0;
+        }
+
+        this.gameId = data.configuration.gameId;
+        localStorage.setItem(this._gameIdKey, data.configuration.gameId);
+      }
 
       if (this.demoDevice) {
         if (this.canary) {
