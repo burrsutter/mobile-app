@@ -29,7 +29,6 @@ export class SelfieComponent {
 
   onChange(event) {
     const self = this;
-    console.log(this);
 
     if (event.target.files.length === 1 && event.target.files[0].type.indexOf('image/') === 0) {
       let file = event.target.files[0];
@@ -40,19 +39,17 @@ export class SelfieComponent {
         downsamplingRatio: 0.05
       };
 
+      self.canUpload = true;
+
       loadImage.parseMetaData(file, data => {
         if (data.exif) {
           options['orientation'] = data.exif.get('Orientation');
         }
 
         loadImage(file, data => {
-          self.canUpload = true;
-          setTimeout(() => {
-            console.log(self.elementRef.nativeElement.querySelector('#canvas'));
-            self.canvas = document.getElementById('canvas');
-            self.canvas.parentNode.replaceChild(data, this.canvas);
-            self.canvas = data;
-          }, 0);
+          self.canvas = document.getElementById('canvas');
+          self.canvas.parentNode.replaceChild(data, this.canvas);
+          self.canvas = data;
         }, options);
       });
     }
