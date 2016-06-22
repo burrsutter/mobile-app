@@ -22,7 +22,7 @@ declare var componentHandler: any;
 @Routes([
   {path: '/game', component: GameComponent},
   {path: '/playerid', component: SelfieComponent},
-  {path: '/leaderboard', component: LeaderboardComponent},
+  {path: '/achievements', component: LeaderboardComponent},
   {path: '/admin', component: AdminComponent},
   {path: '/', component: HomeComponent},
   {path: '*', component: HomeComponent}
