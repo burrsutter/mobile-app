@@ -66,9 +66,6 @@ export class AdminComponent implements AfterViewInit {
 
   connect() {
     this.ws = new WebSocket(this.socketUrl);
-    // this.ws = new WebSocket('ws://localhost:8081/game/admin');
-    // this.ws = new WebSocket('ws://game-server-demo.apps.demo.aws.paas.ninja/game/admin');
-
     this.ws.onopen = this.onOpen.bind(this);
     this.ws.onmessage = this.onMessage.bind(this);
     this.ws.onclose = this.onClose.bind(this);
