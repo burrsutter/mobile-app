@@ -1,4 +1,17 @@
-<div class="admin" *ngIf="ws.readyState === 1">
+<div class="admin" *ngIf="!authenticated">
+  <div class="mdl-card mdl-shadow--2dp">
+    <div class="mdl-card__title">
+      <h2 class="mdl-card__title-text">Admin Login</h2>
+    </div>
+    <div class="mdl-card__actions mdl-card--border">
+      <div class="mdl-textfield mdl-js-textfield">
+        <input class="mdl-textfield__input" type="password" [(ngModel)]="token" placeholder="Password">
+      </div>
+      <button class="mdl-button mdl-js-button mdl-button--raised" (click)="login()">Login</button>
+    </div>
+  </div>
+</div>
+<div class="admin" *ngIf="authenticated && ws.readyState === 1">
   <div class="mdl-card mdl-shadow--2dp">
     <div class="mdl-card__title">
       <h2 class="mdl-card__title-text">Player ID Admin</h2>
@@ -174,7 +187,7 @@
 
 </div>
 
-<div class="admin" *ngIf="ws.readyState !== 1">
+<div class="admin" *ngIf="authenticated && ws.readyState !== 1">
   <div class="mdl-card mdl-shadow--2dp">
     <div class="mdl-card__title">
       <h2 class="mdl-card__title-text">Error</h2>

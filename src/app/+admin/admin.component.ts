@@ -21,6 +21,8 @@ export class AdminComponent implements AfterViewInit {
   size: number = 0.3;
   isPaused: boolean = false;
   isPlaying: boolean = false;
+  authenticated: boolean = false;
+  token: string = '';
   socketUrl: string = (environment.production) ? 'ws://gamebus-production.apps-test.redhatkeynote.com/game/admin' : 'ws://localhost:9001/game/admin';
   selfieStates = [
     {
@@ -61,6 +63,12 @@ export class AdminComponent implements AfterViewInit {
       display: null
     };
 
+    if (this.authenticated) {
+      this.connect();
+    }
+  }
+
+  login() {
     this.connect();
   }
 
@@ -73,13 +81,15 @@ export class AdminComponent implements AfterViewInit {
 
   onOpen(evt) {
     let message = {
-      type: 'register'
+      type: 'register',
+      token: this.token
     };
 
     this.ws.send(JSON.stringify(message));
   }
 
   onClose(evt) {
+    let interval;
     let intervalHandler = () => {
       if (this.ws.readyState === WebSocket.CLOSED) {
         this.connect();
@@ -91,12 +101,22 @@ export class AdminComponent implements AfterViewInit {
       }
     }
 
-    intervalHandler = intervalHandler.bind(this);
-    const interval = setInterval(intervalHandler, this._reconnectInterval);
+    if (this.authenticated) {
+      intervalHandler = intervalHandler.bind(this);
+      interval = setInterval(intervalHandler, this._reconnectInterval);
+    }
   }
 
   onMessage(evt) {
     let message = JSON.parse(evt.data);
+
+    if (message.type === 'auth-failed') {
+      this.ws.close();
+      this.authenticated = false;
+      return;
+    }
+
+    this.authenticated = true;
 
     if (message.type === 'state') {
       this.gameStates.forEach(gameState => {
@@ -193,7 +213,8 @@ export class AdminComponent implements AfterViewInit {
 
     const message = {
       type: 'state-change',
-      state: state
+      state: state,
+      token: this.token
     };
 
     this.ws.send(JSON.stringify(message));
@@ -208,7 +229,8 @@ export class AdminComponent implements AfterViewInit {
   changeSelfieState(state) {
     const message = {
       type: 'selfie-state-change',
-      state: state.name
+      state: state.name,
+      token: this.token
     };
 
     this.ws.send(JSON.stringify(message));
@@ -217,7 +239,8 @@ export class AdminComponent implements AfterViewInit {
   publishConfigurationChange() {
     const message = {
       type: 'configuration',
-      configuration: this.configuration
+      configuration: this.configuration,
+      token: this.token
     };
 
     this.ws.send(JSON.stringify(message));
