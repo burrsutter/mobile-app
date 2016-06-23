@@ -26,7 +26,7 @@
     </div>
     <div *ngIf="!error">
       <h1>Upload success!</h1>
-      <p class="upload-success">We've awarded you <strong>{{scoreIncrement}}</strong> additional points.</p>
+      <p *ngIf="pointsAwarded" class="upload-success">We've awarded you <strong>{{scoreIncrement}}</strong> additional points.</p>
     </div>
     <div *ngIf="error">
       <h1>Image upload failed...</h1>

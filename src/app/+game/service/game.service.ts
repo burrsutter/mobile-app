@@ -12,6 +12,7 @@ export class GameService {
   private _demoDeviceKey: string = 'demo';
   private _achievementsKey: string = 'achievements';
   private _gameIdKey: string = 'game-id';
+  private _selfieTakenKey: string = 'selfie-taken';
   private _teamsArray: Array<string> = ['Orange', 'Teal', 'Violet', 'Green'];
   private _teamsClassArray: Array<string> = ['team-orange', 'team-teal', 'team-violet', 'team-green'];
   private _reconnectInterval: number = 5000;
@@ -30,6 +31,7 @@ export class GameService {
   demoDevice: boolean = JSON.parse(localStorage.getItem(this._demoDeviceKey)) || false;
   achievements: Array<any> = JSON.parse(localStorage.getItem(this._achievementsKey)) || [];
   gameId: string = localStorage.getItem(this._gameIdKey) || null;
+  selfieTaken: boolean = JSON.parse(localStorage.getItem(this._selfieTakenKey)) || false;
   achievementIconsHash: any = {
     pops1: 'local_play',
     pops2: 'whatshot',
@@ -129,6 +131,11 @@ export class GameService {
 
       window.location.reload();
     }
+  }
+
+  setSelfieTaken(value: boolean) {
+    this.selfieTaken = value;
+    localStorage.setItem(this._selfieTakenKey, JSON.stringify(value));
   }
 
   private updateAchievements(achievement) {
@@ -246,6 +253,7 @@ export class GameService {
         if (this.gameId && this.gameId !== data.configuration.gameId) {
           this.resetPlayerScore();
           this.resetAchievements();
+          this.setSelfieTaken(false);
           this.teamScore = 0;
         }
 

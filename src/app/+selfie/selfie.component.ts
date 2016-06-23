@@ -23,6 +23,7 @@ export class SelfieComponent {
   uploading: boolean = false;
   canUpload: boolean = false;
   scoreIncrement: number = 500;
+  pointsAwarded: boolean = false;
   uploadUrl: string = (environment.production) ? 'http://player-id-server-demo.apps-test.redhatkeynote.com/upload' : 'http://localhost:8085/upload';
 
   constructor(private http: Http, private gameService: GameService, private elementRef: ElementRef) {}
@@ -64,6 +65,7 @@ export class SelfieComponent {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
+    this.pointsAwarded = false;
     this.uploading = true;
 
     setTimeout(() => {
@@ -80,8 +82,12 @@ export class SelfieComponent {
           this.imageUploaded = true;
           localStorage.setItem('id', data.id);
 
-          // give the user some points for uploading their player id
-          this.gameService.incrementPlayerScore(this.scoreIncrement);
+          if (!this.gameService.selfieTaken) {
+            // give the user some points for uploading their player id
+            this.gameService.incrementPlayerScore(this.scoreIncrement);
+            this.gameService.setSelfieTaken(true);
+            this.pointsAwarded = true;
+          }
         }
       })
       .catch(err => {
