@@ -32,7 +32,6 @@ const barrels: string[] = [
   'app/+game',
   'app/+selfie',
   'app/+home',
-  'app/+admin',
   'app/+game/achievement',
   'app/+leaderboard',
   'app/winner',

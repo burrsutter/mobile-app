@@ -3,7 +3,6 @@ import { Routes, Route, Router, ROUTER_DIRECTIVES} from '@angular/router';
 import { GameComponent } from './+game';
 import { SelfieComponent } from './+selfie';
 import { HomeComponent } from './+home';
-import { AdminComponent } from './+admin';
 import { LeaderboardComponent } from './+leaderboard';
 import { WinnerComponent } from './winner/winner.component';
 import { GameService } from './+game/service/game.service';
@@ -23,7 +22,6 @@ declare var componentHandler: any;
   {path: '/game', component: GameComponent},
   {path: '/playerid', component: SelfieComponent},
   {path: '/achievements', component: LeaderboardComponent},
-  {path: '/admin', component: AdminComponent},
   {path: '/', component: HomeComponent},
   {path: '*', component: HomeComponent}
 ])
