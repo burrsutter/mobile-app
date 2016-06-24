@@ -57,6 +57,10 @@ export class SelfieComponent {
   }
 
   upload() {
+    if (this.gameService.currentState === 'game-over') {
+      return;
+    }
+    
     let image = this.canvas.toDataURL('image/jpeg', 0.1);
     let body = JSON.stringify({
       image: image,

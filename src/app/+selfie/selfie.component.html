@@ -1,4 +1,4 @@
-<div class="mdl-grid" *ngIf="!imageUploaded">
+<div class="mdl-grid" *ngIf="!imageUploaded && gameService.currentState !== 'game-over'">
   <div class="mdl-cell selfie">
     <input type="file" capture="camera" accept="image/*" id="takePictureField" (change)="onChange($event)" *ngIf="!canUpload">
     <div class="controls" *ngIf="canUpload">
@@ -18,7 +18,7 @@
   </div>
 </div>
 
-<div class="game-over" *ngIf="imageUploaded" [ngClass]="{'game-over-success': !error, 'game-over-danger': error}"><!-- or game-over-success -->
+<div class="game-over" *ngIf="imageUploaded && gameService.currentState !== 'game-over'" [ngClass]="{'game-over-success': !error, 'game-over-danger': error}"><!-- or game-over-success -->
   <div class="game-over-container">
     <div class="game-over-icon">
       <i class="material-icons" *ngIf="!error">thumb_up</i>
@@ -35,5 +35,12 @@
     <p>
       <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" (click)="tryAgain()">Take another selfie</button>
     </p>
+  </div>
+</div>
+
+<div class="game-over game-over-success" *ngIf="gameService.currentState === 'game-over'">
+  <div class="game-over-container">
+    <h1>The game has ended</h1>
+    <p>Thank you for playing!</p>
   </div>
 </div>
