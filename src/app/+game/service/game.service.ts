@@ -261,13 +261,7 @@ export class GameService {
         localStorage.setItem(this._gameIdKey, data.configuration.gameId);
       }
 
-      if (this.demoDevice) {
-        if (this.canary) {
-          this.configurationChange.emit({
-            configuration: this.configuration
-          });
-        }
-
+      if (this.demoDevice && data.configuration.bp) {
         return;
       }
 
