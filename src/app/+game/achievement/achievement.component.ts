@@ -44,6 +44,10 @@ export class AchievementComponent {
   }
 
   transitionEndHandler(evt) {
+    if (evt.target.classList.contains('visible')) {
+      return;
+    }
+    
     console.log('removing achievement');
     this.achievements.shift();
 
