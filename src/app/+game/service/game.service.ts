@@ -44,8 +44,7 @@ export class GameService {
     gold: 'golden'
   };
   configuration: Object = {};
-  // socketUrl: string = (environment.production) ? 'ws://gamebus-production.apps-test.redhatkeynote.com/game' : 'ws://localhost:9001/game';
-  socketUrl: string = 'ws://gamebus-production.apps-test.redhatkeynote.com/game';
+  socketUrl: string = (environment.production) ? 'ws://gamebus-production.apps-test.redhatkeynote.com/game' : 'ws://localhost:9001/game';
 
   @Output() stateChange = new EventEmitter();
   @Output() configurationChange = new EventEmitter();

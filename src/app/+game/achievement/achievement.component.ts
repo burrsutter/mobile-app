@@ -29,21 +29,26 @@ export class AchievementComponent {
   }
 
   showAchievement() {
+    console.log('showing achievement');
     this.element.nativeElement.classList.add('visible');
   }
 
   animationEndHandler(evt) {
+    console.log('in animation handler');
     if (evt.target.classList.contains('visible')) {
       setTimeout(() => {
         evt.target.classList.remove('visible');
+        console.log('animation handler timeout done!');
       }, 3000);
     }
   }
 
   transitionEndHandler(evt) {
+    console.log('removing achievement');
     this.achievements.shift();
 
     if (this.achievements.length > 0) {
+      console.log('showing another achievement');
       this.showAchievement();
     }
   }
@@ -60,6 +65,7 @@ export class AchievementComponent {
 
     for (t in transitions){
       if ( el.style[t] !== undefined ) {
+        console.log('transition event: ' + transitions[t]);
         return transitions[t];
       }
     }
@@ -77,6 +83,7 @@ export class AchievementComponent {
 
     for (t in transitions){
       if ( el.style[t] !== undefined ) {
+        console.log('animation event: ' + transitions[t]);
         return transitions[t];
       }
     }
