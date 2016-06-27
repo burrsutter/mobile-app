@@ -12,6 +12,7 @@ module.exports = function(defaults) {
       'reflect-metadata/*.js',
       'rxjs/**/*.js',
       '@angular/**/*.js',
+      'material-design-lite/material.min.js',
       'blueimp-load-image/js/load-image.all.min.js'
     ]
   });
