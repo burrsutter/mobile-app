@@ -1,6 +1,8 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
 import { environment } from '../../environment'
 
+declare var sjcl: any;
+
 @Injectable()
 export class GameService {
   private _usernameKey: string = 'username';
@@ -42,7 +44,8 @@ export class GameService {
     gold: 'golden'
   };
   configuration: Object = {};
-  socketUrl: string = (environment.production) ? 'ws://gamebus-production.apps-test.redhatkeynote.com/game' : 'ws://localhost:9001/game';
+  // socketUrl: string = (environment.production) ? 'ws://gamebus-production.apps-test.redhatkeynote.com/game' : 'ws://localhost:9001/game';
+  socketUrl: string = 'ws://gamebus-production.apps-test.redhatkeynote.com/game';
 
   @Output() stateChange = new EventEmitter();
   @Output() configurationChange = new EventEmitter();
@@ -88,6 +91,7 @@ export class GameService {
     this.sendMessage({
       type: 'score',
       score: this.playerScore,
+      encryptedScore: sjcl.encrypt(''+this.playerId, ''+this.playerScore),
       consecutive: 0,
       goldenSnitchPopped: false
     });

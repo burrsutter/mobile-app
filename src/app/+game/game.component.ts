@@ -3,6 +3,7 @@ import { AchievementComponent } from './achievement/achievement.component';
 import { GameService } from './service/game.service';
 
 declare var Phaser: any;
+declare var sjcl: any;
 
 @Component({
   moduleId: module.id,
@@ -128,6 +129,7 @@ export class GameComponent implements OnInit, OnDestroy {
           this.gameService.sendMessage({
             type: 'score',
             score: this.gameService.playerScore,
+            encryptedScore: sjcl.encrypt(''+this.gameService.playerId, ''+this.gameService.playerScore),
             consecutive: consecutive,
             goldenSnitchPopped: (balloon.frameName === 'balloon_golden') ? true : false
           });
