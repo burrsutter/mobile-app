@@ -7,7 +7,10 @@
     </span>
     {{gameService.teamScore}}
   </li>
-  <li><span>{{gameService.playerUsername}} (You)</span>{{gameService.playerScore}}</li>
+  <li class="player">
+    <span>{{gameService.playerUsername}}</span>
+    {{gameService.playerScore}}
+  </li>
 </ul>
 <div class="game-over" *ngIf="currentState === 'game-over'">
   <div class="game-over-container">
