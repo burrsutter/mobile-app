@@ -20,6 +20,8 @@ export class GameService {
   private _reconnectInterval: number = 5000;
 
   ws: any;
+  socketClosed: boolean = false;
+  reconnecting: boolean = false;
   currentState: string = 'title';
   currentSelfieState: string = 'closed';
   selfieAdmin: boolean = false;
@@ -157,6 +159,8 @@ export class GameService {
   }
 
   private onOpen(evt) {
+    this.socketClosed = false;
+
     const message = {
       type: 'register'
     };
@@ -177,19 +181,10 @@ export class GameService {
   }
 
   private onClose(evt) {
-    let intervalHandler = () => {
-      if (this.ws.readyState === WebSocket.CLOSED) {
-        this.connect();
-        return;
-      }
-
-      if (this.ws.readyState === WebSocket.OPEN) {
-        clearInterval(interval);
-      }
-    }
-
-    intervalHandler = intervalHandler.bind(this);
-    const interval = setInterval(intervalHandler, this._reconnectInterval);
+    setTimeout(() => {
+      this.reconnecting = false;
+      this.socketClosed = true;
+    }, 500);
   }
 
   private onMessage(evt) {

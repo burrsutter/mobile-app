@@ -25,5 +25,12 @@
     </ul>
   </div>
 </div>
+<div class="reconnect" *ngIf="gameService.socketClosed">
+  <p>The web socket has been disconnected.</p>
+  <div class="reconnect-actions">
+    <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" (click)="reconnect()" *ngIf="!gameService.reconnecting">Reconnect</button>
+    <div class="mdl-spinner mdl-js-spinner is-active" *ngIf="gameService.reconnecting"></div>
+  </div>
+</div>
 <div id="game" class="game" [ngClass]="configuration.background"></div>
 <app-achievement></app-achievement>

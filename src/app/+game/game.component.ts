@@ -4,6 +4,7 @@ import { GameService } from './service/game.service';
 
 declare var Phaser: any;
 declare var sjcl: any;
+declare var componentHandler: any;
 
 @Component({
   moduleId: module.id,
@@ -241,6 +242,15 @@ export class GameComponent implements OnInit, OnDestroy {
         'balloon_golden': this.configuration.points.goldenSnitch,
       }
     }
+  }
+
+  reconnect() {
+    this.gameService.reconnecting = true;
+    this.gameService.connect();
+
+    setTimeout(() => {
+      componentHandler.upgradeDom();
+    }, 0);
   }
 
   ngOnDestroy() {
