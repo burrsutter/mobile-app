@@ -213,15 +213,14 @@ html.standalone {
     font-size: 16px;
     padding: 5px 10px;
     margin: 1px;
-    flex: 0 1 calc(50% - 22px);
+    flex: 1;
+    border-radius: 4px;
     font-weight: 600;
-    &:nth-child(2){
-      border-radius: 0 0 0 4px;
-    }
     span{
       text-transform: uppercase;
     }
     &:not(:first-child) span{
+      border-radius: 4px 4px 0 0;
       display: block;
       font-weight: 600;
       font-size: 11px;
